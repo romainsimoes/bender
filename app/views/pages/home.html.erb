@@ -3,7 +3,9 @@
 
 
 <% if user_signed_in? %>
-<%= link_to 'See your bots !', bots_path, class:" btn btn-primary" %>
+<%= link_to 'Get Started', bots_path, class:"button button-blue" %>
+<%= link_to 'Documentation', bots_path, class:"button button-red" %>
 <% else %>
-<%= link_to 'Start Now !', new_user_session_path, class:" btn btn-primary" %>
+<%= link_to 'Start Now !', new_user_session_path, class:"button button-blue" %>
 <% end %>
+
