@@ -5,6 +5,10 @@ class BotPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    true
+  end
+
   def create?
     true # All user can create
   end
