@@ -25,7 +25,7 @@ class BotsController < ApplicationController
   end
 
   def create
-    @bot = Bot.new(bot_params)
+    @bot = current_user.bots.build(bot_params)
     if @bot.save
       redirect_to bots_path, notice: 'Bot was successfully created.'
     else
