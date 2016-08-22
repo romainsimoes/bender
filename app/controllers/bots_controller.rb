@@ -1,5 +1,5 @@
 class BotsController < ApplicationController
-  before_action :set_bot, only: [:show, :edit, :update, :destroy]
+  before_action :set_bot, only: [:analytic, :guide, :webhook, :show, :edit, :update, :destroy]
 
   def analytic
   end
@@ -26,8 +26,7 @@ class BotsController < ApplicationController
   end
 
   def create
-    @bot = Bot.new(bot_params)
-    @bot.user = current_user
+    @bot = current_user.bots.build(bot_params)
     authorize @bot
     if @bot.save
       redirect_to bots_path, notice: 'Bot was successfully created.'
@@ -53,7 +52,7 @@ class BotsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_bot
       @bot = Bot.find(params[:id])
-      authorize @restaurant
+      authorize @bot
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
