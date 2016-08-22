@@ -1,7 +1,7 @@
 class BotPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(user: user) # User can show his restauran
+      scope.where(user: user)
     end
   end
 
@@ -10,6 +10,6 @@ class BotPolicy < ApplicationPolicy
   end
 
   def create?
-    true # All user can create
+    true
   end
 end
