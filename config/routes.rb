@@ -4,9 +4,11 @@ Rails.application.routes.draw do
   resources :bots do
     resources :histories, only: [:index]
     resources :patterns, except: [:show]
-    get 'analytic', to: 'bots#analytic'
-    post 'webhook', to: 'bots#webhook'
-    get 'guide', to: 'bots#guide'
+    member do
+      get 'analytic', to: 'bots#analytic'
+      post 'webhook', to: 'bots#webhook'
+      get 'guide', to: 'bots#guide'
+    end
   end
 
   devise_for :users
