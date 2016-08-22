@@ -11,7 +11,7 @@ class BotsController < ApplicationController
   end
 
   def index
-    @bots = Bot.all
+    @bots = policy_scope(Bot)
   end
 
   def show
@@ -19,6 +19,7 @@ class BotsController < ApplicationController
 
   def new
     @bot = Bot.new
+    authorize @bot
   end
 
   def edit
@@ -26,6 +27,7 @@ class BotsController < ApplicationController
 
   def create
     @bot = Bot.new(bot_params)
+    authorize @bot
     if @bot.save
       redirect_to bots_path, notice: 'Bot was successfully created.'
     else
@@ -50,6 +52,7 @@ class BotsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_bot
       @bot = Bot.find(params[:id])
+      authorize @restaurant
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
