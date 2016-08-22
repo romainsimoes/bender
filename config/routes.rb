@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :patterns, except: [:show]
     member do
       get 'analytic', to: 'bots#analytic'
+      get 'webhook', to: "bots#webhook_verification"
       post 'webhook', to: 'bots#webhook'
       get 'guide', to: 'bots#guide'
     end

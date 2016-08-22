@@ -1,10 +1,19 @@
 class BotsController < ApplicationController
-  before_action :set_bot, only: [:analytic, :guide, :webhook, :show, :edit, :update, :destroy]
+  before_action :set_bot, only: [:analytic, :guide, :webhook_verification, :show, :edit, :update, :destroy]
 
   def analytic
   end
 
+  def webhook_verification
+    if params['hub.mode'] == 'subscribe' && params['hub.verify_token'] == @bot.token
+      render json: {params['hub.challenge']}, status: :ok
+    else
+      render json: {}, status: :forbidden
+    end
+  end
+
   def webhook
+
   end
 
   def guide
