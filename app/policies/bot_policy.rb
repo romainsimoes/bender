@@ -25,7 +25,7 @@ class BotPolicy < ApplicationPolicy
     record.user == user || user.admin?
   end
 
-  def webhook_validation?
+  def webhook_verification?
     true
   end
 
