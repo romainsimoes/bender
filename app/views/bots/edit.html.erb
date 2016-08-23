@@ -1,6 +1,32 @@
-<h1>Editing Bot</h1>
 
-<%= render 'form', bot: @bot %>
+<div class="row">
+  <div class="col-md-4 col-md-offset-4 ">
 
-<%= link_to 'Show', @bot %> |
-<%= link_to 'Back', bots_path %>
+    <h1>Editing Bot</h1>
+    <div class="grey-card">
+      <%= render 'form', bot: @bot %>
+      <%= link_to 'Show', @bot %> |
+      <%= link_to 'Back', bots_path %>
+    </div>
+<br>
+    <%= simple_form_for [@bot, @pattern] do
+    |f| %>
+    <%= f.error_notification %>
+    <%= f.input :trigger %>
+    <%= f.input :answer %>
+     <%= f.button :submit %>
+     <% end %>
+
+     <h2>Patterns</h2>
+         <% @bot.patterns.each do |pattern| %>
+            <div class="grey-card">
+              <p><%= pattern.trigger %></p>
+              <p><%= pattern.answer %></p>
+              <br>
+              <%= link_to "Delete", bot_pattern_path(@bot, pattern), :method => "delete" , :class => "button button-red" %>
+          </div>
+           <% end %>
+
+
+  </div>
+</div>
