@@ -1,5 +1,5 @@
 class BotsController < ApplicationController
-  before_action :set_bot, only: [:analytic, :guide, :show, :edit, :update, :destroy]
+  before_action :set_bot, only: [:analytic, :guide, :show, :edit, :update, :destroy, :webhook_verification, :webhook]
 
   skip_before_action :authenticate_user!, only: [:webhook, :webhook_verification]
   skip_after_action :verify_authorized, only: [:webhook, :webhook_verification]
