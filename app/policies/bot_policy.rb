@@ -2,7 +2,7 @@ class BotPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.admin?
-        scope.all?
+        scope.all
       else
         scope.where(user: user)
       end
