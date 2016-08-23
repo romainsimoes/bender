@@ -26,4 +26,7 @@ class User < ApplicationRecord
     return user
   end
 
+  def admin?
+    true
+  end
 end
