@@ -15,8 +15,7 @@ class PatternsController < ApplicationController
   end
 
   def create
-    @pattern = Pattern.new(pattern_params)
-    @pattern.bot_id = @bot.id
+    @pattern = @bot.patterns.build(pattern_params)
     if @pattern.save
       redirect_to bot_path(@bot), notice: 'Pattern was successfully created.'
     else
