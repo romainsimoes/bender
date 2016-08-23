@@ -11,7 +11,7 @@ class ProcessBotMessageJob < ApplicationJob
     end
 
     # 2 si il y a une réponse envoyer la réponse
-    FacebookRequestService.send_message(message_sender_id, message, 'EAAYbTrA74CMBANiStW7UnIqsSEE64Er20EgsdxdqSTEBG7L550nnzjzwMlGaviubhfWstdjLju3i9dhyJGYwiSKgHJsc1pVIwR3V6RKpM5AP3z9WpHrwq7lZBFhdzd2YXWcqRda1xC7eHxv2jCG9asWGtKoqZBjFVxa2xlRwZDZD')
+    FacebookRequestService.send_message(message_sender_id, message, bot.page_access_token)
     # 3 enregistrer dans history
 
   end
