@@ -3,7 +3,7 @@ class BotsController < ApplicationController
 
   skip_before_action :authenticate_user!, only: [:webhook, :webhook_verification]
   skip_after_action :verify_authorized, only: [:webhook, :webhook_verification]
-  skip_before_filter  :verify_authenticity_token, only: [:webhook, :webhook_verification]
+  skip_before_action  :verify_authenticity_token, only: [:webhook, :webhook_verification]
 
   def analytic
   end
@@ -21,15 +21,28 @@ class BotsController < ApplicationController
     # 0 Verify token
 
     # 1 - Parse message
-    message_text = params['entry'][0]['messaging'][0]['message']['text']
-    message_sender_id = params['entry'][0]['messaging'][0]['sender']['id']
-    if message_text && message_sender_id
-      # 2 - Init Job
-      ProcessBotMessageJob.perform_later(message_sender_id, message_text, @bot)
+    begin
+      message_text = params['entry'][0]['messaging'][0]['message']['text']
+      message_sender_id = params['entry'][0]['messaging'][0]['sender']['id']
+      if message_text && message_sender_id
+        # 2 - Init Job
+        ProcessBotMessageJob.perform_later(message_sender_id, message_text, @bot)
+      end
+    rescue
+      p 'Error parsing'
     end
 
     # 3 - 200
     render nothing: true, status: 200
+  end
+
+  def webhook_subscribe
+    if FacebookRequestService.subscribe('EAAYbTrA74CMBANiStW7UnIqsSEE64Er20EgsdxdqSTEBG7L550nnzjzwMlGaviubhfWstdjLju3i9dhyJGYwiSKgHJsc1pVIwR3V6RKpM5AP3z9WpHrwq7lZBFhdzd2YXWcqRda1xC7eHxv2jCG9asWGtKoqZBjFVxa2xlRwZDZD')
+      redirect_to :index
+    else
+      flash[:alert] = "Error when refresh subscribe"
+      redirect_to :index
+    end
   end
 
   def guide

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     member do
       get 'analytic', to: 'bots#analytic'
       get 'webhook', to: "bots#webhook_verification"
+      get 'webhook_subscribe', to: "bots#webhook_subscribe"
       post 'webhook', to: 'bots#webhook'
       get 'guide', to: 'bots#guide'
     end
