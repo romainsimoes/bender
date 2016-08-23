@@ -12,7 +12,9 @@ class ProcessBotMessageJob < ApplicationJob
     # 1 utiliser bot + message pour essayer de trouve la réponse
 
     # 2 si il y a une réponse envoyer la réponse
-    FacebookRequestService.send_message(message_sender_id, 'bonjour :)', 'EAAOSnZA1FWRkBAHBTLbmrAyZAlrmrwGMnP1ZCKNwGK2p2l8Wqc5ZBX6VvByOwxHKLY1bRQGPf5ybLUaiDR5tPFDDB5DTkoOEodJaKr3doN7kwAbK1r00UwolU5KUYTP6O4UvShKQHWDKg4fZAOznnZBRjceeDRdI37c5G5ClhZBQwZDZD')
+    FacebookRequestService.send_message(message_sender_id, 'bonjour :)', 'EAASrII2HfC0BAAyCOXt1TtcliQCyUH0W6PGCpiDIaolk8un3UV22wBeqwyZBsZAlgVbZB9z5Bn3vlZAOhedrY7sS4U3lX5gz929ot7nAQ9RwYHZBQEYFZAPLfQ9FxgWQrZABnAWzKPwTegk9OhQy9y7Vu80wlr5b98Nkc5b64a41QZDZD')
+
+
     # 3 enregistrer dans history
   end
 end

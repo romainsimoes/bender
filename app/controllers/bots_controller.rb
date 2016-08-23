@@ -49,6 +49,7 @@ class BotsController < ApplicationController
   end
 
   def edit
+    @pattern = Pattern.new
   end
 
   def create
