@@ -1,5 +1,5 @@
 class BotsController < ApplicationController
-  before_action :set_bot, only: [:analytic, :show, :edit, :update, :destroy, :webhook_verification, :webhook]
+  before_action :set_bot, only: [:analytic, :show, :edit, :update, :destroy, :webhook_verification, :webhook, :webhook_subscribe]
 
   skip_before_action :authenticate_user!, only: [:webhook, :webhook_verification]
   skip_after_action :verify_authorized, only: [:webhook, :webhook_verification, :guide]
@@ -38,7 +38,7 @@ class BotsController < ApplicationController
   end
 
   def webhook_subscribe
-    if FacebookRequestService.subscribe('EAAYbTrA74CMBANiStW7UnIqsSEE64Er20EgsdxdqSTEBG7L550nnzjzwMlGaviubhfWstdjLju3i9dhyJGYwiSKgHJsc1pVIwR3V6RKpM5AP3z9WpHrwq7lZBFhdzd2YXWcqRda1xC7eHxv2jCG9asWGtKoqZBjFVxa2xlRwZDZD')
+    if FacebookRequestService.subscribe(@bot.page_access_token)
       redirect_to :index
     else
       flash[:alert] = "Error when refresh subscribe"
