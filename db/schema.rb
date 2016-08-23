@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160822143602) do
+ActiveRecord::Schema.define(version: 20160823141014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,10 +18,11 @@ ActiveRecord::Schema.define(version: 20160822143602) do
   create_table "bots", force: :cascade do |t|
     t.string   "name"
     t.string   "token"
-    t.boolean  "enable",     default: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.boolean  "enable",            default: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.integer  "user_id"
+    t.string   "page_access_token"
     t.index ["user_id"], name: "index_bots_on_user_id", using: :btree
   end
 

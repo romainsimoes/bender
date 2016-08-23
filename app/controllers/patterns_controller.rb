@@ -1,6 +1,7 @@
 class PatternsController < ApplicationController
   before_action :set_pattern, only: [:show, :edit, :update, :destroy]
   before_action :find_bot, only: [:new, :edit, :create, :update, :destroy]
+  skip_after_action :verify_authorized
 
   def index
     @patterns = Pattern.all
