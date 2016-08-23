@@ -1,11 +1,12 @@
 class BotsController < ApplicationController
-  before_action :set_bot, only: [:analytic, :guide, :show, :edit, :update, :destroy, :webhook_verification, :webhook]
+  before_action :set_bot, only: [:analytic, :show, :edit, :update, :destroy, :webhook_verification, :webhook]
 
   skip_before_action :authenticate_user!, only: [:webhook, :webhook_verification]
-  skip_after_action :verify_authorized, only: [:webhook, :webhook_verification]
+  skip_after_action :verify_authorized, only: [:webhook, :webhook_verification, :guide]
   skip_before_filter  :verify_authenticity_token, only: [:webhook, :webhook_verification]
 
   def analytic
+    @bot = Bot.find(params[:id])
   end
 
   def webhook_verification
@@ -19,7 +20,6 @@ class BotsController < ApplicationController
 
   def webhook
     # 0 Verify token
-
     # 1 - Parse message
     message_text = params['entry'][0]['messaging'][0]['message']['text']
     message_sender_id = params['entry'][0]['messaging'][0]['sender']['id']
@@ -33,6 +33,7 @@ class BotsController < ApplicationController
   end
 
   def guide
+    @bot = Bot.find(params[:id])
   end
 
   def index
