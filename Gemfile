@@ -33,3 +33,8 @@ end
 
 gem 'omniauth-facebook'
 gem 'rest-client'
+
+gem 'remotipart', github: 'mshibuya/remotipart'
+gem 'rails_admin', '>= 1.0.0.rc'
+
+gem "rails_admin_pundit", :github => "Samy-Amar/rails_admin_pundit"
