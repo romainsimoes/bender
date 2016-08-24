@@ -1,0 +1,51 @@
+.banner {
+  text-align: center;
+  height: 100vh;
+  /* if you have a 70px navbar => height: calc(100vh - 70px); */
+  background-size: cover !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+  padding-top: Opx;
+}
+.banner-title {
+  margin-top: 20vh;
+  margin-bottom: 20vh;
+  text-align: center;
+}
+
+
+.banner-title img {
+  width: 30vh;
+}
+
+.gif img {
+  width: 80vh;
+}
+
+.banner h1 {
+  width: 80vh;
+}
+
+
+.banner-blue {
+  height: 80vh;
+  color: white;
+  background-color: #0084FF;
+
+}
+
+.banner-blue h1{
+  font-size: 20px;
+  font-family: "OpenSans";
+  font-weight: 20;
+}
+
+.banner-blue img{
+   width: 80vh;
+}
+
+.title {
+  margin-top: 15vh;
+}

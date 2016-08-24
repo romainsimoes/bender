@@ -78,7 +78,7 @@ class BotsController < ApplicationController
 
   def update
     if @bot.update(bot_params)
-      redirect_to @bot, notice: 'Bot was successfully updated.'
+      redirect_to edit_bot_path(@bot), notice: 'Bot was successfully updated.'
     else
       render :edit
     end
