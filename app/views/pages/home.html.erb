@@ -1,9 +1,45 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+
+<div class="banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-xs-12">
+
+        <div class="banner-title">
+          <%= image_tag "panda-logo-name-black.png" %>
+          <p>Create your messenger bot. Quickily. Easily.</p>
+
+          <%= link_to omniauth_authorize_path('user', 'facebook'), class:"button button-blue-facebook" do %>
+          <span class="fa fa-facebook-square fa-2x"></span>
+          <p>Get Started for Free</p>
+        <% end %>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-xs-12">
+       <div class="gif">
+         <%= image_tag "image-1.gif" %>
+       </div>
+     </div>
+
+   </div>
+ </div>
+</div>
+
+<div class="banner-blue">
+    <div class="col-md-8 col-xs-12">
+
+    </div>
+
+    <div class="col-md-4 col-xs-12">
+      <div class="title">
+    <h1>NO PROGRAMMING</h1>
+     <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugi.</p>
+     <br>
+     <%= link_to 'Start Now !', new_user_session_path, class:"button button-light-blue" %>
+       </div>
+    </div>
 
 
-<% if user_signed_in? %>
-<%= link_to 'See your bots !', bots_path, class:" btn btn-primary" %>
-<% else %>
-<%= link_to 'Start Now !', new_user_session_path, class:" btn btn-primary" %>
-<% end %>
+
+</div>
+

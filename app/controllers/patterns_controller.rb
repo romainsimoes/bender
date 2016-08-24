@@ -1,6 +1,7 @@
 class PatternsController < ApplicationController
   before_action :set_pattern, only: [:show, :edit, :update, :destroy]
   before_action :find_bot, only: [:new, :edit, :create, :update, :destroy]
+  skip_after_action :verify_authorized
 
   def index
     @patterns = Pattern.all
@@ -14,9 +15,9 @@ class PatternsController < ApplicationController
   end
 
   def create
-    @pattern = Pattern.new(pattern_params)
+    @pattern = @bot.patterns.build(pattern_params)
     if @pattern.save
-      redirect_to bot_path(@bot), notice: 'Pattern was successfully created.'
+      redirect_to edit_bot_path(@bot)
     else
       render :new
     end
@@ -24,7 +25,7 @@ class PatternsController < ApplicationController
 
   def update
     if @pattern.update(pattern_params)
-      redirect_to bot_path(@bot), notice: 'Pattern was successfully updated.'
+      redirect_to edit_bot_path(@bot)
     else
       render :edit
     end
@@ -32,7 +33,7 @@ class PatternsController < ApplicationController
 
   def destroy
     @pattern.destroy
-    redirect_to bot_path(@bot), notice: 'Pattern was successfully destroyed.'
+    redirect_to edit_bot_path(@bot)
   end
 
   private

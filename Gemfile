@@ -17,6 +17,8 @@ gem 'font-awesome-sass'
 gem 'simple_form'
 gem 'autoprefixer-rails'
 gem 'pundit'
+gem 'sidekiq'
+gem 'sidekiq-failures'
 
 group :development, :test do
   gem 'binding_of_caller'
@@ -30,3 +32,9 @@ group :development, :test do
 end
 
 gem 'omniauth-facebook'
+gem 'rest-client'
+
+gem 'remotipart', github: 'mshibuya/remotipart'
+gem 'rails_admin', '>= 1.0.0.rc'
+
+gem "rails_admin_pundit", :github => "Samy-Amar/rails_admin_pundit"

@@ -1,0 +1,80 @@
+// Buttons Style Color
+.button {
+    border: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 16px;
+    margin: 0 8px;
+    color: #FFFFFF;
+    background-color: #E7E9ED;
+    border-radius: 8px;
+    font-family: "ProximaNovaSoft-Regular", sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+    transition: box-shadow 200ms ease-out;
+    font-size: 100%;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: 0.1px;
+    text-align: center;
+}
+
+// Buttons Color
+.button-red {
+  width: 180px;
+  background-color: #FF6384
+}
+.button-blue {
+  width: 180px;
+  background-color: #0084FF;
+}
+.button-green {
+  width: 180px;
+  background-color: #4BC0C0;
+}
+.button-yellow {
+  width: 180px;
+  background-color: #FFCE56;
+}
+
+.button-light-blue {
+  width: 180px;
+  background-color: #2998FF;
+}
+// Buttons Size
+
+
+
+
+// Buttons Hover
+
+.button:hover {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+}
+
+a:hover {
+  outline: 0;
+  color: white;
+  text-decoration: none;
+}
+
+
+// Facebook Log in
+
+.button-blue-facebook {
+  width: 270px;
+  background-color: #0084FF;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button span {
+  flex: 0 0 20%;
+}
+
+.button p {
+  flex: 0 0 80%;
+  display:inline;
+  margin-bottom: 0px;
+}
+

@@ -1,1 +1,13 @@
-Guide
+<h1>Guide</h1>
+
+<%= simple_form_for(@bot) do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :page_access_token %>
+  <%= f.button :submit %>
+<% end %>
+
+<p>http://localhost:3000/bots/<%= @bot.id %>/webhook</p>
+<p><%= @bot.token %></p>
+
+

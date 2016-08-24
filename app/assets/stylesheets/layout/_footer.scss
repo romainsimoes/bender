@@ -1,1 +1,40 @@
-// Your footer style
+
+
+
+
+
+.footer-links {
+  line-height: 30px;
+  text-align: center;
+  margin-top: 5vh;
+}
+
+.footer-copyright {
+  margin-top: 20px;
+  margin-bottom: 50px;
+  color: #999;
+  text-align: center;
+}
+
+.footer-link {
+  padding-bottom: 5px;
+  border-style: none;
+  border-color: #d9d9d9;
+  border-bottom-width: 1px;
+  -webkit-transition: border 200ms ease;
+  transition: border 200ms ease;
+  color: #4d4d4d;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  color: #FF6384;
+}
+
+a {
+  color: #FF6384;
+  text-decoration: none;
+}
+
+
+

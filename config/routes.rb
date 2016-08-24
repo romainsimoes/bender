@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: 'pages#home'
 
   resources :bots do
@@ -7,6 +8,7 @@ Rails.application.routes.draw do
     member do
       get 'analytic', to: 'bots#analytic'
       get 'webhook', to: "bots#webhook_verification"
+      get 'webhook_subscribe', to: "bots#webhook_subscribe"
       post 'webhook', to: 'bots#webhook'
       get 'guide', to: 'bots#guide'
     end
@@ -15,4 +17,5 @@ Rails.application.routes.draw do
   devise_for :users,
     controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  #
 end
