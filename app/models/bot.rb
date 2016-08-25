@@ -11,10 +11,10 @@ class Bot < ApplicationRecord
 
   def match_intent_pattern(entities)
     self.patterns.each do |pattern|
-      answer_intent = pattern.intent_match(entities)
-      return answer_intent if answer_intent
+      answer = pattern.match(message_text)
+      return { answer: answer, pattern: pattern.id }  if answer
     end
-    nil
+    { answer: nil, pattern: nil }
   end
 
   def match_text_pattern(message_text)

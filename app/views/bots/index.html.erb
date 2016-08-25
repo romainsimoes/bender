@@ -1,43 +1,81 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Bots</h1>
+<div class="container-bot">
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Token</th>
-      <th>Enable</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="container">
+<h3> Your Chatbots</h3>
 
-  <tbody>
-    <% @bots.each do |bot| %>
-      <tr>
-      <div class="grey-card">
-        <td><%= bot.name %></td>
-        <td><%= bot.token %></td>
-        <td><%= bot.enable %></td>
-        <td><%= link_to 'Show', bot %></td>
-        <td><%= link_to 'Edit', edit_bot_path(bot) %></td>
-        <td><%= link_to 'Destroy', bot, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </div>
-        <%= link_to 'Edit Your Bots', edit_bot_path(bot), class:" button button-red"  %>
-        <%= link_to 'See Analytics', analytic_bot_path(bot), class:" button button-green"  %>
+  <div class="row">
+
+    <div class="col-md-4 col-sm-6">
+    <div class="robot-card">
+    <%= link_to new_bot_path do %>
+   <span class="fa fa-plus-circle fa-5x text-center"></span>
+  <% end %>
 
 
+       </div>
+
+    </div>
+
+      <% @bots.each do |bot| %>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="robot-card">
 
 
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+         <p> <%= bot.name %></p>
+         <%= image_tag "robot.png" %>
+         <%= bot.token %>
+         <br>
+         <br>
 
-<br>
-<center>
-<%= link_to 'Add a bot', new_bot_path, class:"button button-blue button-square"  %>
-</center>
+
+             <br>
+
+
+
+        <input class="toggle-one" checked type="checkbox"> <br><br>
+        <%= link_to edit_bot_path(bot) do %>
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        <% end %>
+        <%= link_to analytic_bot_path(bot)  do %>
+         <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+         <% end %>
+         <%= link_to bot_path(bot), :method => "delete", data: { confirm: 'Are you sure?' } do %>
+         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+         <% end %>
+
+
+        </div>
+
+
+
+       </div>
+
+     <% end %>
+
+
+ </div>
+</div>
+</div>
+
+
+
+
+
+
+
+<% content_for :js do %>
+<script>
+  $(function() {
+    $('.toggle-one').bootstrapToggle();
+  })
+</script>
+<% end %>
+
+
+
 
 
 
