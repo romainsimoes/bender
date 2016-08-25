@@ -1,63 +1,44 @@
-<p id="notice"><%= notice %></p>
-
 <div class="container-bot">
 
-<div class="container">
-<h3> Your Chatbots</h3>
+  <div class="container">
+    <h3> Your Chatbots</h3>
 
-  <div class="row">
+    <div class="row">
 
-    <div class="col-md-4 col-sm-6">
-    <div class="robot-card">
-    <%= link_to new_bot_path do %>
-   <span class="fa fa-plus-circle fa-5x text-center"></span>
-  <% end %>
+      <div class="col-md-4 col-sm-6">
+        <div class="robot-card">
+          <%= link_to new_bot_path do %>
+          <span class="fa fa-plus-circle fa-5x text-center "></span>
+          <% end %>
 
+        </div>
 
-       </div>
-
-    </div>
+      </div>
 
       <% @bots.each do |bot| %>
 
       <div class="col-md-4 col-sm-6">
         <div class="robot-card">
-
-
          <p> <%= bot.name %></p>
          <%= image_tag "robot.png" %>
-         <%= bot.token %>
-         <br>
-         <br>
-
-
-             <br>
-
-
-
-        <input class="toggle-one" checked type="checkbox"> <br><br>
-        <%= link_to edit_bot_path(bot) do %>
-        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-        <% end %>
-        <%= link_to analytic_bot_path(bot)  do %>
+         <%= bot.token %><br><br><br>
+         <input class="toggle-one" checked type="checkbox"> <br><br>
+         <%= link_to edit_bot_path(bot) do %>
+         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+         <% end %>
+         <%= link_to bot_histories_path(bot)  do %>
          <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
          <% end %>
          <%= link_to bot_path(bot), :method => "delete", data: { confirm: 'Are you sure?' } do %>
          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
          <% end %>
-
-
-        </div>
-
-
-
        </div>
+     </div>
 
      <% end %>
 
-
+   </div>
  </div>
-</div>
 </div>
 
 
