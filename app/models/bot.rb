@@ -11,9 +11,9 @@ class Bot < ApplicationRecord
   def match_pattern(message_text)
     self.patterns.each do |pattern|
       answer = pattern.match(message_text)
-      return answer if answer
+      return { answer: answer, pattern: pattern.id }  if answer
     end
-    nil
+    { answer: nil, pattern: nil }
   end
 
 end
