@@ -4,7 +4,7 @@ class WitApiService
     data = RestClient.post(
         "https://api.wit.ai/message?v=20160825&q=#{text}",
         {},
-        { 'Authorization' => "Bearer XGUQVTLXDIWUB4CADG2OE22T24FYNWQF",
+        { 'Authorization' => "Bearer #{ENV['WIT_KEY']}",
           content_type: 'application/json',
          }
       )
@@ -25,7 +25,7 @@ class WitApiService
     data = RestClient.post(
         "https://api.wit.ai/message?v=20160825&q=#{text}",
         {},
-        { 'Authorization' => "Bearer XGUQVTLXDIWUB4CADG2OE22T24FYNWQF",
+        { 'Authorization' => "Bearer #{ENV['WIT_KEY']}",
           content_type: 'application/json',
          }
       )
