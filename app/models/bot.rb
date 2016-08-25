@@ -5,17 +5,11 @@ class Bot < ApplicationRecord
   belongs_to :user
   has_many :patterns
   has_many :histories
+  has_many :recoveries
 
   validates :name, presence: true
 
 
-  def match_intent_pattern(entities)
-    self.patterns.each do |pattern|
-      answer = pattern.match(message_text)
-      return { answer: answer, pattern: pattern.id }  if answer
-    end
-    { answer: nil, pattern: nil }
-  end
 
   def match_text_pattern(message_text)
     self.patterns.each do |pattern|
@@ -24,4 +18,14 @@ class Bot < ApplicationRecord
     end
     nil
   end
+
+
+  def match_intent_pattern(entities)
+    self.patterns.each do |pattern|
+      answer_intent = pattern.intent_match(entities)
+      return answer_intent if answer_intent
+    end
+    nil
+  end
+
 end
