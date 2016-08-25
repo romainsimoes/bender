@@ -23,6 +23,7 @@ module Bender
     # -- all .rb files in that directory are automatically loaded.
     config.active_job.queue_adapter = :sidekiq
     config.autoload_paths << Rails.root.join('lib/services')
+    config.eager_load_paths << Rails.root.join('lib/services')
 
   end
 end
