@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20160824161244) do
     t.datetime "updated_at",                        null: false
     t.integer  "user_id"
     t.string   "page_access_token"
+    t.json     "info"
     t.index ["user_id"], name: "index_bots_on_user_id", using: :btree
   end
 

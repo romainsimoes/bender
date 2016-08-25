@@ -1,5 +1,3 @@
-require 'rest-client'
-
 class FacebookRequestService
 
   def self.subscribe(page_token)
