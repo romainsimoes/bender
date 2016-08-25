@@ -7,8 +7,7 @@
 
       <div class="grey-card">
         <%= render 'form', bot: @bot %>
-        <%= link_to 'Bot History ', bot_histories_path(@bot), class:" btn btn-primary"  %>
-
+        <%= link_to 'Bot History ', bot_histories_path(@bot), class:" btn btn-success"  %>
       </div>
     </div>
 
@@ -49,5 +48,17 @@
       </div>
 
     </div>
+
+<div class="col-md-4 ">
+
+      <h2>Set Up Tutorial </h2>
+
+      <div class="grey-card">
+        <%= link_to 'See our Set up Tutorial', guide_bot_path(@bot), class:" btn btn-primary"  %>
+      </div>
+    </div>
+
+
+
   </div>
 

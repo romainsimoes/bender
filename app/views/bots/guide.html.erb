@@ -1,3 +1,8 @@
+<div class="container">
+<div class="row padded">
+    <div class="col-md-4 col-md-offset-4">
+
+
 <h1>Guide</h1>
 
 <%= simple_form_for(@bot) do |f| %>
@@ -7,7 +12,13 @@
   <%= f.button :submit %>
 <% end %>
 
-<p>http://localhost:3000/bots/<%= @bot.id %>/webhook</p>
+<p>http://pand-bot.herokuapp/bots/<%= @bot.id %>/webhook</p>
 <p><%= @bot.token %></p>
+
+
+
+    </div>
+  </div>
+</div>
 
 
