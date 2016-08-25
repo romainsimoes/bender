@@ -8,12 +8,20 @@ class Bot < ApplicationRecord
 
   validates :name, presence: true
 
-  def match_pattern(message_text)
+
+  def match_intent_pattern(entities)
     self.patterns.each do |pattern|
-      answer = pattern.match(message_text)
-      return answer if answer
+      answer_intent = pattern.intent_match(entities)
+      return answer_intent if answer_intent
     end
     nil
   end
 
+  def match_text_pattern(message_text)
+    self.patterns.each do |pattern|
+      answer = pattern.simple_match(message_text)
+      return answer if answer
+    end
+    nil
+  end
 end

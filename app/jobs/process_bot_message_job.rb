@@ -1,18 +1,27 @@
 class ProcessBotMessageJob < ApplicationJob
   queue_as :default
 
+
   def perform(message_sender_id, message_text, bot)
 
-    # 1 utiliser bot + message pour essayer de trouver la réponse
-    message = bot.match_pattern(message_text)
 
-    unless message
-      message = "default message"
+    entities = WitApiService.get_entities(message_text)
+
+    answer_intent = bot.match_intent_pattern(entities) if entities
+
+    if answer_intent
+      answer = answer_intent[:answer]
+      intent = answer_intent[:intent]
     end
 
-    # 2 si il y a une réponse envoyer la réponse
-    FacebookRequestService.send_message(message_sender_id, message, bot.page_access_token)
+    answer = bot.match_text_pattern(message_text) unless answer
+
+    answer = "J'ai rien compris batard" unless answer
+
+    FacebookRequestService.send_message(message_sender_id, answer, bot.page_access_token)
     # 3 enregistrer dans history
 
   end
+
 end
+
