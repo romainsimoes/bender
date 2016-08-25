@@ -11,6 +11,8 @@
     <!-- Different navigation if login or not -->
     <% if user_signed_in? %>
 
+    <%= link_to  "My Bots", bots_path, class: "navbar-wagon-item navbar-wagon-link"  %>
+
       <!-- Profile picture and dropdown -->
       <div class="navbar-wagon-item">
         <div class="dropdown">
@@ -27,12 +29,7 @@
             </li>
             <li>
               <%= link_to bots_path do %>
-                <i class="fa fa-user"></i> <%= t(".profile", default: "Profile") %>
-              <% end %>
-            </li>
-            <li>
-              <%= link_to "#" do %>
-                <i class="fa fa-home"></i>  <%= t(".profile", default: "Home") %>
+                <i class="fa fa-user"></i> <%= t(".profile", default: "My Bots") %>
               <% end %>
             </li>
             <li>
@@ -49,7 +46,7 @@
     <% else %>
 
       <!-- Login text link -->
-      <%= link_to t(".sign_in", default: "Login"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-link" %>
+      <%= link_to "Sign up / Login ",(omniauth_authorize_path('user', 'facebook')), class: "navbar-wagon-item navbar-wagon-link" %>
 
     <% end %>
 
