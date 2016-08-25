@@ -16,8 +16,8 @@ skip_after_action :verify_authorized
 
     def defaultmessage
       @defaultmessage = 0
-      @histories.each do | n |
-        if n.answer == "default message"
+      @histories.each do | history |
+        if history.pattern.nil?
           @defaultmessage += 1
         end
       end

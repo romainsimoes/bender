@@ -29,7 +29,7 @@
          <%= link_to bot_histories_path(bot)  do %>
          <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
          <% end %>
-         <%= link_to bot_path(bot), :method => "delete", data: { confirm: 'Are you sure?' } do %>
+         <%= link_to bot_path(bot), method: "delete", data: { confirm: 'Are you sure?' } do %>
          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
          <% end %>
        </div>

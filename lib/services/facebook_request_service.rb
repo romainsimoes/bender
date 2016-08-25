@@ -55,7 +55,7 @@ class FacebookRequestService
     end
   end
 
-  def self.quick_replies(recipient_id, page_token)
+  def self.quick_replies(recipient_id, message, page_token)
     message_data = {
       recipient:{
         id: recipient_id

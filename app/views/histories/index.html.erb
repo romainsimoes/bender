@@ -52,51 +52,6 @@
 
 
 
-
-
-<!-- LAST 5 REQUEST (KEEP FOR ANALYTICS)
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <div class="table-responsive">
-      <table class="table">
-        <h3>Last 5 Requests</h3>
-        <thead>
-          <tr>
-            <b>
-              <th>Questions</th>
-              <th>Answers</th>
-              <th>Sent at</th>
-              <th>Date</th>
-              <th colspan="4"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% n = @histories.size %>
-            <% ((n-5)..(n-1)).each do |i| %>
-            <tr>
-              <td><%= @histories[i].question %></td>
-              <td>
-                <% if @histories[i].pattern_id ==  nil %>
-                <p>Default Message</p>
-                <% else %>
-                <p><%= @histories[i].answer[0,15] %> ...</p>
-                <% end %>
-              </td>
-              <td><%= @histories[i].created_at.strftime("%T") %></td>
-              <td><%= @histories[i].created_at.strftime("%D") %></td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </table>
-    </div>
-  </div>
-</div> -->
-
-
-
-
-
 <% content_for :js do %>
 <script>
 var ctx = document.getElementById("myChartPie");

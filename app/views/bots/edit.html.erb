@@ -15,9 +15,10 @@
 
     <div class="col-md-4 ">
 
+
      <h2>Add Patern</h2>
-      <%= simple_form_for [@bot, @pattern] do
-        |f| %>
+      <%= simple_form_for [@bot, @pattern] do |f| %>
+
 
         <%= f.error_notification %>
         <%= f.input :trigger %>
