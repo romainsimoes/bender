@@ -23,10 +23,29 @@
   margin-bottom: 50px;
   border:2px solid #E6E5E4;
   flex: display;
+  text-align: center;
+}
+
+.robot-card p {
+  bottom: 20%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 20px;
 
 }
 
 .container-bot .container  {
 width: 930px;
 }
+
+
+.toggle-one {
+  bottom: 5%;
+  left: 0;
+  right: 0;
+}
+
+
 
