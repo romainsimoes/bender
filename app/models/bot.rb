@@ -3,7 +3,7 @@ class Bot < ApplicationRecord
   has_secure_token
 
   belongs_to :user
-  has_many :patterns
+  has_many :patterns, dependent: :destroy
   has_many :histories
 
   validates :name, presence: true
