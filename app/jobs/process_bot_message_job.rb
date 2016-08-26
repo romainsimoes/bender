@@ -9,6 +9,8 @@ class ProcessBotMessageJob < ApplicationJob
     starting_step(message_sender_id, message_text, bot) if @session_retreiver.step == 'start'
 
     case @intent
+    when "stop_all"
+      @session_retreiver.destroy
     when "wit_opening_times"
       booking_message = "Souhaitez-vous reserver un RDV ?"
       FacebookRequestService.quick_replies(message_sender_id, booking_message, bot.page_access_token)
@@ -64,7 +66,12 @@ class ProcessBotMessageJob < ApplicationJob
       @intent = answer_intent[:intent]
     end
 
-    answer = bot.match_text_pattern(message_text) unless answer
+    answer_pattern = bot.match_text_pattern(message_text) unless answer
+    if answer_pattern
+      answer = answer_pattern[:answer]
+      pattern_id = answer_pattern[:pattern_id]
+    end
+
     answer = "J'ai rien compris batard" unless answer
 
     FacebookRequestService.send_message(message_sender_id, answer, bot.page_access_token)

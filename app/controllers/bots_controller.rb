@@ -13,13 +13,14 @@ class BotsController < ApplicationController
   def webhook_verification
     @bot = Bot.find(params[:id])
     if params['hub.mode'] == 'subscribe' && params['hub.verify_token'] == @bot.token
-      render json: params['hub.challenge'], status: :ok
+      render json: params['hub.challenge'], status: 200
     else
       render json: {}, status: :forbidden
     end
   end
 
   def webhook
+    p params
     # 0 Verify token
     # 1 - Parse message
     begin
