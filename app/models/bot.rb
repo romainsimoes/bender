@@ -7,7 +7,9 @@ class Bot < ApplicationRecord
   has_many :histories
   has_many :recoveries
 
-  validates :name, presence: true
+  validates :street, presence: true
+  validates :city, presence: true
+  validates :shop_name, presence: true
 
 
 
