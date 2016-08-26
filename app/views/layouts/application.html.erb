@@ -17,5 +17,6 @@
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <%= render 'shared/footer' %>
     <%= yield :js %>
+    <%= yield(:after_js) %>
   </body>
 </html>

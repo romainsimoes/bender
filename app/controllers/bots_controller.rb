@@ -69,6 +69,7 @@ class BotsController < ApplicationController
 
   def create
     @bot = current_user.bots.build(bot_params)
+    @bot.info = place_detail
     authorize @bot
     if @bot.save
       redirect_to bots_path, notice: 'Bot was successfully created.'
@@ -90,6 +91,31 @@ class BotsController < ApplicationController
     redirect_to bots_path, notice: 'Bot was successfully destroyed.'
   end
 
+  def geocode_parsing
+    url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{URI::escape(@bot.street)} #{URI::escape(@bot.city)}"
+    response = RestClient.get(url)
+    json = JSON.parse(response)
+    location = { lat: json["results"][0]["geometry"]["location"]["lat"], lng: json["results"][0]["geometry"]["location"]["lng"] }
+  end
+
+  def place_id_parsing(location)
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{location[:lat]},#{location[:lng]}&name=#{URI::escape(@bot.shop_name)}&key=#{ENV['GOOGLE_API_KEY']}"
+    response = RestClient.get(url)
+    json = JSON.parse(response)
+    return if json["status"] == "ZERO_RESULTS"
+    places = json["results"].select{ |n| n["name"].length == @bot.shop_name.length }
+    place = places.select{ |n| n["vicinity"].length == "#{@bot.street}, #{@bot.city}".length }
+    return place[0]["place_id"]
+  end
+
+  def place_detail
+    location = geocode_parsing
+    place_id = place_id_parsing(location)
+    url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=#{place_id}&key=#{ENV['GOOGLE_API_KEY']}"
+    response = RestClient.get(url)
+    return JSON.parse(response)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bot
@@ -99,6 +125,6 @@ class BotsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bot_params
-      params.require(:bot).permit(:name, :token, :enable, :page_access_token)
+      params.require(:bot).permit(:name, :shop_name, :street, :city, :token, :enable, :page_access_token)
     end
 end
