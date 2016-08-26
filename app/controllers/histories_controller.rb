@@ -5,6 +5,7 @@ skip_after_action :verify_authorized
   def index
     @histories =  policy_scope(History)
     defaultmessage
+    @pattern_number = History.all.where(bot: Bot.find(params[:bot_id])).group(:pattern_id).count
   end
 
   private
@@ -16,7 +17,7 @@ skip_after_action :verify_authorized
 
     def defaultmessage
       @defaultmessage = 0
-      @histories.each do | history |
+      @bot.histories.each do | history |
         if history.pattern.nil?
           @defaultmessage += 1
         end
