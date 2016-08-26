@@ -49,7 +49,7 @@
   <!-- Monthly requests-->
   <% @monthly_requests = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] %>
   <% @bot.histories.each do |history| %>
-  <% n = history.created_at.wday-1 %>
+  <% n = history.created_at.month-1 %>
   <% @monthly_requests[n]  += 1 %>
   <% end %>
 
@@ -270,7 +270,12 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 206, 86, 0.2)',
                 '#36A2EB',
                 'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                'rgba(255, 159, 64, 0.2)',
+                '#36A2EB',
+                '#36A2EB',
+                '#36A2EB',
+                '#36A2EB',
+                '#36A2EB',
             ],
             borderColor: [
                 'rgba(255,99,132,1)',
