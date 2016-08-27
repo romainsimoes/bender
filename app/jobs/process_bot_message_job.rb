@@ -37,25 +37,30 @@ class ProcessBotMessageJob < ApplicationJob
   def intent_path
     case @intent
       when "wit_stop_all"
-        @session_retreiver.destroy
+        wit_stop_all_path
       when "wit_opening_times"
         if @bot.wit_opening_times
           intent_pattern
           wit_opening_times_path
-          @return = true
           return
         end
       when 'agenda_entry'
         if @bot.wit_booking
           wit_agenda_entry_path
-          @return = true
           return
         end
       when 'wit_welcome'
-        intent_pattern
-        @return = true
-        return
+        if @bot.wit_welcome
+          intent_pattern
+          return
+        end
     end
+  end
+
+  def wit_stop_all_path
+    send_and_store_answer(@negative_message, nil)
+    @return = true
+    stepper('start')
   end
 
   def booking_boolean_step
@@ -150,11 +155,13 @@ class ProcessBotMessageJob < ApplicationJob
   def send_and_store_answer(answer, pattern_id)
     FacebookRequestService.send_message(@message_sender_id, answer, @bot.page_access_token)
     History.create(question: @message_text, answer: answer, bot_id: @bot.id, pattern_id: pattern_id)
+    @return = true
   end
 
   def send_and_store_quick_answer(answer, pattern_id)
     FacebookRequestService.quick_replies(@message_sender_id, answer, @bot.page_access_token)
     History.create(question: @message_text, answer: answer, bot_id: @bot.id, pattern_id: pattern_id)
+    @return = true
   end
 
   def no_matches
@@ -188,6 +195,8 @@ class ProcessBotMessageJob < ApplicationJob
   def session_recovering(message_sender_id)
     recovery = Recovery.where(sender_id: message_sender_id)
     if recovery.empty?
+      @session_retreiver = Recovery.new(sender_id: message_sender_id, step: "start")
+    elsif recovery.first.outdated?
       @session_retreiver = Recovery.new(sender_id: message_sender_id, step: "start")
     else
       @session_retreiver = recovery.first
