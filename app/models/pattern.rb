@@ -21,7 +21,7 @@ class Pattern < ApplicationRecord
   def intent_match(entities)
     entities.each do |intent, array|
       if (self.trigger == intent) && (array[0]['confidence'] > 0.85 )
-        return { answer: self.answer, intent: intent }
+        return self.answer
       end
     end
     nil

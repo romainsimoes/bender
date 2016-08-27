@@ -24,8 +24,8 @@ class Bot < ApplicationRecord
 
   def match_intent_pattern(entities)
     self.patterns.each do |pattern|
-      answer_intent = pattern.intent_match(entities)
-      return { answer_intent: answer_intent, pattern_id: pattern.id } if answer_intent
+      answer = pattern.intent_match(entities)
+      return { answer: answer, pattern_id: pattern.id } if answer
     end
     nil
   end

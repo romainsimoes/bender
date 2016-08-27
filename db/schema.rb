@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20160826133039) do
 
   # These are extensions that must be enabled in order to support this database
@@ -24,6 +25,9 @@ ActiveRecord::Schema.define(version: 20160826133039) do
     t.integer  "user_id"
     t.string   "page_access_token"
     t.json     "info"
+    t.boolean  "wit_booking",       default: false
+    t.boolean  "wit_opening_times", default: false
+    t.boolean  "wit_welcome",       default: false
     t.string   "street"
     t.string   "city"
     t.string   "shop_name"

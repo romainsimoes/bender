@@ -16,15 +16,15 @@ class FacebookRequestService
           text: message_text
         }
       }
-    begin
-      RestClient.post(
-          "https://graph.facebook.com/v2.6/me/messages?access_token=#{page_token}",
-          message_data.to_json,
-          content_type: :json
-        )
-    rescue RestClient::ExceptionWithResponse => err
-      puts "\nFacebook API response from invalid request:\n#{err.response}\n\n"
-    end
+    # begin
+    RestClient.post(
+        "https://graph.facebook.com/v2.6/me/messages?access_token=#{page_token}",
+        message_data.to_json,
+        content_type: :json
+      )
+    # rescue RestClient::ExceptionWithResponse => err
+    #   puts "\nFacebook API response from invalid request:\n#{err.response}\n\n"
+    # end
   end
 
   def self.get_profile(recipient_id)
