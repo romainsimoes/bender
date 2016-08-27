@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160825152137) do
+ActiveRecord::Schema.define(version: 20160826165443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,9 @@ ActiveRecord::Schema.define(version: 20160825152137) do
     t.integer  "user_id"
     t.string   "page_access_token"
     t.json     "info"
+    t.boolean  "wit_booking",       default: false
+    t.boolean  "wit_opening_times", default: false
+    t.boolean  "wit_welcome",       default: false
     t.index ["user_id"], name: "index_bots_on_user_id", using: :btree
   end
 

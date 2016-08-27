@@ -2,7 +2,7 @@ class WitApiService
 
   def self.get_entities(text)
     data = RestClient.post(
-        "https://api.wit.ai/message?v=20160825&q=#{text}",
+        "https://api.wit.ai/message?v=20160825&q=#{URI::escape(text)}",
         {},
         { 'Authorization' => "Bearer #{ENV['WIT_KEY']}",
           content_type: 'application/json',
@@ -23,7 +23,7 @@ class WitApiService
 
   def self.get_date(text)
     data = RestClient.post(
-        "https://api.wit.ai/message?v=20160825&q=#{text}",
+        "https://api.wit.ai/message?v=20160825&q=#{URI::escape(text)}",
         {},
         { 'Authorization' => "Bearer #{ENV['WIT_KEY']}",
           content_type: 'application/json',

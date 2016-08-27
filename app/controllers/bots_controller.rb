@@ -23,16 +23,16 @@ class BotsController < ApplicationController
     p params
     # 0 Verify token
     # 1 - Parse message
-    begin
+    p 'TEST'
+    if params['entry'][0]['messaging'][0]['message']
       message_text = params['entry'][0]['messaging'][0]['message']['text']
       message_sender_id = params['entry'][0]['messaging'][0]['sender']['id']
       p params
+      p 'TEST IN IF'
       if message_text && message_sender_id
         # 2 - Init Job
         ProcessBotMessageJob.perform_later(message_sender_id, message_text, @bot)
       end
-    rescue
-      p 'Error parsing'
     end
 
     # 3 - 200
