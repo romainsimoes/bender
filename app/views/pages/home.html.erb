@@ -7,11 +7,17 @@
         <div class="banner-title">
           <%= image_tag "panda-logo-name-black.png" %>
           <p>Create your messenger bot. Quickily. Easily.</p>
-
-          <%= link_to omniauth_authorize_path('user', 'facebook'), class:"button button-blue-facebook" do %>
-          <span class="fa fa-facebook-square fa-2x"></span>
-          <p>Get Started for Free</p>
-        <% end %>
+          <% if current_user %>
+              <%= link_to bots_path, class:"button button-blue-facebook" do %>
+                <span class="fa fa-facebook-square fa-2x"></span>
+                <p>Get Started for Free</p>
+              <% end %>
+            <% else %>
+              <%= link_to omniauth_authorize_path('user', 'facebook'), class:"button button-blue-facebook" do %>
+                <span class="fa fa-facebook-square fa-2x"></span>
+                <p>Get Started for Free</p>
+              <% end %>
+          <% end %>
         </div>
       </div>
 
