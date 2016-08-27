@@ -1,3 +1,63 @@
+<!--**************************BACKEND RUBY*************************************-->
+
+<!-- Extract an array [Pattern, Number of Time ]-->
+<% @pattern_array = [] %>
+<% @pattern_number.each do | key, value | %>
+  <% if  key != nil  %>
+    <% x = Pattern.find(key).trigger[0,14].capitalize%>
+    <% y = value %>
+  <% else %>
+    <% x = "Default Pattern" %>
+    <% y = value %>
+  <% end %>
+  <% @pattern_array  << [x,y] %>
+<% end %>
+
+<!-- Generate 2 array for graph  [Label Pattern] & [Data pattern]-->
+<% @label_pattern = [] %>
+<% @data_pattern = [] %>
+  <% for n in (0..@pattern_array.length - 1) do %>
+  <% @label_pattern << @pattern_array[n][0] %>
+  <% @data_pattern << @pattern_array[n][1] %>
+  <% end %>
+
+<!-- Extract an array whith most used Patterns [Max Data Pattern] & [Max Data Pattern]-->
+<% @max_pattern_data = [] %>
+<% @max_pattern_label = [] %>
+  <% if @pattern_array.length >= 4 %>
+    <% for n in (0..3) do %>
+    <% @max_pattern_data << @data_pattern.zip(@label_pattern).max(4)[n][0] %>
+    <% @max_pattern_label << @data_pattern.zip(@label_pattern).max(4)[n][1] %>
+    <% end %>
+  <% else %>
+    <% for n in (0..@pattern_array.length - 1) do %>
+    <% @max_pattern_data << @data_pattern.zip(@label_pattern).max(@pattern_array.length)[n][0] %>
+    <% @max_pattern_label << @data_pattern.zip(@label_pattern).max(@pattern_array.length)[n][1] %>
+    <% end %>
+  <% end %>
+
+
+
+<!-- Daily requests-->
+  <% @daily_requests = [0, 0, 0, 0, 0, 0, 0] %>
+  <% @bot.histories.each do |history| %>
+  <% n = history.created_at.wday-1 %>
+  <% @daily_requests[n]  += 1 %>
+  <% end %>
+
+
+  <!-- Monthly requests-->
+  <% @monthly_requests = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] %>
+  <% @bot.histories.each do |history| %>
+  <% n = history.created_at.month-1 %>
+  <% @monthly_requests[n]  += 1 %>
+  <% end %>
+
+
+
+  <!--**************************FRONTEND*************************************-->
+
+
 <p id="notice"><%= notice %></p>
 
 <h3 class="text-center"><%= @bot.name %> histories </h3>
@@ -7,7 +67,7 @@
   <div class="col-md-8 col-md-offset-2">
     <div class="table-responsive">
       <table class="table">
-        <h3> Full Historic :  <%= @histories.size %> questions</h3>
+        <h3> Full Historic :  <%= @bot.histories.size %> questions</h3>
         <thead>
           <tr>
             <b>
@@ -19,7 +79,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @histories.each do | history | %>
+            <% @bot.histories.each do | history | %>
             <tr>
               <td><%= history.question %></td>
               <td>
@@ -38,30 +98,63 @@
       </table>
     </div>
   </div>
+</div>
 
-
-    <div class="col-md-8 col-md-offset-2">
-    <canvas  id="myChartPie" width="100" height="100"></canvas>
-    </div>
-
-
-
+<!-- Generate Graph : See Script Below-->
+<div class="col-md-8 col-md-offset-4">
+  <canvas  id="DefaultMessageChart" width="100" height="100"></canvas>
+  <canvas  id="PatternsCharts" width="100" height="100"></canvas>
+   <canvas  id="DailyRequest" width="100" height="100"></canvas>
+    <canvas  id="MonthlyRequests" width="100" height="100"></canvas>
 </div>
 
 
 
 
+<div class="row padded">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="table-responsive">
+      <table class="table">
+        <h3> You Have   <%= @pattern_array.length %> defined patterns</h3>
+        <thead>
+          <tr>
+            <b>
+              <th>Pattern</th>
+              <th>Solicitations</th>
+              <th colspan="4"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @pattern_array.each do | pattern | %>
+            <tr>
+              <td><%= pattern[0] %></td>
+              <td><%= pattern[1] %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </table>
+    </div>
+  </div>
+</div>
 
+
+
+<!-- Generate Graph : See Script Below-->
+
+
+
+<!--**************************BACKEND JAVA CHART*************************************-->
 <% content_for :js do %>
 <script>
-var ctx = document.getElementById("myChartPie");
+var ctx = document.getElementById("DefaultMessageChart");
 var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
         labels: ["Pattern Answers", "Default Answers"],
         datasets: [{
             label: '# of Votes',
-            data: [<%= @histories.size - @defaultmessage %>, <%= @defaultmessage %>],
+            data: [<%= @bot.histories.size - @defaultmessage %>, <%= @defaultmessage %>],
             backgroundColor: [
                 "#FF6384",
                 "#36A2EB"
@@ -80,18 +173,138 @@ var myChart = new Chart(ctx, {
                 }
             }]
         },
-
         title: {
               display: true,
               text: 'Default Answer vs Pattern Answer'
           },
-
-
-
-
     }
-
 });
+
+var ctx = document.getElementById("PatternsCharts");
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: <%= @max_pattern_label.to_json.html_safe %>,
+        datasets: [{
+            label: '# of requests',
+            data: <%= @max_pattern_data %>,
+            backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ]
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        },
+        title: {
+              display: true,
+              text: 'Most used Patterns'
+          },
+    }
+});
+
+
+var ctx = document.getElementById("DailyRequest");
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Monday", "Tuesday","Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        datasets: [{
+            label: '# of Votes',
+            data: <%= @daily_requests %>,
+            backgroundColor: [
+                '#FF6384',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                '#FFCE56',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        },
+        title: {
+              display: true,
+              text: 'Default Answer vs Pattern Answer'
+          },
+    }
+});
+
+
+var ctx = document.getElementById("MonthlyRequests");
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["January", "February","March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
+        datasets: [{
+            label: '# of Votes',
+            data: <%= @monthly_requests %>,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                '#36A2EB',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                '#36A2EB',
+                '#36A2EB',
+                '#36A2EB',
+                '#36A2EB',
+                '#36A2EB',
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        },
+        title: {
+              display: true,
+              text: 'Default Answer vs Pattern Answer'
+          },
+    }
+});
+
+
+
+
 
 
 

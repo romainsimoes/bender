@@ -1,4 +1,42 @@
+<div class="container">
+<div class="row padded">
+    <div class="col-md-8 col-md-offset-2">
+
+
 <h1>Guide</h1>
+
+
+<h2>>1. Create a Facebook App and Page</h2>
+
+<p>
+Create a new Facebook App and Page or use existing ones. Go to the App Dashboard and under Product Settings click "Add Product" and select "Messenger."
+</p>
+<div class="tuto">
+ <%= image_tag "tutorial_1.png", width: "800" %>
+ </div>
+
+
+
+<h2>2. Setup Webhook</h2>
+
+<div class="tuto">
+ <%= image_tag "tutorial_2.png", width: "800" %>
+ </div>
+
+<p>In the Webhooks section, click "Setup Webhooks."<p>
+<br>
+
+<p>Paste this  <h5>https://localhost:3000.com//bots/<%= @bot.id %>/webhook</h5> for the URL.</p>
+<p> Paste this in the Verify Token <h5><%= @bot.token %></h5> </p> <br>
+<p>>Select message_deliveries, messages, messaging_optins, and messaging_postbacks under Subscription Fields.</p>
+
+<div class="tuto">
+ <%= image_tag "tutorial_3.png", width: "800" %>
+ </div>
+
+<h2> 3. Get a Page Access Token</h2>
+
+<p>Stick your Page Access Token below</p>
 
 <%= simple_form_for(@bot) do |f| %>
   <%= f.error_notification %>
@@ -7,7 +45,15 @@
   <%= f.button :submit %>
 <% end %>
 
-<p>http://localhost:3000/bots/<%= @bot.id %>/webhook</p>
-<p><%= @bot.token %></p>
+
+<h2>4. Subscribe the App to the Page</h2>
+
+
+
+
+
+    </div>
+  </div>
+</div>
 
 

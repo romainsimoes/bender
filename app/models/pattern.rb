@@ -1,7 +1,7 @@
 class Pattern < ApplicationRecord
 
   belongs_to :bot
-  has_many :histories
+  has_many :histories, dependent: :destroy
 
 
   def simple_match(message_text)

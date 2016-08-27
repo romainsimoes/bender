@@ -1,6 +1,6 @@
 class History < ApplicationRecord
 
   belongs_to :bot
-  belongs_to :pattern, dependent: :destroy
+  belongs_to :pattern
 
 end
