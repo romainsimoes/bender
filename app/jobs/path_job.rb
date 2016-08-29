@@ -8,9 +8,7 @@ class PathJob < ProcessBotMessageJob
 
   def self.wit_opening_times_path
     SharedJob.send_and_store_quick_answer(@@booking_message, nil)
-    if @@bot.intent.include?('agenda_entry')
-      SharedJob.stepper('booking_boolean')
-    end
+    SharedJob.stepper('booking_boolean')
   end
 
   def self.agenda_entry_path
@@ -24,6 +22,16 @@ class PathJob < ProcessBotMessageJob
 
   def self.location_path
     SharedJob.send_map
+  end
+
+  def self.wit_website_path
+    SharedJob.send_and_store_answer(@@website, nil)
+    @@return = true
+  end
+
+  def self.wit_tel_path
+    SharedJob.send_and_store_answer(@@telephone, nil)
+    @@return = true
   end
 
 end

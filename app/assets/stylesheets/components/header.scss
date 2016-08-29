@@ -1,0 +1,33 @@
+.header {
+  height: 100vh;
+}
+
+.header-gif img {
+  width: 70vh;
+}
+
+.header-text{
+  margin-top: 12%;
+  h1 {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 52px;
+  margin: 0;
+  color: black;
+  }
+  h2 {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 48px;
+  font-weight: 200;
+  margin: 0;
+  color: black;
+  }
+  h3 {
+  font-family: 'Source Sans Pro', sans-serif;
+  margin: 70px 0;
+  font-weight: 200;
+  font-size: 24px;
+  color: black;
+  }
+}
+
+
