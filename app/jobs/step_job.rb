@@ -45,6 +45,7 @@ class StepJob < ProcessBotMessageJob
           ask_for_time_step_one = "Pas de soucis pour le #{@@date[0]}/#{@@date[1]}/#{@@date[2]}, nos disponibilités ce jour-ci sont:"
           SharedJob.send_and_store_answer(ask_for_time_step_one, nil)
           SharedJob.send_and_store_answer(@@ask_for_time_step_three, nil)
+          @@return = true
         end
       end
     end

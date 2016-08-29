@@ -26,4 +26,14 @@ class PathJob < ProcessBotMessageJob
     SharedJob.send_map
   end
 
+  def self.wit_website_path
+    SharedJob.send_and_store_answer(@@website, nil)
+    @@return = true
+  end
+
+  def self.wit_tel_path
+    SharedJob.send_and_store_answer(@@telephone, nil)
+    @@return = true
+  end
+
 end

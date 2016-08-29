@@ -74,6 +74,8 @@ class ProcessBotMessageJob < ApplicationJob
     @@thanks_message = 'tout le plaisir est pour moi'
     @@ask_for_time_step_three = 'A quelle heure souhaitez-vous réserver ?'
     @@sorry_not_available = 'Désolé, nous sommes fermé à cette heure là, veuillez choisir une autre horaire'
+    @@bot.info ? @@website = @@bot.info['result']['website'] : @@website = "Désolé, je ne connais pas l'url"
+    @@bot.info ? @@telephone = @@bot.info['result']['international_phone_number'] : @@telephone = "Désolé, je ne connais pas le numéro"
   end
 
   def get_intent
