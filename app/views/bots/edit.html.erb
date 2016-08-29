@@ -1,3 +1,5 @@
+
+
 <div class="container padded">
   <div class="row">
 
@@ -5,19 +7,16 @@
 
       <h2>Bot Infos</h2>
 
-      <div class="grey-card">
+      <a class="grey-card" href="#" ></a>
         <%= render 'form', bot: @bot %>
         <%= link_to 'Bot History ', bot_histories_path(@bot), class:" btn btn-success"  %>
       </div>
-    </div>
 
 
     <div class="col-md-4 ">
 
-
      <h2>Add Patern</h2>
       <%= simple_form_for [@bot, @pattern] do |f| %>
-
 
         <%= f.error_notification %>
         <%= f.input :trigger %>
@@ -68,6 +67,6 @@
     </div>
 
 
-
+</div>
   </div>
 

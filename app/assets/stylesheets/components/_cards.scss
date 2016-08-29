@@ -14,27 +14,6 @@
 }
 
 
-.robot-card {
-  width: 275px;
-  height:225px;
-  border-radius: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50px;
-  border:2px solid #E6E5E4;
-  flex: display;
-  text-align: center;
-}
-
-.robot-card p {
-  bottom: 20%;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 20px;
-
-}
 
 .container-bot .container  {
 width: 930px;
@@ -47,10 +26,138 @@ width: 930px;
   right: 0;
 }
 
+.btn-primary {
+    color: #fff;
+    background-color: #0084FF;
+    border-color: #0084FF;
+}
+
 .scroll-small {
   overflow-y: auto;
   height: 30vh;
   overflow: scroll;
 }
+
+
+//////////////////////////////////////////////////////////
+.card {
+  width: 275px;
+  height:225px;
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+  border:2px solid #E6E5E4;
+  text-align: center;
+  position: relative;
+}
+
+.card:hover {
+  width: 275px;
+  height:225px;
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+  border:2px solid #0084FF;
+  text-align: center;
+  position: relative;
+}
+
+.card img {
+  width: 60px;
+  position: absolute;
+  top: 20px;
+  left: 105px;
+  }
+
+  .card h4 {
+    font-size: 100px;
+    position: absolute;
+    top: 18%;
+    left: 119px;
+    font-weight: 100;
+}
+
+.card h4:hover {
+    color: #0084FF;
+}
+
+  .card p {
+  display: inline;
+  }
+
+.card-user {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.card-category {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 10px;
+  text-transform: uppercase;
+  z-index: 3000;
+}
+.card-description {
+  position: absolute;
+  bottom: 10px;
+  left: 40px;
+  right: 40px;
+  z-index: 3000;
+}
+.card-description h2 {
+  font-size: 24px;
+
+}
+.card-description p {
+  font-size: 13px;
+  z-index: 3000;
+  }
+
+.card-description h5 {
+    font-size: 13px;
+    z-index: 3000;
+    position: absolute;
+    left: 35%;
+    bottom: 50px;
+}
+
+.card-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  opacity: 0;
+  left: 0;
+  width: 275px;
+  height:225px;
+  z-index:2;
+  border-radius: 20px;
+}
+
+.card-link:hover{
+
+  opacity: 0.1;
+}
+
+.card-buttons {
+z-index:3000;
+position: abolute;
+top: 0;
+bottom: 0;
+left: 0;
+}
+
+a {
+    color: #777777;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0084FF;
+    text-decoration: none;
+}
+
 
 
