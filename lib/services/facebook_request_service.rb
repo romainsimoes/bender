@@ -87,4 +87,43 @@ class FacebookRequestService
     end
   end
 
+  def self.map_template(recipient_id, bot)
+    message_data = {
+      recipient:{
+        id: recipient_id
+      },
+      message:{
+        attachment:{
+          type: :template,
+          payload:{
+            template_type: :generic,
+            elements:[
+              {
+                title: bot.shop_name,
+                image_url: "https://maps.googleapis.com/maps/api/staticmap?markers=color:red|#{bot.street}#{bot.city}&size=300x150&zoom=18&maptype=roadmap",
+                subtitle: bot.street + ", " + bot.city,
+                buttons:[
+                  {
+                    type: :web_url,
+                    url: "https://www.google.fr/maps/search/#{bot.street}, #{bot.city}",
+                    title: "Allez-y!"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+    begin
+    RestClient.post(
+        "https://graph.facebook.com/v2.6/me/messages?access_token=#{bot.page_access_token}",
+        message_data.to_json,
+        content_type: :json
+        )
+    rescue RestClient::ExceptionWithResponse => err
+      puts "\nFacebook API response from invalid request:\n#{err.response}\n\n"
+    end
+  end
+
 end

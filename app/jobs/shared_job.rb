@@ -12,6 +12,11 @@ class SharedJob < ProcessBotMessageJob
     @@return = true
   end
 
+  def self.send_map
+    FacebookRequestService.map_template(@@message_sender_id, @@bot)
+    @@return = true
+  end
+
   def self.stepper(step_request)
     @@session_retreiver.step = step_request
     @@session_retreiver.save
