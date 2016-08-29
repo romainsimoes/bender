@@ -4,8 +4,8 @@ class WitApiService
     data = RestClient.post(
         "https://api.wit.ai/message?v=20160825&q=#{URI::escape(text)}",
         {},
-        { 'Authorization' => "Bearer #{ENV['WIT_KEY']}",
-          content_type: 'application/json',
+        { Authorization: "Bearer #{ENV['WIT_KEY']}",
+          content_type: 'application/json'
          }
       )
 
