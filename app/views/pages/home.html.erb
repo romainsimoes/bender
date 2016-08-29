@@ -1,12 +1,25 @@
-
-<div class="banner">
+<div class="header">
   <div class="container">
+    <div class="nvb">
+      <div class="nvb-brand">
+        <p>logo</p>
+      </div>
+      <div class="nvb-menu">
+      <% if current_user %>
+        <%= link_to "Dasboard", bots_path, class:"rectangle rectangle-s" %>
+      <% else %>
+        <%= link_to "Dashboard", omniauth_authorize_path('user', 'facebook'), class:"rectangle rectangle-s"%>
+      <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="container" id="lead">
     <div class="row">
-      <div class="col-md-6 col-xs-12">
-
-        <div class="banner-title">
-          <%= image_tag "panda-logo-name-black.png" %>
-          <p>Create your messenger bot. Quickily. Easily.</p>
+      <div class="col-xs-12 col-md-6">
+        <div class="header-text">
+          <h1>Panda</h1>
+          <h2>Create your messenger bot. Quickily. Easily.</h2>
+          <h3>No coding skills required</h3>
           <% if current_user %>
               <%= link_to bots_path, class:"button button-blue-facebook" do %>
                 <span class="fa fa-facebook-square fa-2x"></span>
@@ -20,32 +33,11 @@
           <% end %>
         </div>
       </div>
-
-      <div class="col-md-6 col-xs-12">
-       <div class="gif">
+      <div class="col-xs-12 col-md-6">
+        <div class="header-gif hidden-xs text-center">
          <%= image_tag "image-1.gif" %>
-       </div>
-     </div>
-
-   </div>
- </div>
-</div>
-
-<div class="banner-blue">
-    <div class="col-md-8 col-xs-12">
-
+        </div>
+      </div>
     </div>
-
-    <div class="col-md-4 col-xs-12">
-      <div class="title">
-    <h1>NO PROGRAMMING</h1>
-     <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugi.</p>
-     <br>
-     <%= link_to 'Start Now !', new_user_session_path, class:"button button-light-blue" %>
-       </div>
-    </div>
-
-
-
+  </div>
 </div>
-

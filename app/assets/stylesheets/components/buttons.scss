@@ -5,7 +5,7 @@
     justify-content: space-around;
     align-items: center;
     padding: 16px;
-    margin: 0 8px;
+    margin: 0;
     color: #FFFFFF;
     background-color: #E7E9ED;
     border-radius: 8px;
@@ -71,8 +71,6 @@ a:hover {
 .button-blue-facebook {
   width: 270px;
   background-color: #0084FF;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .button span {
@@ -84,4 +82,24 @@ a:hover {
   display:inline;
   margin-bottom: 0px;
 }
+
+.rectangle {
+  padding: 10px;
+  border: 2px solid #0084FF;
+  color: #0084FF;
+  background-color: white;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+}
+
+.rectangle s {
+  font-size: 15px;
+}
+
+.rectangle:hover {
+  background-color: #0084FF;
+  color: white;
+  transition: background-color 0.5s ease;
+}
+
 
