@@ -1,8 +1,4 @@
 
-
-
-
-
 .footer-links {
   line-height: 30px;
   text-align: center;
@@ -27,14 +23,18 @@
   text-decoration: none;
 }
 
-.footer-link:hover {
-  color: #FF6384;
+.footer a {
+    color: #777777;
+    text-decoration: none;
 }
 
-.footer a {
-  color: #FF6384;
-  text-decoration: none;
+.footer a:hover {
+    color: #0084FF;
+    text-decoration: none;
 }
+
+
+
 
 
 
