@@ -91,8 +91,38 @@ For every folder (**`components`**, **`layout`**, **`pages`**, **`vendor`**), th
 
 ## Navbar template
 
-Our `layout/_navbar.scss` code works well with our home-made ERB template which you can find 
+Our `layout/_navbar.scss` code works well with our home-made ERB template which you can find
 
 - [version without login](https://github.com/lewagon/awesome-navbars/blob/master/templates/_navbar_wagon_without_login.html.erb).
 - [version with login](https://github.com/lewagon/awesome-navbars/blob/master/templates/_navbar_wagon.html.erb).
 
+
+
+ <!--  <div class="row padded">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="table-responsive">
+        <table class="table">
+          <h3> You Have   <%= @pattern_array.length %> defined patterns</h3>
+          <thead>
+            <tr>
+              <b>
+                <th>Pattern</th>
+                <th>Solicitations</th>
+                <th colspan="4"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @pattern_array.each do | pattern | %>
+              <tr>
+                <td><%= pattern[0] %></td>
+                <td><%= pattern[1] %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+ -->
