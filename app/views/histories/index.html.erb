@@ -53,90 +53,150 @@
   <% @monthly_requests[n]  += 1 %>
   <% end %>
 
+  <!-- Hourly requests-->
+  <% @hourly_requests = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] %>
+  <% @bot.histories.each do |history| %>
+  <% n = history.created_at.hour-1 %>
+  <% @hourly_requests[n]  += 1 %>
+  <% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   <!--**************************FRONTEND*************************************-->
 
 
-<p id="notice"><%= notice %></p>
-
-<h3 class="text-center"><%= @bot.name %> histories </h3>
 
 
-<div class="row padded">
-  <div class="col-md-8 col-md-offset-2">
-    <div class="table-responsive">
-      <table class="table">
-        <h3> Full Historic :  <%= @bot.histories.size %> questions</h3>
-        <thead>
-          <tr>
-            <b>
-              <th>Questions</th>
-              <th>Answers</th>
-              <th>Sent at</th>
-              <th>Date</th>
-              <th colspan="4"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @bot.histories.each do | history | %>
+  <div class="grey-background">
+
+    <h1> <%= @bot.name %> Key Figures </h1>
+
+    <div class="container">
+      <div class="row">
+       <div class="col-md-4 col-sm-6 text-center">
+        <div class="card-analytic">
+          <h2> Total Number of Requests</h2>
+          <h3> <%= @bot.histories.size %> </h3>
+        </div>
+      </div>
+
+
+      <div class="col-md-4 col-sm-6">
+        <div class="card-analytic">
+          <h2> Total Number of Patterns</h2>
+          <h3> <%= @bot.patterns.size %> </h3>
+        </div>
+      </div>
+
+
+      <div class="col-md-4 col-sm-6 ">
+        <div class="card-analytic">
+
+          <h2> Total % of Successfull Answers</h2>
+          <h3> <%=  (@bot.histories.size - @defaultmessage) * 100 / @bot.histories.size %>  </h3>
+
+          <h3> </h3>
+        </div>
+      </div>
+    </div>
+
+    <h1> Advanced Analytics </h1>
+
+    <div class="col-md-4">
+      <canvas  id="DefaultMessageChart" width="100" height="100"></canvas>
+    </div>
+
+
+    <div class="col-md-4">
+      <canvas  id="PatternsCharts" width="100" height="100"></canvas>
+    </div>
+
+    <div class="col-md-4">
+      <canvas  id="DailyRequest" width="100" height="100"></canvas>
+    </div>
+
+    <div class="col-md-4 col-md-offset-2">
+      <canvas  id="MonthlyRequests" width="100" height="100"></canvas>
+    </div>
+
+    <div class="col-md-4 ">
+      <canvas  id="HourlyRequests" width="100" height="100"></canvas>
+    </div>
+
+
+
+  </div>
+
+
+
+
+
+
+  <br><h1> Full Historic :  <%= @bot.histories.size %> questions</h1>
+
+  <div class="row ">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="table-responsive">
+        <br>
+        <table class="table">
+          <thead>
             <tr>
-              <td><%= history.question %></td>
-              <td>
-                <% if history.pattern_id ==  nil %>
-                <p>Default Message</p>
-                <% else %>
-                <p><%= history.answer[0,15] %> ...</p>
-                <% end %>
-              </td>
-              <td><%= history.created_at.strftime("%T") %></td>
-              <td><%= history.created_at.strftime("%D") %></td>
-            </tr>
-            <% end %>
-          </tbody>
+              <b>
+                <th>Questions</th>
+                <th>Answers</th>
+                <th>Sent at</th>
+                <th>Date</th>
+                <th colspan="4"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @bot.histories.each do | history | %>
+              <tr>
+                <td><%= history.question %></td>
+                <td>
+                  <% if history.pattern_id ==  nil %>
+                  <p>Default Message</p>
+                  <% else %>
+                  <p><%= history.answer[0,15] %> ...</p>
+                  <% end %>
+                </td>
+                <td><%= history.created_at.strftime("%T") %></td>
+                <td><%= history.created_at.strftime("%D") %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
         </table>
-      </table>
+      </div>
     </div>
   </div>
-</div>
-
-<!-- Generate Graph : See Script Below-->
-<div class="col-md-8 col-md-offset-4">
-  <canvas  id="DefaultMessageChart" width="100" height="100"></canvas>
-  <canvas  id="PatternsCharts" width="100" height="100"></canvas>
-   <canvas  id="DailyRequest" width="100" height="100"></canvas>
-    <canvas  id="MonthlyRequests" width="100" height="100"></canvas>
-</div>
 
 
 
 
-<div class="row padded">
-  <div class="col-md-8 col-md-offset-2">
-    <div class="table-responsive">
-      <table class="table">
-        <h3> You Have   <%= @pattern_array.length %> defined patterns</h3>
-        <thead>
-          <tr>
-            <b>
-              <th>Pattern</th>
-              <th>Solicitations</th>
-              <th colspan="4"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @pattern_array.each do | pattern | %>
-            <tr>
-              <td><%= pattern[0] %></td>
-              <td><%= pattern[1] %></td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </table>
-    </div>
-  </div>
-</div>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -216,27 +276,17 @@ var myChart = new Chart(ctx, {
 
 var ctx = document.getElementById("DailyRequest");
 var myChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'line',
     data: {
         labels: ["Monday", "Tuesday","Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         datasets: [{
-            label: '# of Votes',
+            label: '# of Request',
             data: <%= @daily_requests %>,
             backgroundColor: [
-                '#FF6384',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                '#FFCE56',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                '#ffce56'
             ],
             borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                '#ffce56'
             ],
         }]
     },
@@ -250,40 +300,28 @@ var myChart = new Chart(ctx, {
         },
         title: {
               display: true,
-              text: 'Default Answer vs Pattern Answer'
+              text: 'Daily Requests'
           },
     }
 });
+
+
+
 
 
 var ctx = document.getElementById("MonthlyRequests");
 var myChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'line',
     data: {
         labels: ["January", "February","March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
         datasets: [{
-            label: '# of Votes',
+            label: '# of Request',
             data: <%= @monthly_requests %>,
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                '#36A2EB',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                '#36A2EB',
-                '#36A2EB',
-                '#36A2EB',
-                '#36A2EB',
-                '#36A2EB',
+                '#36A2EB'
             ],
             borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                '#36A2EB'
             ],
         }]
     },
@@ -297,11 +335,43 @@ var myChart = new Chart(ctx, {
         },
         title: {
               display: true,
-              text: 'Default Answer vs Pattern Answer'
+              text: 'Requests per Month'
           },
     }
 });
 
+
+
+var ctx = document.getElementById("HourlyRequests");
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ["01h","02h", "03h", "04h", "05h", "06h", "07h", "08h", "09h", "10h", "11h", "12h", "13h", "14h", "15h", "16h", "17h", "18h", "19h", "20h", "21h", "22h", "23h", "00h"],
+        datasets: [{
+            label: '# of Request',
+            data: <%= @hourly_requests %>,
+            backgroundColor: [
+                '#FF6384'
+            ],
+            borderColor: [
+                '#FF6384'
+            ],
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        },
+        title: {
+              display: true,
+              text: 'Requests per Hour'
+          },
+    }
+});
 
 
 
