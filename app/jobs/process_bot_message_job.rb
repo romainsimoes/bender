@@ -6,6 +6,8 @@ class ProcessBotMessageJob < ApplicationJob
     session_recovering(message_sender_id)
     var_initalizer(message_sender_id, message_text, bot)
 
+    GoogleCalendarApiService.create_event
+
     get_intent
 
     step_path unless @@step == 'start'
@@ -84,14 +86,6 @@ class ProcessBotMessageJob < ApplicationJob
   end
 
   def session_recovering(message_sender_id)
-
-    a = GoogleCalendarApiService.initialize_cal
-    p '#####################################################################'
-    p a
-    p '#####################################################################'
-    b = GoogleCalendarApiService.create_event
-    p b
-    p '#####################################################################'
     recovery = Recovery.where(sender_id: message_sender_id)
     if recovery.empty?
       @@session_retreiver = Recovery.new(sender_id: message_sender_id, step: "start")

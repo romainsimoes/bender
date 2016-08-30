@@ -1,29 +1,49 @@
+require 'google/apis/calendar_v3'
+require 'google/api_client/client_secrets'
+
 class GoogleCalendarApiService
 
-  def self.initialize_cal
-    @@cal = Google::Calendar.new(:client_id     => ENV['GOOGLE_CALENDAR_CLIENT_ID'],
-        :client_secret => ENV['GOOGLE_CALENDAR_CLIENT_SECRET'],
-        :calendar      => 'romain.simoes.pro@gmail.com',
-        :redirect_url  => "urn:ietf:wg:oauth:2.0:oob" # this is what Google uses for 'applications'
-      )
+  def self.create_event(user)
+    user.refresh_token_if_expired
 
-    # p @@cal.authorize_url
-    # p "\nCopy the code that Google returned and paste it here:"
+    authorization = Google::Auth::UserRefreshCredentials.new(
+        client_id: ENV['GOOGLE_CALENDAR_CLIENT_ID'],
+        client_secret: ENV['GOOGLE_CALENDAR_CLIENT_SECRET'],
+        scope: 'https://www.googleapis.com/auth/calendar',
+        access_token: user.google_token,
+        refresh_token: user.refresh_token,
+        expires_at: user.expires_at,
+        grant_type: 'authorization_code')
 
-    #   # Pass the ONE TIME USE access code here to login and get a refresh token that you can use for access from now on.
-    #   refresh_token = @@cal.login_with_auth_code( $stdin.gets.chomp )
 
-    #   puts "\nMake sure you SAVE YOUR REFRESH TOKEN so you don't have to prompt the user to approve access again."
-    #   puts "your refresh token is:\n\t#{refresh_token}\n"
-    #   puts "Press return to continue"
-    #   $stdin.gets.chomp
-  end
+    @@event = {
+      'summary' => 'New Event Title',
+      'description' => 'The description',
+      'location' => 'Location',
+      'start' => { 'dateTime' => Chronic.parse('tomorrow 4 pm') },
+      'end' => { 'dateTime' => Chronic.parse('tomorrow 5pm') },
+      'attendees' => [ { "email" => 'bob@example.com' },
+      { "email" =>'sally@example.com' } ] }
 
-  def self.create_event
-    event = @@cal.create_event do |e|
-      e.title = 'A Cool Event'
-      e.start_time = Time.now
-      e.end_time = Time.now + (60 * 60) # seconds * min
+
+    client = Google::Apis::CalendarV3::CalendarService.new
+
+    client.key = "AIzaSyC2EggZa1BTpxMAqzR-Ratmi6TrFuoKekM"
+    #client = Google::APIClient.new
+    client.authorization = authorization
+    #service = client.discovered_api('calendar', 'v3')
+    client.list_events(user.google_email) do |res, err|
+      if err
+        puts 'coucou'
+        puts err.body
+      end
+      puts res.body
     end
+
+    # @@set_event = client.execute(:api_method => service.events.insert,
+    #                         :parameters => {'calendarId' => user.google_email, 'sendNotifications' => true},
+    #                         :body => JSON.dump(@@event),
+    #                         :headers => {'Content-Type' => 'application/json'})
   end
+
 end

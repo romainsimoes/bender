@@ -32,6 +32,10 @@
         <%= f.text_area(:answer, value: @opening_and_closing)%>
         <%= f.button :submit %>
         <% end %>
+
+
+      <%= link_to "BOOKING", omniauth_authorize_path('user', 'google_oauth2'), class:"rectangle rectangle-s"%>
+
       </div>
 
       <div class="col-md-4 ">

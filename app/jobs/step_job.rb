@@ -76,7 +76,6 @@ class StepJob < ProcessBotMessageJob
       date_json_format = date_matches[3].gsub(/:/, '').to_i
       opening_and_closing.each do |a|
         if (a['open']['time'].to_i < date_json_format) && (a['close']['time'].to_i > date_json_format)
-          p 'YAHA'
           return true
         end
       end

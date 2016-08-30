@@ -103,7 +103,7 @@ class BotsController < ApplicationController
 
     def get_opening_times
       @opening_and_closing = ''
-      if @bot.info
+      if @bot.info['status'] != "INVALID_REQUEST"
         @bot.info['result']['opening_hours']['weekday_text'].each do |day|
           @opening_and_closing += "#{day}\n"
         end
