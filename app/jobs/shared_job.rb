@@ -17,6 +17,11 @@ class SharedJob < ProcessBotMessageJob
     @@return = true
   end
 
+  def self.send_item_template
+    FacebookRequestService.item_template(@@message_sender_id, @@bot)
+    @@return = true
+  end
+
   def self.stepper(step_request)
     @@session_retreiver.step = step_request
     @@session_retreiver.save
@@ -25,6 +30,11 @@ class SharedJob < ProcessBotMessageJob
   def self.date_parser(date_to_format)
     date_matches = date_to_format.scan(/(\d{2})-(\d{2})-(\d{2})T(\d{2}:\d{2})/)
     date_matches.first
+  end
+
+  def self.make_an_order
+    FacebookRequestService.item_template(@@message_sender_id, @@bot)
+    @@return = true
   end
 
 end
