@@ -1,4 +1,13 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  def google_oauth2
+    user = User.find_for_google_oauth2(request.env['omniauth.auth'])
+    if user
+      redirect_to bots_path, notice: 'Compte google ajouté avec succès'
+    else
+      redirect_to bots_path, notice: "Error."
+    end
+  end
+
   def facebook
     user = User.find_for_facebook_oauth(request.env['omniauth.auth'])
 
