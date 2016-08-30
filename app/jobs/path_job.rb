@@ -26,4 +26,10 @@ class PathJob < ProcessBotMessageJob
     SharedJob.send_map
   end
 
+  def self.wit_order_path
+    SharedJob.send_and_store_answer(@@make_an_order_message, nil)
+    SharedJob.send_item_template
+    SharedJob.stepper('ordering')
+  end
+
 end

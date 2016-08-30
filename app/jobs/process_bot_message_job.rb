@@ -74,6 +74,7 @@ class ProcessBotMessageJob < ApplicationJob
     @@thanks_message = 'tout le plaisir est pour moi'
     @@ask_for_time_step_three = 'A quelle heure souhaitez-vous réserver ?'
     @@sorry_not_available = 'Désolé, nous sommes fermé à cette heure là, veuillez choisir une autre horaire'
+    @@make_an_order_message = "Que voulez-vous commandez ?"
   end
 
   def get_intent
