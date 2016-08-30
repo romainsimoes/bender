@@ -40,3 +40,4 @@ gem 'rails_admin', '>= 1.0.0.rc'
 gem "rails_admin_pundit", :github => "Samy-Amar/rails_admin_pundit"
 gem 'chart-js-rails'
 gem 'chartjs-ror'
+gem 'google_calendar'

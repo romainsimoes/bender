@@ -14,38 +14,40 @@ class StepJob < ProcessBotMessageJob
 
   def self.date_asked_step
     entities = WitApiService.get_date(@@message_text)
-    if entities.key?('datetime')
-      if entities['datetime'][0]['value'] && (entities['datetime'][0]['confidence'] > 0.9)
-        @@date ||= nil
-        booking_request = entities['datetime'][0]['value']
-        date_matches = SharedJob.date_parser(booking_request)
-        if date_matches[3] != '00:00'
-          if @@date
-            if match_request_with_opening_times?(date_matches)
-              validation_message = "C'est réservé pour le #{@@date} à #{date_matches[3]}"
-              SharedJob.send_and_store_answer(validation_message, nil)
-              SharedJob.send_and_store_answer(@@ask_what_next_message, nil)
-              SharedJob.stepper('what_next')
+    unless entities.empty?
+      if entities.key?('datetime')
+        if entities['datetime'][0]['value'] && (entities['datetime'][0]['confidence'] > 0.9)
+          @@date ||= nil
+          booking_request = entities['datetime'][0]['value']
+          date_matches = SharedJob.date_parser(booking_request)
+          if date_matches[3] != '00:00'
+            if @@date
+              if match_request_with_opening_times?(date_matches)
+                validation_message = "C'est réservé pour le #{@@date} à #{date_matches[3]}"
+                SharedJob.send_and_store_answer(validation_message, nil)
+                SharedJob.send_and_store_answer(@@ask_what_next_message, nil)
+                SharedJob.stepper('what_next')
+              else
+                SharedJob.send_and_store_answer(@@sorry_not_available, nil)
+              end
             else
-              SharedJob.send_and_store_answer(@@sorry_not_available, nil)
+              if match_request_with_opening_times?(date_matches)
+                validation_message = "C'est réservé pour le #{date_matches[2]}/#{date_matches[1]}/#{date_matches[0]} à #{date_matches[3]}"
+                SharedJob.send_and_store_answer(validation_message, nil)
+                SharedJob.send_and_store_answer(@@ask_what_next_message, nil)
+                SharedJob.stepper('what_next')
+              else
+                SharedJob.send_and_store_answer(@@sorry_not_available, nil)
+              end
             end
+            @@return = true
           else
-            if match_request_with_opening_times?(date_matches)
-              validation_message = "C'est réservé pour le #{date_matches[2]}/#{date_matches[1]}/#{date_matches[0]} à #{date_matches[3]}"
-              SharedJob.send_and_store_answer(validation_message, nil)
-              SharedJob.send_and_store_answer(@@ask_what_next_message, nil)
-              SharedJob.stepper('what_next')
-            else
-              SharedJob.send_and_store_answer(@@sorry_not_available, nil)
-            end
+            @@date = [date_matches[2], date_matches[1], date_matches[0]]
+            ask_for_time_step_one = "Pas de soucis pour le #{@@date[0]}/#{@@date[1]}/#{@@date[2]}, nos disponibilités ce jour-ci sont:"
+            SharedJob.send_and_store_answer(ask_for_time_step_one, nil)
+            SharedJob.send_and_store_answer(@@ask_for_time_step_three, nil)
+            @@return = true
           end
-          @@return = true
-        else
-          @@date = [date_matches[2], date_matches[1], date_matches[0]]
-          ask_for_time_step_one = "Pas de soucis pour le #{@@date[0]}/#{@@date[1]}/#{@@date[2]}, nos disponibilités ce jour-ci sont:"
-          SharedJob.send_and_store_answer(ask_for_time_step_one, nil)
-          SharedJob.send_and_store_answer(@@ask_for_time_step_three, nil)
-          @@return = true
         end
       end
     end
@@ -84,7 +86,11 @@ class StepJob < ProcessBotMessageJob
     end
   end
 
-  def self.match_request_with_availabities(date_matches)
+  def self.match_request_with_availabities?(date_matches)
+  end
+
+  def self.create_event
+
   end
 
   def self.what_next_step
