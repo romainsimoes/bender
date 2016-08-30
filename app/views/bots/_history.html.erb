@@ -1,0 +1,39 @@
+<div class="row white-background">
+
+    <div class="col-md-9 col-md-offset-1">
+    <h1> Full Historic :  <%= @bot.histories.size %> questions</h1>
+      <div class="table-responsive">
+
+        <br>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Questions</th>
+              <th>Answers</th>
+              <th>Sent at</th>
+              <th>Date</th>
+              <th colspan="4"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @bot.histories.each do | history | %>
+            <tr>
+              <td><%= history.question %></td>
+              <td>
+                <% if history.pattern_id ==  nil %>
+                <p>Default Message</p>
+                <% else %>
+                <p><%= history.answer[0,15] %> ...</p>
+                <% end %>
+              </td>
+              <td><%= history.created_at.strftime("%T") %></td>
+              <td><%= history.created_at.strftime("%D") %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>

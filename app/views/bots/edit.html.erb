@@ -1,72 +1,29 @@
+<div class="row ">
 
+  <!-- Nav tabs -->
+  <div class="col-md-2 column col-sm-2 col-xs-2">
+    <ul class="nav nav-stacked nav-pills" role="tablist">
+      <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><%= @bot.name.capitalize %></a></li>
+      <li role="presentation"><a href="#pattern" aria-controls="pattern" role="tab" data-toggle="tab">Patterns</a></li>
+      <li role="presentation"><a href="#intent" aria-controls="intent" role="tab" data-toggle="tab">Intents</a></li>
+      <li role="presentation"><a href="#analytics" aria-controls="analytics" role="tab" data-toggle="tab">Analytics</a></li>
+      <li role="presentation"><a href="#history" aria-controls="history" role="tab" data-toggle="tab">History</a></li>
+      <li role="presentation"><a href="#tuto" aria-controls="tuto" role="tab" data-toggle="tab">Set up</a></li>
+    </ul>
 
-<div class="container padded">
-  <div class="row">
+  </div>
 
-    <div class="col-md-4 ">
+  <div class="tab-content col-md-10 scroll">
 
-      <h2>Bot Infos</h2>
-
-      <a class="grey-card" href="#" ></a>
-        <%= render 'form', bot: @bot %>
-        <%= link_to 'Bot History ', bot_histories_path(@bot), class:" btn btn-success"  %>
-      </div>
-
-
-    <div class="col-md-4 ">
-
-     <h2>Add Patern</h2>
-      <%= simple_form_for [@bot, @pattern] do |f| %>
-
-        <%= f.error_notification %>
-        <%= f.input :trigger %>
-        <%= f.input :answer %>
-        <%= f.button :submit %>
-        <% end %>
-
-    <h2>Add Intent</h2>
-      <%= simple_form_for [@bot, @pattern] do |f| %>
-
-        <%= f.error_notification %>
-        <%= f.input :trigger, input_html: { disabled: true, value: 'wit_opening_times' } %>
-        <%= f.text_area(:answer, value: @opening_and_closing)%>
-        <%= f.button :submit %>
-        <% end %>
-      </div>
-
-      <div class="col-md-4 ">
-        <h2>Paterns</h2>
-        <div class="scroll-small">
-        <% @bot.patterns.each do |pattern| %>
-        <div class="pattern-card">
-          <p><%= pattern.trigger %></p>
-          <p><%= pattern.answer %></p>
-
-          <%= link_to bot_pattern_path(@bot, pattern), :method => "delete" do %>
-          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-          <% end %>
-
-          <%= link_to edit_bot_pattern_path(@bot, pattern) do %>
-          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-          <% end %>
-        </div>
-
-        <% end %>
-        </div>
-      </div>
-
-    </div>
-
-<div class="col-md-4 ">
-
-      <h2>Set Up Tutorial </h2>
-
-      <div class="grey-card">
-        <%= link_to 'See our Set up Tutorial', guide_bot_path(@bot), class:" btn btn-primary"  %>
-      </div>
-    </div>
-
+    <div role="tabpanel" class="tab-pane active" id="home"><%= render 'home' %></div>
+    <div role="tabpanel" class="tab-pane" id="pattern"><%= render 'pattern' %></div>
+    <div role="tabpanel" class="tab-pane" id="intent"><%= render 'intent' %></div>
+    <div role="tabpanel" class="tab-pane" id="analytics"><%= render '/histories/analytics'%></div>
+    <div role="tabpanel" class="tab-pane" id="tuto"><%= render 'guide'%></div>
+    <div role="tabpanel" class="tab-pane" id="history"><%= render 'history' %></div>
+  </div>
 
 </div>
-  </div>
+
+
 
