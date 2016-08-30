@@ -65,7 +65,10 @@ class BotsController < ApplicationController
   end
 
   def edit
+    get_opening_times
     @pattern = Pattern.new
+    @bot_id = params[:id]
+    #@pattern_number = History.all.where(bot: Bot.find(params[:bot_id])).group(:pattern_id).count
   end
 
   def create
@@ -98,6 +101,15 @@ class BotsController < ApplicationController
     def set_bot
       @bot = Bot.find(params[:id])
       authorize @bot
+    end
+
+    def get_opening_times
+      @opening_and_closing = ''
+      if @bot.info
+        @bot.info['result']['opening_hours']['weekday_text'].each do |day|
+          @opening_and_closing += "#{day}\n"
+        end
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

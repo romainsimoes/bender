@@ -1,0 +1,16 @@
+<div class="col-md-6">
+  <div class="card-edit" >
+    <%= image_tag "robot.png" %>
+    <div class="card-description-edit">
+      <h2><%= @bot.name.capitalize %></h2>
+      <p>Address : <%= @bot.street %></p>
+      <p>City : <%= @bot.city %></p>
+      <p>Shop : <%= @bot.shop_name %></p>
+      <p>Token : <%= @bot.token %></p>
+    </div>
+  </div>
+</div>
+<div class="col-md-5 info-form">
+ <h2> Edit info</h2>
+ <%= render 'form', bot: @bot %>
+</div>

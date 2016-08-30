@@ -1,8 +1,7 @@
 <!--**************************BACKEND RUBY*************************************-->
-
 <!-- Extract an array [Pattern, Number of Time ]-->
 <% @pattern_array = [] %>
-<% @pattern_number.each do | key, value | %>
+<% pattern_number(@bot_id).each do | key, value | %>
   <% if  key != nil  %>
     <% x = Pattern.find(key).trigger[0,14].capitalize%>
     <% y = value %>
@@ -60,33 +59,19 @@
   <% @hourly_requests[n]  += 1 %>
   <% end %>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <!--**************************FRONTEND*************************************-->
 
 
 
 
-  <div class="grey-background">
+<div class="white-background">
+    <h1 class="text-center">Key Figures</h1>
 
-    <h1> <%= @bot.name.capitalize %> Key Figures </h1>
 
     <div class="container">
       <div class="row">
-       <div class="col-md-4 col-sm-6 text-center">
+
+       <div class="col-md-2 col-md-offset-2">
         <div class="card-analytic">
           <h2> Total Number of Requests</h2>
           <h3> <%= @bot.histories.size %> </h3>
@@ -94,7 +79,7 @@
       </div>
 
 
-      <div class="col-md-4 col-sm-6">
+      <div class="col-md-2 col-sm-6">
         <div class="card-analytic">
           <h2> Total Number of Patterns</h2>
           <h3> <%= @bot.patterns.size %> </h3>
@@ -102,20 +87,21 @@
       </div>
 
 
-      <div class="col-md-4 col-sm-6 ">
+      <div class="col-md-2  ">
         <div class="card-analytic">
 
-          <h2> Total % of Successfull Answers</h2>
-          <h3> <%=  (@bot.histories.size - @defaultmessage) * 100 / @bot.histories.size %>  </h3>
+          <h2>% of Successfull Answers</h2>
+          <h3> <%=  successfull_answers_percentage(@bot) %>  </h3>
 
           <h3> </h3>
         </div>
       </div>
+
     </div>
 
     <h1> Advanced Analytics </h1>
 
-    <div class="col-md-4">
+    <div class="col-md-4 col-md-offset-1">
       <canvas  id="DefaultMessageChart" width="100" height="100"></canvas>
     </div>
 
@@ -124,78 +110,21 @@
       <canvas  id="PatternsCharts" width="100" height="100"></canvas>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-4 col-md-offset-1">
       <canvas  id="DailyRequest" width="100" height="100"></canvas>
     </div>
 
-    <div class="col-md-4 col-md-offset-2">
+    <div class="col-md-4 ">
       <canvas  id="MonthlyRequests" width="100" height="100"></canvas>
     </div>
 
-    <div class="col-md-4 ">
+    <div class="col-md-4 col-md-offset-1">
       <canvas  id="HourlyRequests" width="100" height="100"></canvas>
     </div>
 
-
-
   </div>
 
-
-
-
-
-
-  <br><h1> Full Historic :  <%= @bot.histories.size %> questions</h1>
-
-  <div class="row ">
-    <div class="col-md-8 col-md-offset-2">
-      <div class="table-responsive">
-        <br>
-        <table class="table">
-          <thead>
-            <tr>
-              <b>
-                <th>Questions</th>
-                <th>Answers</th>
-                <th>Sent at</th>
-                <th>Date</th>
-                <th colspan="4"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @bot.histories.each do | history | %>
-              <tr>
-                <td><%= history.question %></td>
-                <td>
-                  <% if history.pattern_id ==  nil %>
-                  <p>Default Message</p>
-                  <% else %>
-                  <p><%= history.answer[0,15] %> ...</p>
-                  <% end %>
-                </td>
-                <td><%= history.created_at.strftime("%T") %></td>
-                <td><%= history.created_at.strftime("%D") %></td>
-              </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </table>
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
+</div>
 
 
 
@@ -214,7 +143,7 @@ var myChart = new Chart(ctx, {
         labels: ["Pattern Answers", "Default Answers"],
         datasets: [{
             label: '# of Votes',
-            data: [<%= @bot.histories.size - @defaultmessage %>, <%= @defaultmessage %>],
+            data: [<%= (@bot.histories.size || 0) - defaultmessage(@bot) %>, <%= defaultmessage(@bot) %>],
             backgroundColor: [
                 "#FF6384",
                 "#36A2EB"
