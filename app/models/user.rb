@@ -28,32 +28,41 @@ class User < ApplicationRecord
 
   def self.find_for_google_oauth2(access_token, user)
 
-    data = access_token.info
+    p '###'
+    p access_token
+    p '###'
+
+    # Get information
     user.expires_at = access_token.credentials.expires_at
-    user.refresh_token = access_token.credentials.refresh_token
-    user.google_email = data.email
+    user.refresh_token = access_token.credentials.refresh_token unless user.refresh_token
+    user.google_email = access_token.info.email
     user.google_uid = access_token.uid
     user.google_token = access_token.credentials.token
-    user.save
-    user
+
+    # Verify informations
+    if user.is_user_google_connected?
+      user.save
+      user
+    else
+      print 'Error when get google information for user with id : ' + user.id.to_s
+      nil
+    end
   end
 
   def refresh_token_if_expired
     if token_expired?
       response = RestClient.post(
-          "#{ENV['DOMAIN']}/oauth2/token",
+          'https://accounts.google.com/o/oauth2/token',
           :grant_type => 'refresh_token',
           :refresh_token => self.refresh_token,
           :client_id => ENV['GOOGLE_CALENDAR_CLIENT_ID'],
           :client_secret => ENV['GOOGLE_CALENDAR_CLIENT_SECRET']
         )
+
       refreshhash = JSON.parse(response.body)
 
-      google_token_will_change!
-      expires_at_will_change!
-
-      self.token     = refreshhash['access_token']
-      self.expiresat = DateTime.now + refreshhash["expires_in"].to_i.seconds
+      self.google_token     = refreshhash['access_token']
+      self.expires_at = DateTime.now + refreshhash["expires_in"].to_i.seconds
 
       self.save
     end
@@ -61,13 +70,15 @@ class User < ApplicationRecord
 
   def token_expired?
     expiry = Time.at(self.expires_at)
-    return true if expiry < Time.now # expired token, so we should quickly return
-    token_expires_at = expiry
-    save if changed?
-    false # token not expired. :D
+    return true if expiry < Time.now
+    false
   end
 
   def admin?
     true
+  end
+
+  def is_user_google_connected?
+    google_email.nil? || google_token.nil? || google_uid.nil?
   end
 end

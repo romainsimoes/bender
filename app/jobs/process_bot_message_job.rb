@@ -6,7 +6,6 @@ class ProcessBotMessageJob < ApplicationJob
     session_recovering(message_sender_id)
     var_initalizer(message_sender_id, message_text, bot)
 
-    GoogleCalendarApiService.create_event
 
     get_intent
 

@@ -27,4 +27,28 @@ class SharedJob < ProcessBotMessageJob
     date_matches.first
   end
 
+  def self.create_google_agenda_event(event)
+    GoogleCalendarApiService.create_event(@@bot.user, event)
+  end
+
+  def self.create_event_with_date(date)
+    event_start = DateTime.parse(date)
+    event_end = event_start + (30/1440.0)
+    event = {
+      summary: 'Booking',
+      start: {
+        date_time: date,
+        time_zone: "Europe/Paris",
+      },
+      end: {
+        date_time: event_end.iso8601,
+        time_zone: "Europe/Paris",
+      },
+    }
+  end
+
+  def self.format_dates(hour, date)
+    "20#{date[2]}-#{date[1]}-#{date[0]}T#{hour}:00.000+02:00"
+  end
+
 end

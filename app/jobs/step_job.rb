@@ -19,13 +19,18 @@ class StepJob < ProcessBotMessageJob
         if entities['datetime'][0]['value'] && (entities['datetime'][0]['confidence'] > 0.9)
           @@date ||= nil
           booking_request = entities['datetime'][0]['value']
+          p '####################################################'
+          p booking_request
           date_matches = SharedJob.date_parser(booking_request)
           if date_matches[3] != '00:00'
             if @@date
               if match_request_with_opening_times?(date_matches)
-                validation_message = "C'est réservé pour le #{@@date} à #{date_matches[3]}"
+                validation_message = "C'est réservé pour le #{@@date[0]}/#{@@date[1]}/#{@@date[2]} à #{date_matches[3]}"
                 SharedJob.send_and_store_answer(validation_message, nil)
                 SharedJob.send_and_store_answer(@@ask_what_next_message, nil)
+                date_formatted = SharedJob.format_dates(date_matches[3], @@date)
+                event = SharedJob.create_event_with_date(date_formatted)
+                SharedJob.create_google_agenda_event(event)
                 SharedJob.stepper('what_next')
               else
                 SharedJob.send_and_store_answer(@@sorry_not_available, nil)
@@ -35,6 +40,8 @@ class StepJob < ProcessBotMessageJob
                 validation_message = "C'est réservé pour le #{date_matches[2]}/#{date_matches[1]}/#{date_matches[0]} à #{date_matches[3]}"
                 SharedJob.send_and_store_answer(validation_message, nil)
                 SharedJob.send_and_store_answer(@@ask_what_next_message, nil)
+                event = SharedJob.create_event_with_date(booking_request)
+                SharedJob.create_google_agenda_event(event)
                 SharedJob.stepper('what_next')
               else
                 SharedJob.send_and_store_answer(@@sorry_not_available, nil)
@@ -52,6 +59,8 @@ class StepJob < ProcessBotMessageJob
       end
     end
   end
+
+
 
   def self.match_request_with_opening_times?(date_matches)
     if @@bot.info
