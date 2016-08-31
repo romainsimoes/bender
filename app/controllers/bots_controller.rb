@@ -66,6 +66,8 @@ class BotsController < ApplicationController
 
   def edit
     get_opening_times
+    @telephone = @bot.info['result']['international_phone_number']
+    @website = @bot.info['result']['website']
     @pattern = Pattern.new
     @bot_id = params[:id]
     #@pattern_number = History.all.where(bot: Bot.find(params[:bot_id])).group(:pattern_id).count
