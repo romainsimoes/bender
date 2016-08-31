@@ -10,32 +10,8 @@
     </div>
   </div>
 </div>
-<div class="col-md-5 info-form">
- <h6> Edit info</h6>
- <%= simple_form_for(@bot) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.text_area :name,  id: 'text_area_small' %>
-  </div>
-
-  <div class="form-inputs">
-    <%= f.text_area :street,  id: 'text_area_small' %>
-  </div>
-
-  <div class="form-inputs">
-    <%= f.text_area :city,  id: 'text_area_small' %>
-  </div>
-
-  <div class="form-inputs">
-    <%= f.text_area :shop_name,  id: 'text_area_small' %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, :class => 'btn btn-primary' %>
-  </div>
-<% end %>
-
+<div class="col-md-4 info-form">
+<%= render 'form', bot: @bot %>
 </div>
 
 
@@ -43,6 +19,3 @@
 
 
 
-<%= content_for(:after_js) do %>
-  <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=<%=ENV['GOOGLE_AUTOCOMPLETE_API']%>"></script>
-<% end %>
