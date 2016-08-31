@@ -281,4 +281,9 @@ Devise.setup do |config|
     image_size: 'square',  # 50x50, guaranteed ratio
     secure_image_url: true
 
+  config.omniauth :google_oauth2, ENV["GOOGLE_CALENDAR_CLIENT_ID"], ENV["GOOGLE_CALENDAR_CLIENT_SECRET"],
+    scope: 'https://www.googleapis.com/auth/plus.login,https://www.googleapis.com/auth/calendar',
+    access_type: 'offline',
+    approval_prompt: 'force'
+
 end

@@ -2,7 +2,7 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  devise :omniauthable, omniauth_providers: [:facebook]
+  devise :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
 
   has_many :bots
 
@@ -26,7 +26,59 @@ class User < ApplicationRecord
     return user
   end
 
+  def self.find_for_google_oauth2(access_token, user)
+
+    p '###'
+    p access_token
+    p '###'
+
+    # Get information
+    user.expires_at = access_token.credentials.expires_at
+    user.refresh_token = access_token.credentials.refresh_token unless user.refresh_token
+    user.google_email = access_token.info.email
+    user.google_uid = access_token.uid
+    user.google_token = access_token.credentials.token
+
+    # Verify informations
+    if user.is_user_google_connected?
+      user.save
+      user
+    else
+      print 'Error when get google information for user with id : ' + user.id.to_s
+      nil
+    end
+  end
+
+  def refresh_token_if_expired
+    if token_expired?
+      response = RestClient.post(
+          'https://accounts.google.com/o/oauth2/token',
+          :grant_type => 'refresh_token',
+          :refresh_token => self.refresh_token,
+          :client_id => ENV['GOOGLE_CALENDAR_CLIENT_ID'],
+          :client_secret => ENV['GOOGLE_CALENDAR_CLIENT_SECRET']
+        )
+
+      refreshhash = JSON.parse(response.body)
+
+      self.google_token     = refreshhash['access_token']
+      self.expires_at = DateTime.now + refreshhash["expires_in"].to_i.seconds
+
+      self.save
+    end
+  end
+
+  def token_expired?
+    expiry = Time.at(self.expires_at)
+    return true if expiry < Time.now
+    false
+  end
+
   def admin?
     true
+  end
+
+  def is_user_google_connected?
+    google_email.nil? || google_token.nil? || google_uid.nil?
   end
 end
