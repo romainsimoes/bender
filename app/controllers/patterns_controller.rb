@@ -17,7 +17,7 @@ class PatternsController < ApplicationController
   def create
     @pattern = @bot.patterns.build(pattern_params)
     if @pattern.save
-      redirect_to edit_bot_path(@bot)
+      redirect_to edit_bot_path(@bot, active: :patterns)
     else
       render :new
     end
@@ -25,7 +25,7 @@ class PatternsController < ApplicationController
 
   def update
     if @pattern.update(pattern_params)
-      redirect_to edit_bot_path(@bot)
+      redirect_to edit_bot_path(@bot, active: :patterns)
     else
       render :edit
     end
@@ -33,7 +33,7 @@ class PatternsController < ApplicationController
 
   def destroy
     @pattern.destroy
-    redirect_to edit_bot_path(@bot)
+    redirect_to edit_bot_path(@bot, active: :patterns)
   end
 
   private

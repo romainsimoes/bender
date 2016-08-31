@@ -6,6 +6,7 @@ class Bot < ApplicationRecord
   has_many :patterns, dependent: :destroy
   has_many :histories
   has_many :recoveries
+  has_many :products, dependent: :destroy
 
   validates :street, presence: true
   validates :city, presence: true

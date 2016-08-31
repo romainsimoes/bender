@@ -19,6 +19,8 @@ gem 'autoprefixer-rails'
 gem 'pundit'
 gem 'sidekiq'
 gem 'sidekiq-failures'
+gem 'carrierwave'
+gem 'cloudinary'
 
 group :development, :test do
   gem 'binding_of_caller'

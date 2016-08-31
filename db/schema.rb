@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20160830153623) do
 
   # These are extensions that must be enabled in order to support this database
@@ -49,6 +50,17 @@ ActiveRecord::Schema.define(version: 20160830153623) do
     t.datetime "updated_at", null: false
     t.integer  "bot_id"
     t.index ["bot_id"], name: "index_patterns_on_bot_id", using: :btree
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string   "titre"
+    t.string   "description"
+    t.integer  "bot_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "photo"
+    t.string   "price"
+    t.index ["bot_id"], name: "index_products_on_bot_id", using: :btree
   end
 
   create_table "recoveries", force: :cascade do |t|
@@ -91,4 +103,5 @@ ActiveRecord::Schema.define(version: 20160830153623) do
   add_foreign_key "bots", "users"
   add_foreign_key "histories", "bots"
   add_foreign_key "patterns", "bots"
+  add_foreign_key "products", "bots"
 end

@@ -113,4 +113,8 @@ class StepJob < ProcessBotMessageJob
     end
   end
 
+  def self.ordering_step
+
+  end
+
 end

@@ -33,6 +33,10 @@ class BotPolicy < ApplicationPolicy
     true
   end
 
+  def toggle?
+    record.user == user
+  end
+
   def rails_admin?(action)
     case action
       when :destroy, :new

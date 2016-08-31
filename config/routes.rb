@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       get 'webhook_subscribe', to: 'bots#webhook_subscribe'
       post 'webhook', to: 'bots#webhook'
       get 'guide', to: 'bots#guide'
+      patch 'toggle/:id', to: 'bots#toggle', as: :toggle
     end
   end
 

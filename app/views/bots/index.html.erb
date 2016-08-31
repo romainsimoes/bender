@@ -1,10 +1,10 @@
 
-<div class="container-bot">
 <div class="container">
- <h3> Your Chatbots</h3>
+ <h3> Your Chatbots</h2>
+ <br><br>
   <div class="row">
 
-    <div class="col-md-4 col-sm-6">
+    <div class="col-md-4 col-sm-12">
       <div class="card">
         <%= link_to new_bot_path do %>
         <div class="card-description ">
@@ -12,53 +12,44 @@
         </div>
         <h4> + </h4>
         <% end %>
-
       </div>
-
     </div>
-
 
      <% @bots.each do |bot| %>
 
-    <div class="col-xs-12 col-sm-4">
-
+    <div class="col-md-4 col-sm-12">
       <div class="card" >
-
           <%= image_tag "robot.png" %>
           <div class="card-category"><%= link_to bot_path(bot), method: "delete", data: { confirm: 'Are you sure?' } do %>
            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
            <% end %></div>
-
            <div class="card-description">
-
             <h2><%= bot.name.capitalize %></h2>
 
-            <p><input class="toggle-one" checked type="checkbox"> <br><br>
+            <%=
+              check_box_tag "toggle_bot_#{bot.id}", nil,
+                            bot.enable,
+                            class: 'toggle-bot',
+                            'data-bot' => toggle_bot_path(bot, format: :json),
+                            'data-toggle' => 'toggle'
+            %>
+
 
              <%= link_to edit_bot_path(bot) do %>
              <p>Edit</p>
               <% end %>
              <p>|</p>
-
-             <%= link_to bot_histories_path(bot)  do %>
-              <p>Analytics<p>
+             <%= link_to bot_path(bot), method: "delete", data: { confirm: 'Are you sure?' } do %>
+              <p>Delete<p>
              <% end %>
-
             </div>
-
         <%= link_to edit_bot_path(bot), class: 'card-link' do %>
-
-<% end %>
+        <% end %>
       </div>
     </div>
-
-
-
     <% end %>
   </div>
 </div>
-</div>
-
 
 
 
@@ -67,9 +58,22 @@
 <% content_for :js do %>
 <script>
   $(function() {
-    $('.toggle-one').bootstrapToggle();
+    $('.toggle-bot').change(function() {
+      var toggle = $(this)
+      var state  = toggle.prop('checked');
+      var bot_url = toggle.data('bot');
+
+      $.ajax({
+        url: bot_url,
+        method: 'PATCH',
+        data: { state: state },
+      }).done(function(msg) {
+        console.log(msg);
+      });
+    })
   })
 </script>
+
 <% end %>
 
 

@@ -1,0 +1,309 @@
+<!--**************************BACKEND RUBY*************************************-->
+<!-- Extract an array [Pattern, Number of Time ]-->
+<% @pattern_array = [] %>
+<% pattern_number(@bot_id).each do | key, value | %>
+  <% if  key != nil  %>
+    <% x = Pattern.find(key).trigger[0,14].capitalize%>
+    <% y = value %>
+  <% else %>
+    <% x = "Default Pattern" %>
+    <% y = value %>
+  <% end %>
+  <% @pattern_array  << [x,y] %>
+<% end %>
+
+<!-- Generate 2 array for graph  [Label Pattern] & [Data pattern]-->
+<% @label_pattern = [] %>
+<% @data_pattern = [] %>
+  <% for n in (0..@pattern_array.length - 1) do %>
+  <% @label_pattern << @pattern_array[n][0] %>
+  <% @data_pattern << @pattern_array[n][1] %>
+  <% end %>
+
+<!-- Extract an array whith most used Patterns [Max Data Pattern] & [Max Data Pattern]-->
+<% @max_pattern_data = [] %>
+<% @max_pattern_label = [] %>
+  <% if @pattern_array.length >= 4 %>
+    <% for n in (0..3) do %>
+    <% @max_pattern_data << @data_pattern.zip(@label_pattern).max(4)[n][0] %>
+    <% @max_pattern_label << @data_pattern.zip(@label_pattern).max(4)[n][1] %>
+    <% end %>
+  <% else %>
+    <% for n in (0..@pattern_array.length - 1) do %>
+    <% @max_pattern_data << @data_pattern.zip(@label_pattern).max(@pattern_array.length)[n][0] %>
+    <% @max_pattern_label << @data_pattern.zip(@label_pattern).max(@pattern_array.length)[n][1] %>
+    <% end %>
+  <% end %>
+
+
+
+<!-- Daily requests-->
+  <% @daily_requests = [0, 0, 0, 0, 0, 0, 0] %>
+  <% @bot.histories.each do |history| %>
+  <% n = history.created_at.wday-1 %>
+  <% @daily_requests[n]  += 1 %>
+  <% end %>
+
+
+  <!-- Monthly requests-->
+  <% @monthly_requests = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] %>
+  <% @bot.histories.each do |history| %>
+  <% n = history.created_at.month-1 %>
+  <% @monthly_requests[n]  += 1 %>
+  <% end %>
+
+  <!-- Hourly requests-->
+  <% @hourly_requests = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] %>
+  <% @bot.histories.each do |history| %>
+  <% n = history.created_at.hour-1 %>
+  <% @hourly_requests[n]  += 1 %>
+  <% end %>
+
+  <!--**************************FRONTEND*************************************-->
+
+<div class="white-background">
+    <h1>Key Figures</h1>
+      <div class="row">
+
+       <div class="col-md-2 col-md-offset-2">
+        <div class="card-analytic">
+          <h2> Total Number of Requests</h2>
+          <h3> <%= @bot.histories.size %> </h3>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="card-analytic">
+          <h2> Total Number of Patterns</h2>
+          <h3> <%= @bot.patterns.size %> </h3>
+        </div>
+      </div>
+
+      <div class="col-md-2  ">
+        <div class="card-analytic">
+
+          <h2>% of Successfull Answers</h2>
+          <h3> <%=  successfull_answers_percentage(@bot) %>  </h3>
+
+          <h3> </h3>
+        </div>
+      </div>
+
+    </div>
+
+
+<h1> Advanced Analytics </h1>
+<div class="row">
+
+
+
+      <div class="col-md-4 col-md-offset-1">
+        <canvas  id="DefaultMessageChart" width="100" height="100"></canvas>
+      </div>
+
+      <div class="col-md-4">
+        <canvas  id="PatternsCharts" width="100" height="100"></canvas>
+      </div>
+
+      <div class="col-md-4 col-md-offset-1">
+        <canvas  id="DailyRequest" width="100" height="100"></canvas>
+      </div>
+
+      <div class="col-md-4 ">
+        <canvas  id="MonthlyRequests" width="100" height="100"></canvas>
+      </div>
+
+      <div class="col-md-4 col-md-offset-1">
+        <canvas  id="HourlyRequests" width="100" height="100"></canvas>
+      </div>
+
+    </div>
+</div>
+
+
+
+
+<!-- Generate Graph : See Script Below-->
+
+
+
+<!--**************************BACKEND JAVA CHART*************************************-->
+<% content_for :js do %>
+<script>
+var ctx = document.getElementById("DefaultMessageChart");
+var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ["Pattern Answers", "Default Answers"],
+        datasets: [{
+            label: '# of Votes',
+            data: [<%= (@bot.histories.size || 0) - defaultmessage(@bot) %>, <%= defaultmessage(@bot) %>],
+            backgroundColor: [
+                "#FF6384",
+                "#36A2EB"
+            ],
+            hoverBackgroundColor: [
+                "#FF6384",
+                "#36A2EB"
+            ]
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        },
+        title: {
+              display: true,
+              text: 'Default Answer vs Pattern Answer'
+          },
+    }
+});
+
+var ctx = document.getElementById("PatternsCharts");
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: <%= @max_pattern_label.to_json.html_safe %>,
+        datasets: [{
+            label: '# of requests',
+            data: <%= @max_pattern_data %>,
+            backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ]
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        },
+        title: {
+              display: true,
+              text: 'Most used Patterns'
+          },
+    }
+});
+
+
+var ctx = document.getElementById("DailyRequest");
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ["Monday", "Tuesday","Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        datasets: [{
+            label: '# of Request',
+            data: <%= @daily_requests %>,
+            backgroundColor: [
+                "#FF6384",
+                "#36A2EB"
+            ],
+            borderColor: [
+                '#ffce56'
+            ],
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        },
+        title: {
+              display: true,
+              text: 'Daily Requests'
+          },
+    }
+});
+
+
+
+
+
+var ctx = document.getElementById("MonthlyRequests");
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ["January", "February","March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
+        datasets: [{
+            label: '# of Request',
+            data: <%= @monthly_requests %>,
+            backgroundColor: [
+                "#FF6384",
+                "#36A2EB"
+            ],
+            borderColor: [
+                "#FF6384",
+                "#36A2EB"
+            ],
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        },
+        title: {
+              display: true,
+              text: 'Requests per Month'
+          },
+    }
+});
+
+
+
+var ctx = document.getElementById("HourlyRequests");
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ["01h","02h", "03h", "04h", "05h", "06h", "07h", "08h", "09h", "10h", "11h", "12h", "13h", "14h", "15h", "16h", "17h", "18h", "19h", "20h", "21h", "22h", "23h", "00h"],
+        datasets: [{
+            label: '# of Request',
+            data: <%= @hourly_requests %>,
+            backgroundColor: [
+                '#FF6384'
+            ],
+            borderColor: [
+                '#FF6384'
+            ],
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        },
+        title: {
+              display: true,
+              text: 'Requests per Hour'
+          },
+    }
+});
+
+
+
+
+
+
+</script>
+<% end %>
+

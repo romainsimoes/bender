@@ -17,6 +17,11 @@ class SharedJob < ProcessBotMessageJob
     @@return = true
   end
 
+  def self.send_item_template
+    FacebookRequestService.item_template(@@message_sender_id, @@bot)
+    @@return = true
+  end
+
   def self.stepper(step_request)
     @@session_retreiver.step = step_request
     @@session_retreiver.save
@@ -49,6 +54,11 @@ class SharedJob < ProcessBotMessageJob
 
   def self.format_dates(hour, date)
     "20#{date[2]}-#{date[1]}-#{date[0]}T#{hour}:00.000+02:00"
+  end
+
+  def self.make_an_order
+    FacebookRequestService.item_template(@@message_sender_id, @@bot)
+    @@return = true
   end
 
 end
