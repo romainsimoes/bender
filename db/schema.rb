@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20160830153623) do
+ActiveRecord::Schema.define(version: 20160831134721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +67,8 @@ ActiveRecord::Schema.define(version: 20160830153623) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "sender_id"
+    t.integer  "bot_id"
+    t.index ["bot_id"], name: "index_recoveries_on_bot_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -104,4 +105,5 @@ ActiveRecord::Schema.define(version: 20160830153623) do
   add_foreign_key "histories", "bots"
   add_foreign_key "patterns", "bots"
   add_foreign_key "products", "bots"
+  add_foreign_key "recoveries", "bots"
 end
