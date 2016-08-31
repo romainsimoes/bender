@@ -83,8 +83,8 @@ class BotsController < ApplicationController
   end
 
   def update
-    @bot.info = GoogleApiService.place_detail(@bot)
     if @bot.update(bot_params)
+      @bot.info = GoogleApiService.place_detail(@bot)
       redirect_to(edit_bot_path(@bot), notice: 'Bot was successfully updated.')
     else
       format.html { render :edit }
