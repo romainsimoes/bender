@@ -17,6 +17,8 @@ class PatternsController < ApplicationController
   def create
     @pattern = @bot.patterns.build(pattern_params)
     if @pattern.save
+      @bot.intent << @pattern.trigger
+      @bot.save
       redirect_to edit_bot_path(@bot, active: :patterns)
     else
       render :new
@@ -32,6 +34,8 @@ class PatternsController < ApplicationController
   end
 
   def destroy
+    @bot.intent.delete(@pattern.trigger)
+    @bot.save
     @pattern.destroy
     redirect_to edit_bot_path(@bot, active: :patterns)
   end

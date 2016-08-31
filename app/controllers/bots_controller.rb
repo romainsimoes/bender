@@ -66,6 +66,7 @@ class BotsController < ApplicationController
 
   def edit
     get_opening_times
+    @welcome = "Bonjour, je suis #{@bot.shop_name}, comment puis-je vous aider ?"
     @telephone = @bot.info['result']['international_phone_number']
     @website = @bot.info['result']['website']
     @pattern = Pattern.new
