@@ -10,7 +10,7 @@ class BotPolicy < ApplicationPolicy
   end
 
   def index?
-    true
+    record.user == user || user.admin?
   end
 
   def create?
