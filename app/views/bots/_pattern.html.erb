@@ -23,7 +23,7 @@
   <div class="pattern-card">
     <h1> <b>If user says</b> : <%= pattern.trigger %></h1>
     <h1><b>Bot answers </b>: <%= pattern.answer %></h1>
-    <%= link_to bot_pattern_path(@bot, pattern), :method => "delete" do %>
+    <%= link_to bot_pattern_path(@bot, pattern), method: "delete" do %>
     <p>Delete</p>
     <% end %>
     <p>|</p>
@@ -38,11 +38,22 @@
 
 <div class="col-md-6 card-pattern scroll grey-background">
   <h6>Add Intent</h6>
+
+  <div class="col-md-12  intent-card inline">
+    <h2>Bonjour </h2>
+    <%= simple_form_for [@bot, @pattern] do |f| %>
+    <%= f.error_notification %>
+    <%= f.text_field :trigger, value: 'wit_welcome', hidden: true %>
+    <%= f.text_area :answer, value: @welcome, id: 'text_area_small' %>
+    <%= f.submit "Add", :class => 'btn button-blue-small', id: 'add_intent' %>
+    <% end %>
+  </div>
+
   <div class="col-md-12  intent-card inline">
     <h2>Telephone </h2>
     <%= simple_form_for [@bot, @pattern] do |f| %>
     <%= f.error_notification %>
-    <% f.input :trigger, input_html: { disabled: true, value: 'wit_website_path' } %>
+    <%= f.text_field :trigger, value: 'wit_tel', hidden: true %>
     <%= f.text_area :answer, value: @telephone, id: 'text_area_small' %>
     <%= f.submit "Add", :class => 'btn button-blue-small', id: 'add_intent' %>
     <% end %>
@@ -52,7 +63,7 @@
     <h2>Website </h2>
     <%= simple_form_for [@bot, @pattern] do |f| %>
     <%= f.error_notification %>
-    <% f.input :trigger, input_html: { disabled: true, value: 'wit_website_path' } %>
+    <%= f.text_field :trigger, value: 'wit_website', hidden: true %>
     <%= f.text_area :answer, value: @website, id: 'text_area_small' %>
     <%= f.submit "Add", :class => 'btn button-blue-small', id: 'add_intent' %>
     <% end %>
@@ -63,9 +74,16 @@
     <h2>Opening Hours</h2>
     <%= simple_form_for [@bot, @pattern] do |f| %>
     <%= f.error_notification %>
-    <% f.input :trigger, input_html: { disabled: true, value: 'wit_opening_times' } %>
+    <%= f.text_field :trigger, value: 'wit_opening_times', hidden: true %>
     <%= f.text_area :answer, value: @opening_and_closing, id: 'text_area_big' %>
     <%= f.submit "Add", :class => 'btn button-blue-small', id: 'add_intent' %>
+    <% end %>
+  </div>
+
+  <div class="col-md-12  intent-card">
+    <h2>Booking</h2>
+    <% unless current_user.google_token %>
+      <%= link_to "Booking", omniauth_authorize_path('user', 'google_oauth2'), class:"rectangle rectangle-s"%>
     <% end %>
   </div>
 
