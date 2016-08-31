@@ -1,5 +1,5 @@
 class BotsController < ApplicationController
-  before_action :set_bot, only: [:analytic, :show, :edit, :update, :destroy, :webhook_verification, :webhook, :webhook_subscribe]
+  before_action :set_bot, only: [:toggle, :analytic, :show, :edit, :update, :destroy, :webhook_verification, :webhook, :webhook_subscribe]
 
   skip_before_action :authenticate_user!, only: [:webhook, :webhook_verification]
   skip_after_action :verify_authorized, only: [:webhook, :webhook_verification, :guide]
@@ -84,9 +84,9 @@ class BotsController < ApplicationController
 
   def update
     if @bot.update(bot_params)
-      redirect_to edit_bot_path(@bot), notice: 'Bot was successfully updated.'
+      redirect_to(edit_bot_path(@bot), notice: 'Bot was successfully updated.')
     else
-      render :edit
+      format.html { render :edit }
     end
   end
 
@@ -95,6 +95,11 @@ class BotsController < ApplicationController
     redirect_to bots_path, notice: 'Bot was successfully destroyed.'
   end
 
+  def toggle
+    authorize(@bot)
+    status = @bot.update_attribute(:enable, params[:state])
+    render json: { enabled: @bot.enable, status: @bot.valid? }
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

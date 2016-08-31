@@ -1,10 +1,11 @@
+<div class="container-fluid">
 <div class="row ">
 
   <!-- Nav tabs -->
-  <div class="col-md-2 column col-sm-2 col-xs-2">
+  <div class="col-md-2 column hidden-xs hidden-sm">
     <ul class="nav nav-stacked nav-pills" role="tablist">
-      <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><%= @bot.name.capitalize %></a></li>
-      <li role="presentation"><a href="#pattern" aria-controls="pattern" role="tab" data-toggle="tab">Patterns</a></li>
+      <li role="presentation" class="<%= 'active' unless params[:active] %>"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><%= @bot.name.capitalize %></a></li>
+      <li role="presentation" class="<%= 'active' if params[:active] == 'patterns'%>"><a href="#pattern" aria-controls="pattern" role="tab" data-toggle="tab">Patterns</a></li>
       <li role="presentation"><a href="#intent" aria-controls="intent" role="tab" data-toggle="tab">Intents</a></li>
       <li role="presentation"><a href="#analytics" aria-controls="analytics" role="tab" data-toggle="tab">Analytics</a></li>
       <li role="presentation"><a href="#history" aria-controls="history" role="tab" data-toggle="tab">History</a></li>
@@ -15,8 +16,8 @@
 
   <div class="tab-content col-md-10 scroll">
 
-    <div role="tabpanel" class="tab-pane active" id="home"><%= render 'home' %></div>
-    <div role="tabpanel" class="tab-pane" id="pattern"><%= render 'pattern' %></div>
+    <div role="tabpanel" class="tab-pane <%= 'active' unless params[:active] %>" id="home"><%= render 'home' %></div>
+    <div role="tabpanel" class="tab-pane <%= 'active' if params[:active] == 'patterns'%>" id="pattern"><%= render 'pattern' %></div>
     <div role="tabpanel" class="tab-pane" id="intent"><%= render 'intent' %></div>
     <div role="tabpanel" class="tab-pane" id="analytics"><%= render '/histories/analytics'%></div>
     <div role="tabpanel" class="tab-pane" id="tuto"><%= render 'guide'%></div>
@@ -24,6 +25,4 @@
   </div>
 
 </div>
-
-
-
+</div>

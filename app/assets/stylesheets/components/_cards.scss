@@ -54,16 +54,16 @@ width: 930px;
 }
 
 .card-edit {
-  margin-top: 20%;
-  width: 400px;
-  height:330px;
-  border-radius: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50px;
-  border:2px solid #E6E5E4;
-  text-align: center;
-  position: relative;
+    margin-top: 20%;
+    width: 70%;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    border: 2px solid #E6E5E4;
+    text-align: center;
+    position: relative;
+    padding-bottom: 18px;
 }
 
 .card-edit p {
@@ -71,9 +71,9 @@ width: 930px;
  margin:0px;
   }
 
-  .card-edit img {
- width: 100px;
- padding-top: 10%;
+ .card-edit img {
+    width: 20%;
+    padding-top: 5%;
 }
 
 .card:hover {

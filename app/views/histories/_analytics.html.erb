@@ -61,14 +61,8 @@
 
   <!--**************************FRONTEND*************************************-->
 
-
-
-
 <div class="white-background">
-    <h1 class="text-center">Key Figures</h1>
-
-
-    <div class="container">
+    <h1>Key Figures</h1>
       <div class="row">
 
        <div class="col-md-2 col-md-offset-2">
@@ -78,14 +72,12 @@
         </div>
       </div>
 
-
-      <div class="col-md-2 col-sm-6">
+      <div class="col-md-2">
         <div class="card-analytic">
           <h2> Total Number of Patterns</h2>
           <h3> <%= @bot.patterns.size %> </h3>
         </div>
       </div>
-
 
       <div class="col-md-2  ">
         <div class="card-analytic">
@@ -99,31 +91,33 @@
 
     </div>
 
-    <h1> Advanced Analytics </h1>
 
-    <div class="col-md-4 col-md-offset-1">
-      <canvas  id="DefaultMessageChart" width="100" height="100"></canvas>
+<h1> Advanced Analytics </h1>
+<div class="row">
+
+
+
+      <div class="col-md-4 col-md-offset-1">
+        <canvas  id="DefaultMessageChart" width="100" height="100"></canvas>
+      </div>
+
+      <div class="col-md-4">
+        <canvas  id="PatternsCharts" width="100" height="100"></canvas>
+      </div>
+
+      <div class="col-md-4 col-md-offset-1">
+        <canvas  id="DailyRequest" width="100" height="100"></canvas>
+      </div>
+
+      <div class="col-md-4 ">
+        <canvas  id="MonthlyRequests" width="100" height="100"></canvas>
+      </div>
+
+      <div class="col-md-4 col-md-offset-1">
+        <canvas  id="HourlyRequests" width="100" height="100"></canvas>
+      </div>
+
     </div>
-
-
-    <div class="col-md-4">
-      <canvas  id="PatternsCharts" width="100" height="100"></canvas>
-    </div>
-
-    <div class="col-md-4 col-md-offset-1">
-      <canvas  id="DailyRequest" width="100" height="100"></canvas>
-    </div>
-
-    <div class="col-md-4 ">
-      <canvas  id="MonthlyRequests" width="100" height="100"></canvas>
-    </div>
-
-    <div class="col-md-4 col-md-offset-1">
-      <canvas  id="HourlyRequests" width="100" height="100"></canvas>
-    </div>
-
-  </div>
-
 </div>
 
 
@@ -212,7 +206,8 @@ var myChart = new Chart(ctx, {
             label: '# of Request',
             data: <%= @daily_requests %>,
             backgroundColor: [
-                '#ffce56'
+                "#FF6384",
+                "#36A2EB"
             ],
             borderColor: [
                 '#ffce56'
@@ -247,10 +242,12 @@ var myChart = new Chart(ctx, {
             label: '# of Request',
             data: <%= @monthly_requests %>,
             backgroundColor: [
-                '#36A2EB'
+                "#FF6384",
+                "#36A2EB"
             ],
             borderColor: [
-                '#36A2EB'
+                "#FF6384",
+                "#36A2EB"
             ],
         }]
     },

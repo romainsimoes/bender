@@ -3,8 +3,9 @@
  <div class="scroll-small">
   <% @bot.patterns.each do |pattern| %>
   <div class="pattern-card">
-    <h1> <b>If user says</b> : <%= pattern.trigger.capitalize %></h1>
-    <h1><b>Bot answers </b>: <%= pattern.answer.capitalize %></h1>
+  <% if pattern.trigger || pattern.answer != nil %>
+      <h1> <b>If user says</b> : <%= pattern.trigger.capitalize %></h1>
+      <h1><b>Bot answers </b>: <%= pattern.answer.capitalize %></h1>
     <%= link_to bot_pattern_path(@bot, pattern), :method => "delete" do %>
     <p>Delete</p>
     <% end %>
@@ -13,6 +14,7 @@
     <p>Edit<p>
      <% end %>
    </div>
+    <% end %>
    <% end %>
  </div>
 </div>
