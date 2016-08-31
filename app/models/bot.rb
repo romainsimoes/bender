@@ -8,9 +8,11 @@ class Bot < ApplicationRecord
   has_many :recoveries, dependent: :destroy
   has_many :products, dependent: :destroy
 
+  validates :name, presence: true
   validates :street, presence: true
   validates :city, presence: true
   validates :shop_name, presence: true
+  validates :name, presence: true
 
 
 
