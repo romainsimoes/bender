@@ -65,12 +65,21 @@ class BotsController < ApplicationController
   end
 
   def edit
-    get_opening_times
+    @welcome = "Bonjour, je suis #{@bot.shop_name}, comment puis-je vous aider ?"
     if @bot.info
       if @bot.info['status'] != "INVALID_REQUEST"
+        get_opening_times
         @telephone = @bot.info['result']['international_phone_number']
         @website = @bot.info['result']['website']
+      else
+        @telephone = ''
+        @website = ''
+        @opening_and_closing = ''
       end
+    else
+      @telephone = ''
+      @website = ''
+      @opening_and_closing = ''
     end
     @pattern = Pattern.new
     @bot_id = params[:id]
@@ -116,13 +125,8 @@ class BotsController < ApplicationController
     end
 
     def get_opening_times
-      @opening_and_closing = ''
-      if @bot.info
-        if @bot.info['status'] != "INVALID_REQUEST"
-          @bot.info['result']['opening_hours']['weekday_text'].each do |day|
-            @opening_and_closing += "#{day}\n"
-          end
-        end
+      @bot.info['result']['opening_hours']['weekday_text'].each do |day|
+        @opening_and_closing += "#{day}\n"
       end
     end
 
