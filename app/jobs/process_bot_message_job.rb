@@ -5,7 +5,6 @@ class ProcessBotMessageJob < ApplicationJob
   def perform(message_sender_id, message_text, bot)
     session_recovering(message_sender_id)
     var_initalizer(message_sender_id, message_text, bot)
-
     get_intent
 
     step_path unless @@step == 'start'
@@ -75,6 +74,13 @@ class ProcessBotMessageJob < ApplicationJob
     @@ask_for_time_step_three = 'A quelle heure souhaitez-vous réserver ?'
     @@sorry_not_available = 'Désolé, nous sommes fermé à cette heure là, veuillez choisir une autre horaire'
     @@make_an_order_message = "Que voulez-vous commandez ?"
+    @@ask_to_confirm_order_message = "Voulez-vous confirmez votre commande"
+    @@ask_for_more_message = "Ce sera tout ?"
+    @@ask_for_address_message = "Quelle est votre addresse"
+    @@ask_something_message = "Que souhaiteriez-vous ?"
+    @@products = [] unless defined?(@@products)
+    @@address = ""
+    @@order_confirmed_message = "Votre commande est bien confirmée! Voici un récapitulatif"
     @@bot.info ? @@website = @@bot.info['result']['website'] : @@website = "Désolé, je ne connais pas l'url"
     @@bot.info ? @@telephone = @@bot.info['result']['international_phone_number'] : @@telephone = "Désolé, je ne connais pas le numéro"
   end

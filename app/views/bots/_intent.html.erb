@@ -12,11 +12,12 @@
     </div>
   </div>
   <div class="col-md-3 intent-card">
-   <%= simple_form_for [@bot, @pattern] do |f| %>
-   <%= f.error_notification %>
-   <%= f.input :trigger, input_html: { disabled: true, value: 'wit_opening_times' } %>
-   <%= f.text_area(:answer, value: @opening_and_closing)%>
-   <%= f.button :submit, :class => 'btn btn-primary' %>
-   <% end %>
+    <%= simple_form_for [@bot, @pattern] do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :trigger, input_html: { disabled: true, value: 'wit_opening_times' } %>
+    <%= f.text_area(:answer, value: @opening_and_closing)%>
+    <%= f.button :submit, :class => 'btn btn-primary' %>
+  <% end %>
+  <%= render 'products/form' %>
  </div>
 </div>

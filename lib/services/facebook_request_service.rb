@@ -136,36 +136,26 @@ class FacebookRequestService
           type: :template,
           payload:{
             template_type: :generic,
-            elements:[
-              {
-                title: "cool",
-                image_url: "https://maps.googleapis.com/maps/api/staticmap?markers=color:red|#{bot.street}#{bot.city}&size=300x150&zoom=18&maptype=roadmap",
-                subtitle: bot.street + ", " + bot.city,
-                buttons:[
-                  {
-                    type: :web_url,
-                    url: "https://www.google.fr/maps/search/#{bot.street}, #{bot.city}",
-                    title: "Allez-y!"
-                  }
-                ]
-              },
-              {
-                title: "cool",
-                image_url: "https://maps.googleapis.com/maps/api/staticmap?markers=color:red|#{bot.street}#{bot.city}&size=300x150&zoom=18&maptype=roadmap",
-                subtitle: bot.street + ", " + bot.city,
-                buttons:[
-                  {
-                    type: :web_url,
-                    url: "https://www.google.fr/maps/search/#{bot.street}, #{bot.city}",
-                    title: "Allez-y!"
-                  }
-                ]
-              }
-            ]
+            elements:[]
           }
         }
       }
     }
+    bot.products.each do |product|
+      message_data[:message][:attachment][:payload][:elements] << {
+        title: product.name,
+        image_url: product.photo_url,
+        subtitle: product.description + " " + product.price.to_s + "€",
+        buttons:[
+          {
+            type: "postback",
+            title: product.name,
+            payload: product.name
+          }
+        ]
+      }
+    end
+
     begin
     RestClient.post(
         "https://graph.facebook.com/v2.6/me/messages?access_token=#{bot.page_access_token}",
@@ -177,4 +167,92 @@ class FacebookRequestService
     end
   end
 
+  def self.send_receipt_template(recipient_id, bot, p2, address)
+    products = []
+    p products
+    p p2
+    bot.products.each do |pdt|
+      p2.each do |p|
+        if pdt.name == p
+          products << pdt
+        end
+      end
+    end
+
+    sum = 0
+    products.each { |x|sum += x.price.to_i }
+
+    num_of_product = p2.inject(Hash.new(0)) { |total, e| total[e] += 1 ;total}
+    json = user_info(recipient_id, bot)
+    first_name = json["first_name"]
+    last_name = json["last_name"]
+    message_data = {
+      recipient:{
+        id: recipient_id
+      },
+      message:{
+        attachment:{
+          type: :template,
+          payload:{
+            template_type: :receipt,
+            recipient_name: first_name + " " + last_name,
+            order_number: "200",
+            currency: "EUR",
+            payment_method: "espèce",
+            elements:[],
+            summary:{
+              total_cost: sum
+            }
+          }
+        }
+      }
+    }
+
+    products.each do |pr|
+      message_data[:message][:attachment][:payload][:elements] <<
+        {
+          title: pr.name,
+          subtitle: pr.description,
+          quantity: num_of_product[pr.name],
+          price: pr.price,
+          currency: "EUR",
+          image_url: pr.photo_url
+        }
+    end
+
+    begin
+    RestClient.post(
+        "https://graph.facebook.com/v2.6/me/messages?access_token=#{bot.page_access_token}",
+        message_data.to_json,
+        content_type: :json
+        )
+    rescue RestClient::ExceptionWithResponse => err
+      puts "\nFacebook API response from invalid request:\n#{err.response}\n\n"
+    end
+  end
+
+  def self.user_info(recipient_id, bot)
+    url = "https://graph.facebook.com/v2.6/995327857249604?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=EAAYBn1ZB9NwQBAHcbZAOLSucOH7209yd1BQNa3PZCMxv9X7lLCpn8eBCNp7ZAlOPcw4KBnC9ZAdJ9ThcQD4pGVJlpxcpmC8t2hj98rwaWuviqOdYNBGl6CUZCv7KIpZC5AJmZBUf704xrREsS2gAzlA0t6TG3onR4QluTF9SzUU88wZDZD"
+    response = RestClient.get(url)
+    json = JSON.parse(response)
+    return json
+  end
+
+  def self.processing_message(recipient_id, bot)
+    message_data = {
+      recipient: {
+        id: recipient_id
+      },
+      sender_action: :typing_on
+    }
+    begin
+    RestClient.post(
+        "https://graph.facebook.com/v2.6/me/messages?access_token=#{bot.page_access_token}",
+        message_data.to_json,
+        content_type: :json
+        )
+    rescue RestClient::ExceptionWithResponse => err
+      puts "\nFacebook API response from invalid request:\n#{err.response}\n\n"
+    end
+  end
 end

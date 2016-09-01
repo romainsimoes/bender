@@ -32,9 +32,10 @@ class SharedJob < ProcessBotMessageJob
     date_matches.first
   end
 
-  def self.make_an_order
-    FacebookRequestService.item_template(@@message_sender_id, @@bot)
-    @@return = true
+  def self.send_confirmed_order(answer, pattern_id)
+    FacebookRequestService.send_message(@@message_sender_id, answer, @@bot.page_access_token)
+    FacebookRequestService.send_receipt_template(@@message_sender_id, @@bot, @@products, @@address)
+    product = @@products.join(" ")
+    Order.create(product: product, address: @@address, bot_id: @@bot.id, status: "en cours")
   end
-
 end

@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resources :bots do
     resources :histories, only: [:index]
     resources :patterns, except: [:show]
+    resources :products, except: [:show]
+    resources :orders
     member do
       get 'analytic', to: 'bots#analytic'
       get 'webhook', to: "bots#webhook_verification"

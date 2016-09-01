@@ -1,0 +1,7 @@
+<h1>Your orders</h1>
+
+<ul>
+<% @orders.each do |order| %>
+  <li><%= order.product %> <%= order.address %> <%= order.status %></li>
+<% end %>
+</ul>
