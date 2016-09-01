@@ -3,3 +3,13 @@ color: #0084FF;
 display: inline;
 }
 
+
+.guide a {
+    color: #0084FF;
+}
+
+
+.guide:a:hover {
+  color: #C9CACE;
+  text-decoration: none;
+}
