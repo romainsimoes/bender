@@ -1,0 +1,23 @@
+<div role="tabpanel" class="tab-pane" id="intent">
+  <div class="col-md-4 col-md-offset-2 intent-card">
+    <h2>Add Intent</h2>
+    <div class="checkbox">
+      <label><input type="checkbox" value="">Opening hours</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" value="">Address</label>
+    </div>
+    <div class="checkbox ">
+      <label><input type="checkbox" value="">Phone Number</label>
+    </div>
+  </div>
+  <div class="col-md-3 intent-card">
+    <%= simple_form_for [@bot, @pattern] do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :trigger, input_html: { disabled: true, value: 'wit_opening_times' } %>
+    <%= f.text_area(:answer, value: @opening_and_closing)%>
+    <%= f.button :submit, :class => 'btn btn-primary' %>
+  <% end %>
+  <%= render 'products/form' %>
+ </div>
+</div>

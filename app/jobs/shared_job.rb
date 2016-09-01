@@ -32,6 +32,14 @@ class SharedJob < ProcessBotMessageJob
     date_matches.first
   end
 
+
+  def self.send_confirmed_order(answer, pattern_id)
+    FacebookRequestService.send_message(@@message_sender_id, answer, @@bot.page_access_token)
+    FacebookRequestService.send_receipt_template(@@message_sender_id, @@bot, @@products, @@address)
+    product = @@products.join(" ")
+    Order.create(product: product, address: @@address, bot_id: @@bot.id, status: "en cours")
+  end
+
   def self.create_google_agenda_event(event)
     GoogleCalendarApiService.create_event(@@bot.user, event)
   end
@@ -59,6 +67,6 @@ class SharedJob < ProcessBotMessageJob
   def self.make_an_order
     FacebookRequestService.item_template(@@message_sender_id, @@bot)
     @@return = true
-  end
 
+  end
 end

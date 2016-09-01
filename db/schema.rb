@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema.define(version: 20160831101225) do
+=======
 ActiveRecord::Schema.define(version: 20160831134721) do
+>>>>>>> ea0ff4d18e5cbf661201dc57b0e8abb4d69062d6
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +46,16 @@ ActiveRecord::Schema.define(version: 20160831134721) do
     t.index ["pattern_id"], name: "index_histories_on_pattern_id", using: :btree
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.string   "product"
+    t.string   "address"
+    t.string   "status"
+    t.integer  "bot_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id"], name: "index_orders_on_bot_id", using: :btree
+  end
+
   create_table "patterns", force: :cascade do |t|
     t.string   "trigger"
     t.string   "answer"
@@ -52,7 +66,7 @@ ActiveRecord::Schema.define(version: 20160831134721) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string   "titre"
+    t.string   "name"
     t.string   "description"
     t.integer  "bot_id"
     t.datetime "created_at",  null: false
@@ -103,6 +117,7 @@ ActiveRecord::Schema.define(version: 20160831134721) do
 
   add_foreign_key "bots", "users"
   add_foreign_key "histories", "bots"
+  add_foreign_key "orders", "bots"
   add_foreign_key "patterns", "bots"
   add_foreign_key "products", "bots"
   add_foreign_key "recoveries", "bots"

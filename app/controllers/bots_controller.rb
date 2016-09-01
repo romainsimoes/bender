@@ -33,6 +33,15 @@ class BotsController < ApplicationController
         # 2 - Init Job
         ProcessBotMessageJob.perform_later(message_sender_id, message_text, @bot)
       end
+    elsif params['entry'][0]['messaging'][0]['postback']
+      postback = params['entry'][0]['messaging'][0]['postback']['payload']
+      message_sender_id = params['entry'][0]['messaging'][0]['sender']['id']
+      p postback
+      p 'webhook_request_accepted'
+      if postback && message_sender_id
+        # 2 - Init Job
+        ProcessBotMessageJob.perform_later(message_sender_id, postback, @bot)
+      end
     end
 
     # 3 - 200
@@ -65,6 +74,9 @@ class BotsController < ApplicationController
   end
 
   def edit
+    @product = Product.new
+    get_opening_times
+
     @welcome = "Bonjour, je suis #{@bot.shop_name}, comment puis-je vous aider ?"
     if @bot.info
       if @bot.info['status'] != "INVALID_REQUEST"
@@ -81,6 +93,7 @@ class BotsController < ApplicationController
       @website = ''
       @opening_and_closing = ''
     end
+
     @pattern = Pattern.new
     @bot_id = params[:id]
     #@pattern_number = History.all.where(bot: Bot.find(params[:bot_id])).group(:pattern_id).count

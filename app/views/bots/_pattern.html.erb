@@ -26,7 +26,7 @@
   <div class="pattern-card">
     <h1> <b>If user says</b> : <%= pattern.trigger %></h1>
     <h1><b>Bot answers </b>: <%= pattern.answer %></h1>
-    <%= link_to bot_pattern_path(@bot, pattern), method: "delete" do %>
+    <%= link_to bot_pattern_path(@bot, pattern), :method => "delete" do %>
     <p>Delete</p>
     <% end %>
     <p>|</p>
