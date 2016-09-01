@@ -1,11 +1,10 @@
 <div class="col-md-6 card-pattern ">
-  <h6>
-    Here you can program an answer your bot will send when the message received contain the specific words
-  </h6>
+
  <h6>Specific Information</h6>
+ <p>  Program answers your bot will send in response to specific words.</p>
  <%= simple_form_for [@bot, @pattern] do |f| %>
  <%= f.error_notification %>
-
+<br>
  <div class="col-md-6  intent-card">
    <h2>If user says ... </h2>
    <%= f.text_area :trigger, id: 'text_area_medium' %>
@@ -40,19 +39,11 @@
 
 
 <div class="col-md-6 card-pattern scroll grey-background">
-  <h6>
-    Here you can program an answer your bot will send when the message received has the following intent
-  </h6>
   <h6>Generic Information</h6>
-
+  <p>  Program answers your bot will send in response to generic questions.</p>
   <div class="col-md-12  intent-card inline">
+  <br>
     <h2>Welcome Message</h2>
-    <p>
-      Add if you wish your bot to answer for you when the bot receive a message
-    </p>
-    <p>
-      with a welcome intent
-    </p>
     <%= simple_form_for [@bot, @pattern] do |f| %>
     <%= f.error_notification %>
     <%= f.text_field :trigger, value: 'wit_welcome', hidden: true %>
@@ -63,9 +54,6 @@
 
   <div class="col-md-12  intent-card inline">
     <h2>Telephone </h2>
-    <p>
-      Add if you wish your bot to answer for you your telephone number
-    </p>
     <%= simple_form_for [@bot, @pattern] do |f| %>
     <%= f.error_notification %>
     <%= f.text_field :trigger, value: 'wit_tel', hidden: true %>
@@ -76,9 +64,6 @@
 
   <div class="col-md-12 intent-card">
     <h2>Website </h2>
-    <p>
-      Add if you wish your bot to answer for you your website
-    </p>
     <%= simple_form_for [@bot, @pattern] do |f| %>
     <%= f.error_notification %>
     <%= f.text_field :trigger, value: 'wit_website', hidden: true %>
@@ -90,9 +75,6 @@
 
   <div class="col-md-12  intent-card">
     <h2>Opening Hours</h2>
-    <p>
-      Add if you wish your bot to answer for you your opening times
-    </p>
     <%= simple_form_for [@bot, @pattern] do |f| %>
     <%= f.error_notification %>
     <%= f.text_field :trigger, value: 'wit_opening_times', hidden: true %>
