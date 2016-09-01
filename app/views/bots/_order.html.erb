@@ -1,7 +1,5 @@
-<div class="row">
-  <div class="dim">
-    <div class="col-xs-12 col-md-8">
-      <h1>Your orders</h1>
+<div class="col-md-6 card-pattern ">
+      <h6>Your orders</h6>
       <div class="orders">
         <% @orders.each do |order| %>
         <div class="order-card">
@@ -12,7 +10,7 @@
             <p><%= order.address %></p>
           </div>
           <div class="flex-item">
-            <p><%=order.created_at%></p>
+            <p><%=order.created_at.strftime("%T") %></p>
           </div>
           <div class="flex-item">
             <p><%= order.status %></p>
@@ -20,20 +18,19 @@
         </div>
       <% end %>
       </div>
-    </div>
-  </div>
-  <div class="dim">
-    <div class="col-xs-12 col-md-4 grey-background">
-      <h2>Add a product</h2>
+ </div>
+
+ <div class="col-md-6 card-pattern scroll grey-background">
+      <h6>Add a product</h6>
       <%= render 'products/form' %>
-        <h5>Patterns List</h5>
+        <h6>Product List</h6>
         <div class="scroll-small">
           <% @bot.products.each do |product| %>
             <div class="pattern-card">
-              <%= image_tag product.photo %>
-              <h1><%= product.name %></h1>
-              <h1><%= product.description %></h1>
-              <h1><%= product.price %>€</h1>
+              <%= image_tag product.photo, height: '100', width: '100' %> <br>
+              <p><b><%= product.name %></b></p> <br>
+              <p><%= product.description %></p> <br>
+              <p><%= product.price %>€</p> <br>
               <%= link_to bot_product_path(@bot, product), :method => "delete" do %>
               <p>Delete</p>
               <% end %>
@@ -45,6 +42,6 @@
           <% end %>
         </div>
       </div>
-    </div>
-</div>
+
+
 

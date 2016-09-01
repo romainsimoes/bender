@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
   def create
     @product = @bot.products.build(product_params)
     if @product.save
-      redirect_to edit_bot_path(@bot)
+      redirect_to edit_bot_path(@bot, active: :orders)
     else
       render :new
     end
@@ -25,7 +25,7 @@ class ProductsController < ApplicationController
 
   def update
     if @pattern.update(pattern_params)
-      redirect_to edit_bot_path(@bot)
+      redirect_to edit_bot_path(@bot, active: :orders)
     else
       render :edit
     end
@@ -33,7 +33,7 @@ class ProductsController < ApplicationController
 
   def destroy
     @product.destroy
-    redirect_to edit_bot_path(@bot)
+    redirect_to edit_bot_path(@bot, active: :orders)
   end
 
 private
