@@ -79,6 +79,6 @@ class User < ApplicationRecord
   end
 
   def is_user_google_connected?
-    google_email.nil? || google_token.nil? || google_uid.nil?
+    google_email.nil? || google_token.nil? || google_uid.nil? || refresh_token.nil?
   end
 end

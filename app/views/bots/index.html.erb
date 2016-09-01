@@ -35,13 +35,7 @@
                  <% end %>
                 </div>
 
-                <%=
-                  check_box_tag "toggle_bot_#{bot.id}", nil,
-                                bot.enable,
-                                class: 'toggle-bot',
-                                'data-bot' => toggle_bot_path(bot, format: :json),
-                                'data-toggle' => 'toggle'
-                %>
+                <%= check_box_tag "toggle_bot_#{bot.id}", nil, bot.enable, class: 'toggle-bot', 'data-bot' => toggle_bot_path(bot, format: :json), 'data-toggle' => 'toggle' %>
             <%= link_to edit_bot_path(bot), class: 'card-link' do %>
             <% end %>
           </div>
