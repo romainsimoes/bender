@@ -9,6 +9,14 @@ class OrdersController < ApplicationController
   end
 
   def edit
+    if @order.status == 'en cours'
+      @order.status = 'en préparation'
+      @order.save
+    elsif @order.status == 'en préparation'
+      @order.status = 'commande terminée'
+      @order.save
+    end
+    redirect_to edit_bot_path(@bot)
   end
 
   def update
@@ -27,6 +35,7 @@ class OrdersController < ApplicationController
 
   def find_bot
     @bot = Bot.find(params[:bot_id])
+    authorize(@bot)
   end
 
   def order_params
