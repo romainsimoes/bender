@@ -56,7 +56,7 @@ class ProcessBotMessageJob < ApplicationJob
   end
 
   def no_matches
-    answer = "J'ai rien compris batard"
+    answer = "Ne m'en demande pas trop, je ne suis qu'un robot"
     SharedJob.send_and_store_answer(answer, nil)
   end
 
@@ -71,7 +71,7 @@ class ProcessBotMessageJob < ApplicationJob
     @@negative_message = "Pas de soucis, n'hésitez pas à me recontacter plus tard"
     @@booking_message = "Souhaitez-vous prendre un RDV ?"
     @@ask_for_date_message = 'Quand Souhaitez-vous réserver ?'
-    @@thanks_message = 'tout le plaisir est pour moi'
+    @@thanks_message = 'Tout le plaisir est pour moi'
     @@ask_for_time_step_three = 'A quelle heure souhaitez-vous réserver ?'
     @@sorry_not_available = 'Désolé, nous sommes fermé à cette heure là, veuillez choisir une autre horaire'
     @@make_an_order_message = "Que voulez-vous commandez ?"
