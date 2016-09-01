@@ -107,7 +107,7 @@
       Tell your bot, you wish to let him handle the booking for you
     </p>
     <% if current_user.google_token %>
-      <%= link_to "Del", add_agenda_entry_bot_path(@bot), class: 'btn button-blue-small' %>
+      <%= link_to "Del", delete_agenda_entry_bot_path(@bot), class: 'btn button-blue-small' %>
     <% else %>
       <%= link_to "Add", add_agenda_entry_bot_path(@bot), class: 'btn button-blue-small' %>
     <% end %>
