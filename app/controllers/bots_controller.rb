@@ -74,6 +74,8 @@ class BotsController < ApplicationController
   end
 
   def edit
+     @orders = policy_scope(Order)
+    @orders = Order.all.order(created_at: :desc)
     @product = Product.new
     @welcome = "Bonjour, je suis #{@bot.shop_name}, comment puis-je vous aider ?"
     if @bot.info

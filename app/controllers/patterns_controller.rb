@@ -4,7 +4,7 @@ class PatternsController < ApplicationController
   skip_after_action :verify_authorized
 
   def index
-    @patterns = Pattern.all
+    @pattern = Pattern.all
   end
 
   def new

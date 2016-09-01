@@ -19,8 +19,6 @@ class StepJob < ProcessBotMessageJob
         if entities['datetime'][0]['value'] && (entities['datetime'][0]['confidence'] > 0.9)
           @@date ||= nil
           booking_request = entities['datetime'][0]['value']
-          p '####################################################'
-          p booking_request
           date_matches = SharedJob.date_parser(booking_request)
           if date_matches[3] != '00:00'
             if @@date
@@ -50,7 +48,7 @@ class StepJob < ProcessBotMessageJob
             @@return = true
           else
             @@date = [date_matches[2], date_matches[1], date_matches[0]]
-            ask_for_time_step_one = "Pas de soucis pour le #{@@date[0]}/#{@@date[1]}/#{@@date[2]}, nos disponibilités ce jour-ci sont:"
+            ask_for_time_step_one = "Pas de soucis pour le #{@@date[0]}/#{@@date[1]}/#{@@date[2]}"
             SharedJob.send_and_store_answer(ask_for_time_step_one, nil)
             SharedJob.send_and_store_answer(@@ask_for_time_step_three, nil)
             @@return = true
