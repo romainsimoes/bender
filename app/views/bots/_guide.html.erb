@@ -1,26 +1,20 @@
-<div class="row white-background">
-  <div class="col-md-9 col-md-offset-1">
+<div class="row ">
+  <div class="col-md-9 col-md-offset-1 guide">
 
-    <h6>Before Starting.</h6>
-    <p>To create your bot you must have already created a Facebook Page. Otherwise you will have to</p><a href="https://www.facebook.com/pages/create/"> Create a Facebook Page</a>
-    <h6>Let's get started. Watch Our Tutorial.</h6>
-    <p>It will take 5 minutes to setup your Bot. We will help you in each step. From integrations to making it intelligent.</p>
+    <h6>Get Ready.</h6>
+    <p>First of all, if you don't already have one you have to <a href="https://www.facebook.com/pages/create/" target="blank"> Create a Facebook Page</a>.</p>
+    <h6>Let's get started.</h6>
+    <p>It will take 5 minutes to setup your Bot. Watch carefully our Setup Tutorial.</p>
 
-   <div>
-    <object width="800" height="500">
-      <param name="movie" value="http://www.youtube.com/v/_etwz7NkemE&hl=fr"></param>
-      <param name="wmode" value="transparent"></param>
-      <embed src="http://www.youtube.com/v/_etwz7NkemE&hl=fr" type="application/x-shockwave-flash" wmode="transparent" target="blank" width="800" height="500"></embed>
-    </object>
-  </div>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/FOKeX5Fvie8" frameborder="0" allowfullscreen></iframe>
 
     <h6>1. Create a Facebook App</h6>
-      <p>
-        Create a new Facebook App and Page or use existing ones. Go to the App Dashboard and under Product Settings click "Add Product" and select "Messenger."
+
+    <p>Go to <a href="https://developers.facebook.com/apps" target="blank">Facebook Developper Platform</a>
+        Create a new Facebook App. Goto the App Dashboard and under Product Settings click "Add Product" and select "Messenger."
       </p>
-      <p>
-        https://developers.facebook.com/apps
-      </p>
+
+
       <div class="tuto">
        <%= image_tag "tutorial_1.png", width: "800" %>
      </div>
@@ -37,12 +31,12 @@
       <br><br><br>
       <p>Paste this in the URL section </p> <h5>https://panda-bot.herokuapp.com/bots/<%= @bot.id %>/webhook</h5>
       <br><br><br>
-      <p> Paste this in the Verify Token <h5><%= @bot.token %></h5> </p> <br>
+      <p> Paste this in the Verify Token <h5><%= @bot.token %></h5> </p>
       <p>Select message_deliveries, messages, messaging_optins, and messaging_postbacks under Subscription Fields.</p>
     </div>
 
 
-   <h6> 3. Get a Page Access Token</h6>
+   <h6> 3. Get a Page Access Token</h6><br>
 
    <p>Stick your Page Access Token below</p>
 
