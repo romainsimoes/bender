@@ -1,5 +1,5 @@
 class BotsController < ApplicationController
-  before_action :set_bot, only: [:toggle, :analytic, :show, :edit, :update, :destroy, :webhook_verification, :webhook, :webhook_subscribe]
+  before_action :set_bot, only: [:toggle, :analytic, :show, :edit, :update, :destroy, :webhook_verification, :webhook, :webhook_subscribe, :add_agenda_entry, :delete_agenda_entry]
 
   skip_before_action :authenticate_user!, only: [:webhook, :webhook_verification]
   skip_after_action :verify_authorized, only: [:webhook, :webhook_verification, :guide]
@@ -115,6 +115,20 @@ class BotsController < ApplicationController
     authorize(@bot)
     status = @bot.update_attribute(:enable, params[:state])
     render json: { enabled: @bot.enable, status: @bot.valid? }
+  end
+
+  def add_agenda_entry
+    @bot.intent << 'agenda_entry'
+    @bot.save
+    redirect_to omniauth_authorize_path('user', 'google_oauth2')
+  end
+
+  def delete_agenda_entry
+    current_user.google_token = nil
+    current_user.save
+    @bot.intent.delete('agenda_entry')
+    @bot.save
+    redirect_to omniauth_authorize_path('user', 'google_oauth2')
   end
 
   private

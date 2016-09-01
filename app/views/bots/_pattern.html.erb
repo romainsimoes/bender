@@ -82,8 +82,10 @@
 
   <div class="col-md-12  intent-card">
     <h2>Booking</h2>
-    <% unless current_user.google_token %>
-      <%= link_to "Booking", omniauth_authorize_path('user', 'google_oauth2'), class:"rectangle rectangle-s"%>
+    <% if current_user.google_token %>
+      <%= link_to "Del", delete_agenda_entry_bot_path(@bot), class: 'btn button-blue-small' %>
+    <% else %>
+      <%= link_to "Add", add_agenda_entry_bot_path(@bot), class: 'btn button-blue-small' %>
     <% end %>
   </div>
 

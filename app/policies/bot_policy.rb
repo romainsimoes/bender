@@ -46,4 +46,12 @@ class BotPolicy < ApplicationPolicy
     end
   end
 
+  def add_agenda_entry?
+    record.user == user || user.admin?
+  end
+
+  def delete_agenda_entry?
+    record.user == user || user.admin?
+  end
+
 end
