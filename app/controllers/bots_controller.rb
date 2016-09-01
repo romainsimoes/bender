@@ -75,7 +75,6 @@ class BotsController < ApplicationController
 
   def edit
     @product = Product.new
-
     @welcome = "Bonjour, je suis #{@bot.shop_name}, comment puis-je vous aider ?"
     if @bot.info
       if @bot.info['status'] != "INVALID_REQUEST"
