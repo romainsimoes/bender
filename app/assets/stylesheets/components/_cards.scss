@@ -1,9 +1,10 @@
 .pattern-card {
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  border:2px solid #E6E5E4;
-  margin-right-right: 10px;
+    padding-left: 20px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding-top: 0px;
+    border: 2px solid #E6E5E4;
+    margin-right: 10px;
 }
 
 
@@ -35,7 +36,7 @@ width: 930px;
 
 .scroll-small {
   overflow-y: auto;
-  height: 55vh;
+  height: 50vh;
   overflow: scroll;
 }
 
@@ -54,16 +55,16 @@ width: 930px;
 }
 
 .card-edit {
-  margin-top: 20%;
-  width: 400px;
-  height:330px;
-  border-radius: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50px;
-  border:2px solid #E6E5E4;
-  text-align: center;
-  position: relative;
+    margin-top: 20%;
+    width: 70%;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    border: 2px solid #E6E5E4;
+    text-align: center;
+    position: relative;
+    padding-bottom: 18px;
 }
 
 .card-edit p {
@@ -71,9 +72,9 @@ width: 930px;
  margin:0px;
   }
 
-  .card-edit img {
- width: 100px;
- padding-top: 10%;
+ .card-edit img {
+    width: 20%;
+    padding-top: 5%;
 }
 
 .card:hover {
@@ -132,8 +133,8 @@ width: 930px;
   z-index: 3000;
 }
 .card-description h2 {
-  font-size: 24px;
-
+    font-size: 24px;
+    padding-bottom: 29%;
 }
 .card-description p {
   font-size: 13px;
@@ -194,7 +195,7 @@ width: 80px;
 
 
 .info-form {
-margin-top: 4%;
+margin-top: 6%;
 }
 
 .scroll {
@@ -206,7 +207,7 @@ margin-top: 4%;
 }
 
 .card-pattern {
-  margin-top: 5%;
+  margin-top: 0%;
   padding-left: 5%;
   padding-right: 5%;
 }
@@ -220,6 +221,13 @@ margin-top: 4%;
   font-size: 11px;
   }
 
+.card-pattern h5 {
+  font-size: 20px;
+margin-top: 0px;
+margin-top: 0px;
+padding-top: 0px;
+color: #777777;
+  }
 
 
 .card-add-pattern {
@@ -228,6 +236,15 @@ margin-top: 5%;
 
 
 .intent-card {
-margin-top: 8%;
+margin-top: 0%;
+margin-left: 0px;
+padding-left: 0px;
+}
+
+.intent-card h2 {
+font-size: 15px;
+margin-top: 2px;
+color: black;
+
 }
 

@@ -5,6 +5,7 @@ class ProcessBotMessageJob < ApplicationJob
   def perform(message_sender_id, message_text, bot)
     session_recovering(message_sender_id)
     var_initalizer(message_sender_id, message_text, bot)
+
     get_intent
 
     step_path unless @@step == 'start'

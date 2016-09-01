@@ -8,7 +8,7 @@
       </div>
       <div class="nvb-menu">
       <% if current_user %>
-        <%= link_to "Dasboard", bots_path, class:"rectangle rectangle-s" %>
+        <%= link_to "Dashboard", bots_path, class:"rectangle rectangle-s" %>
       <% else %>
         <%= link_to "Dashboard", omniauth_authorize_path('user', 'facebook'), class:"rectangle rectangle-s"%>
       <% end %>

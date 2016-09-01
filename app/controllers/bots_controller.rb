@@ -1,5 +1,5 @@
 class BotsController < ApplicationController
-  before_action :set_bot, only: [:analytic, :show, :edit, :update, :destroy, :webhook_verification, :webhook, :webhook_subscribe]
+  before_action :set_bot, only: [:toggle, :analytic, :show, :edit, :update, :destroy, :webhook_verification, :webhook, :webhook_subscribe, :add_agenda_entry, :delete_agenda_entry]
 
   skip_before_action :authenticate_user!, only: [:webhook, :webhook_verification]
   skip_after_action :verify_authorized, only: [:webhook, :webhook_verification, :guide]
@@ -76,6 +76,24 @@ class BotsController < ApplicationController
   def edit
     @product = Product.new
     get_opening_times
+
+    @welcome = "Bonjour, je suis #{@bot.shop_name}, comment puis-je vous aider ?"
+    if @bot.info
+      if @bot.info['status'] != "INVALID_REQUEST"
+        get_opening_times
+        @telephone = @bot.info['result']['international_phone_number']
+        @website = @bot.info['result']['website']
+      else
+        @telephone = ''
+        @website = ''
+        @opening_and_closing = ''
+      end
+    else
+      @telephone = ''
+      @website = ''
+      @opening_and_closing = ''
+    end
+
     @pattern = Pattern.new
     @bot_id = params[:id]
     #@pattern_number = History.all.where(bot: Bot.find(params[:bot_id])).group(:pattern_id).count
@@ -94,9 +112,10 @@ class BotsController < ApplicationController
 
   def update
     if @bot.update(bot_params)
-      redirect_to edit_bot_path(@bot), notice: 'Bot was successfully updated.'
+      @bot.info = GoogleApiService.place_detail(@bot)
+      redirect_to(edit_bot_path(@bot), notice: 'Bot was successfully updated.')
     else
-      render :edit
+      format.html { render :edit }
     end
   end
 
@@ -105,6 +124,25 @@ class BotsController < ApplicationController
     redirect_to bots_path, notice: 'Bot was successfully destroyed.'
   end
 
+  def toggle
+    authorize(@bot)
+    status = @bot.update_attribute(:enable, params[:state])
+    render json: { enabled: @bot.enable, status: @bot.valid? }
+  end
+
+  def add_agenda_entry
+    @bot.intent << 'agenda_entry'
+    @bot.save
+    redirect_to omniauth_authorize_path('user', 'google_oauth2')
+  end
+
+  def delete_agenda_entry
+    current_user.google_token = nil
+    current_user.save
+    @bot.intent.delete('agenda_entry')
+    @bot.save
+    redirect_to omniauth_authorize_path('user', 'google_oauth2')
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -115,10 +153,8 @@ class BotsController < ApplicationController
 
     def get_opening_times
       @opening_and_closing = ''
-      if @bot.info
-        @bot.info['result']['opening_hours']['weekday_text'].each do |day|
-          @opening_and_closing += "#{day}\n"
-        end
+      @bot.info['result']['opening_hours']['weekday_text'].each do |day|
+        @opening_and_closing += "#{day}\n"
       end
     end
 

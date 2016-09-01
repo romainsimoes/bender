@@ -1,47 +1,58 @@
+<div class="row white-background">
+  <div class="col-md-9 col-md-offset-1">
 
-  <div class="row  white-background">
-    <div class="col-md-9 col-md-offset-1">
-      <h1>1. Create a Facebook App and Page</h1>
+    <h6>Before Starting.</h6>
+    <p>To create your bot you must have already created a Facebook Page. Otherwise you will have to</p><a href="https://www.facebook.com/pages/create/"> Create a Facebook Page</a>
+    <h6>Let's get started. Watch Our Tutorial.</h6>
+    <p>It will take 5 minutes to setup your Bot. We will help you in each step. From integrations to making it intelligent.</p>
+
+   <div>
+    <object width="800" height="500">
+      <param name="movie" value="http://www.youtube.com/v/_etwz7NkemE&hl=fr"></param>
+      <param name="wmode" value="transparent"></param>
+      <embed src="http://www.youtube.com/v/_etwz7NkemE&hl=fr" type="application/x-shockwave-flash" wmode="transparent" target="blank" width="800" height="500"></embed>
+    </object>
+  </div>
+
+    <h6>1. Create a Facebook App</h6>
       <p>
         Create a new Facebook App and Page or use existing ones. Go to the App Dashboard and under Product Settings click "Add Product" and select "Messenger."
+      </p>
+      <p>
+        https://developers.facebook.com/apps
       </p>
       <div class="tuto">
        <%= image_tag "tutorial_1.png", width: "800" %>
      </div>
 
-     <h1>2. Setup Webhook</h1>
-
-     <div class="tuto">
-     <p>In the Webhooks section, click "Setup Webhooks."<p>
-       <%= image_tag "tutorial_2.png", width: "800" %>
-     </div>
-
-
-
+    <h6>2. Setup Webhook</h6>
       <div class="tuto">
-       <%= image_tag "tutorial_3.png", width: "800" %>
-       <br><br><br>
-        <p>Paste this in the URL section </p> <h5>https://localhost:3000.com//bots/<%= @bot.id %>/webhook</h5>
+        <p>In the Webhooks section, click "Setup Webhooks."<p>
+        <%= image_tag "tutorial_2.png", width: "800" %>
+    </div>
+
+
+    <div class="tuto">
+      <%= image_tag "tutorial_3.png", width: "800" %>
+      <br><br><br>
+      <p>Paste this in the URL section </p> <h5>https://panda-bot.herokuapp.com/bots/<%= @bot.id %>/webhook</h5>
       <br><br><br>
       <p> Paste this in the Verify Token <h5><%= @bot.token %></h5> </p> <br>
       <p>Select message_deliveries, messages, messaging_optins, and messaging_postbacks under Subscription Fields.</p>
-     </div>
+    </div>
 
-     <h1> 3. Get a Page Access Token</h1>
 
-     <p>Stick your Page Access Token below</p>
+   <h6> 3. Get a Page Access Token</h6>
 
-     <%= simple_form_for(@bot) do |f| %>
-     <%= f.error_notification %>
+   <p>Stick your Page Access Token below</p>
 
-     <%= f.input :page_access_token %>
-     <%= f.button :submit, :class => 'btn btn-primary' %>
-     <% end %>
+   <%= simple_form_for(@bot) do |f| %>
+   <%= f.error_notification %>
 
-     <h1>4. Subscribe the App to the Page</h1>
+   <%= f.input :page_access_token %>
+   <%= f.button :submit, :class => 'btn btn-primary' %>
+   <% end %>
 
-   </div>
+   <h6>4. Subscribe the App to the Page</h6>
  </div>
-
-
-
+</div>

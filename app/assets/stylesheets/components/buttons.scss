@@ -25,7 +25,7 @@
   background-color: #FF6384
 }
 .button-blue {
-  width: 180px;
+  width: 50px;
   background-color: #0084FF;
 }
 .button-green {
@@ -42,7 +42,19 @@
   background-color: #2998FF;
 }
 // Buttons Size
+.button-blue-small {
+    width: 50px;
+    background-color: #0084FF;
+    color: white;
+    font-size: smaller;
+}
 
+.button-blue-medium {
+    width: 110px;
+    background-color: #0084FF;
+    color: white;
+    font-size: smaller;
+}
 
 
 
@@ -100,6 +112,14 @@ a:hover {
   background-color: #0084FF;
   color: white;
   transition: background-color 0.5s ease;
+}
+
+
+.toggle {
+    position: absolute;
+    left: 39%;
+    bottom: 17%;
+    z-index: 40000;
 }
 
 

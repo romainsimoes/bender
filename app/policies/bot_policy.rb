@@ -10,7 +10,7 @@ class BotPolicy < ApplicationPolicy
   end
 
   def index?
-    true
+    record.user == user || user.admin?
   end
 
   def create?
@@ -33,6 +33,10 @@ class BotPolicy < ApplicationPolicy
     true
   end
 
+  def toggle?
+    record.user == user
+  end
+
   def rails_admin?(action)
     case action
       when :destroy, :new
@@ -40,6 +44,14 @@ class BotPolicy < ApplicationPolicy
       else
         super
     end
+  end
+
+  def add_agenda_entry?
+    record.user == user || user.admin?
+  end
+
+  def delete_agenda_entry?
+    record.user == user || user.admin?
   end
 
 end
