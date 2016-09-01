@@ -18,7 +18,7 @@
       <div role="tabpanel" class="tab-pane " id="home"><%= render 'home' %></div>
       <div role="tabpanel" class="tab-pane <%= 'active' if params[:active] == 'patterns'%>" id="pattern"><%= render 'pattern' %></div>
       <div role="tabpanel" class="tab-pane" id="analytics"><%= render '/histories/analytics'%></div>
-      <div role="tabpanel" class="tab-pane" id="orders">Orders</div>
+      <div role="tabpanel" class="tab-pane" id="orders"><%= render 'order'%></div>
       <div role="tabpanel" class="tab-pane <%= 'active' unless params[:active] %>" id="tuto"><%= render 'guide'%></div>
       <div role="tabpanel" class="tab-pane" id="history"><%= render 'history' %></div>
 

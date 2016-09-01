@@ -252,8 +252,10 @@ color: black;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 0;
+  padding-top: 0;
+  padding-bottom: 14px;
   margin: 20px 0px;
+  border-bottom: 1px solid #DCE0E0;
 }
 
 .flex-item {
@@ -262,5 +264,11 @@ color: black;
   p{
     margin: 0;
   }
+}
+
+.orders {
+  overflow: hidden;
+  overflow-y: auto;
+  height: 80vh;
 }
 
