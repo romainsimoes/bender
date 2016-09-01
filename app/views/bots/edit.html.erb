@@ -6,7 +6,7 @@
       <ul class="nav nav-stacked nav-pills" role="tablist">
         <li role="presentation" class="<%= 'active' unless params[:active] %>" ><a href="#tuto" aria-controls="tuto" role="tab" data-toggle="tab">1 - Setup</a></li>
         <li role="presentation" class="<%= 'active' if params[:active] == 'patterns'%>"><a href="#pattern" aria-controls="pattern" role="tab" data-toggle="tab">2 - Configuration </a></li>
-        <li role="presentation" ><a href="#orders" aria-controls="orders" role="tab" data-toggle="tab">3 - Orders </a></li>
+        <li role="presentation" class="<%= 'active' if params[:active] == 'orders'%>" ><a href="#orders" aria-controls="orders" role="tab" data-toggle="tab">3 - Orders </a></li>
         <li role="presentation"><a href="#analytics" aria-controls="analytics" role="tab" data-toggle="tab">4 - Analytics</a></li>
         <li role="presentation"><a href="#history" aria-controls="history" role="tab" data-toggle="tab">5 - History</a></li>
         <li role="presentation" ><a href="#home" aria-controls="home" role="tab" data-toggle="tab">6 - Edit </a></li>
@@ -18,7 +18,7 @@
       <div role="tabpanel" class="tab-pane " id="home"><%= render 'home' %></div>
       <div role="tabpanel" class="tab-pane <%= 'active' if params[:active] == 'patterns'%>" id="pattern"><%= render 'pattern' %></div>
       <div role="tabpanel" class="tab-pane" id="analytics"><%= render '/histories/analytics'%></div>
-      <div role="tabpanel" class="tab-pane" id="orders"><%= render 'order'%></div>
+      <div role="tabpanel" class="tab-pane <%= 'active' if params[:active] == 'orders'%>"  id="orders"><%= render 'order'%></div>
       <div role="tabpanel" class="tab-pane <%= 'active' unless params[:active] %>" id="tuto"><%= render 'guide'%></div>
       <div role="tabpanel" class="tab-pane" id="history"><%= render 'history' %></div>
 
