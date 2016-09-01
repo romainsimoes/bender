@@ -248,3 +248,19 @@ color: black;
 
 }
 
+.order-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  margin: 20px 0px;
+}
+
+.flex-item {
+  flex: 0 0 25%;
+  text-align: center;
+  p{
+    margin: 0;
+  }
+}
+

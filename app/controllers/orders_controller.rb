@@ -5,6 +5,7 @@ class OrdersController < ApplicationController
 
   def index
     @orders = policy_scope(Order)
+    @orders = Order.all.order(created_at: :desc)
   end
 
   def edit

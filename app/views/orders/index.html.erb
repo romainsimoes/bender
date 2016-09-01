@@ -1,7 +1,24 @@
 <h1>Your orders</h1>
 
-<ul>
-<% @orders.each do |order| %>
-  <li><%= order.product %> <%= order.address %> <%= order.status %></li>
-<% end %>
-</ul>
+
+  <% @orders.each do |order| %>
+    <div class="order-card">
+      <div class="flex-item">
+        <p><%= order.product %></p>
+      </div>
+      <div class="flex-item">
+        <p><%= order.address %></p>
+      </div>
+      <div class="flex-item">
+        <p><%=order.created_at%></p>
+      </div>
+      <div class="flex-item">
+        <p><%= order.status %></p>
+      </div>
+    </div>
+  <% end %>
+
+  </div>
+
+
+
