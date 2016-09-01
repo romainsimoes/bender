@@ -1,5 +1,5 @@
 <div class="col-md-6 card-pattern ">
- <h6>Add Pattern</h6>
+ <h6>Add Specific Information</h6>
  <%= simple_form_for [@bot, @pattern] do |f| %>
  <%= f.error_notification %>
 
@@ -37,10 +37,10 @@
 
 
 <div class="col-md-6 card-pattern scroll grey-background">
-  <h6>Add Intent</h6>
+   <h6>Add Generic Information</h6>
 
   <div class="col-md-12  intent-card inline">
-    <h2>Bonjour </h2>
+    <h2>Welcome Message </h2>
     <%= simple_form_for [@bot, @pattern] do |f| %>
     <%= f.error_notification %>
     <%= f.text_field :trigger, value: 'wit_welcome', hidden: true %>
