@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="dim">
+    <div class="col-xs-12 col-md-8">
+      <h1>Your orders</h1>
+      <div class="orders">
+        <% @orders.each do |order| %>
+        <div class="order-card">
+          <div class="flex-item">
+            <p><%= order.product %></p>
+          </div>
+          <div class="flex-item">
+            <p><%= order.address %></p>
+          </div>
+          <div class="flex-item">
+            <p><%=order.created_at%></p>
+          </div>
+          <div class="flex-item">
+            <p><%= order.status %></p>
+          </div>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="dim">
+    <div class="col-xs-12 col-md-4 grey-background">
+      <h2>Add a product</h2>
+      <%= render 'products/form' %>
+        <h5>Patterns List</h5>
+        <div class="scroll-small">
+          <% @bot.products.each do |product| %>
+            <div class="pattern-card">
+              <%= image_tag product.photo %>
+              <h1><%= product.name %></h1>
+              <h1><%= product.description %></h1>
+              <h1><%= product.price %>€</h1>
+              <%= link_to bot_product_path(@bot, product), :method => "delete" do %>
+              <p>Delete</p>
+              <% end %>
+              <p>|</p>
+              <%= link_to edit_bot_product_path(@bot, product) do %>
+                <p>Edit</p>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+</div>
+
