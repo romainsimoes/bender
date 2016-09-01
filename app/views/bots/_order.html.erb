@@ -13,7 +13,7 @@
             <p><%=order.created_at.strftime("%T") %></p>
           </div>
           <div class="flex-item">
-            <p><%= order.status %></p>
+            <p><%= link_to order.status, edit_bot_order_path(@bot, order) %></p>
           </div>
         </div>
       <% end %>
