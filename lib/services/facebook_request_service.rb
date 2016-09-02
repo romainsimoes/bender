@@ -99,7 +99,7 @@ class FacebookRequestService
             template_type: :generic,
             elements:[
               {
-                title: bot.shop_name,
+                title: bot.name,
                 image_url: "https://maps.googleapis.com/maps/api/staticmap?markers=color:red|#{bot.street}#{bot.city}&size=300x150&zoom=18&maptype=roadmap",
                 subtitle: bot.street + ", " + bot.city,
                 buttons:[
@@ -232,7 +232,7 @@ class FacebookRequestService
   end
 
   def self.user_info(recipient_id, bot)
-    url = "https://graph.facebook.com/v2.6/995327857249604?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=EAAYBn1ZB9NwQBAHcbZAOLSucOH7209yd1BQNa3PZCMxv9X7lLCpn8eBCNp7ZAlOPcw4KBnC9ZAdJ9ThcQD4pGVJlpxcpmC8t2hj98rwaWuviqOdYNBGl6CUZCv7KIpZC5AJmZBUf704xrREsS2gAzlA0t6TG3onR4QluTF9SzUU88wZDZD"
+    url = "https://graph.facebook.com/v2.6/#{recipient_id}?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=#{bot.page_access_token}"
     response = RestClient.get(url)
     json = JSON.parse(response)
     return json
