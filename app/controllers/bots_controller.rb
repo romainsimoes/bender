@@ -141,7 +141,7 @@ class BotsController < ApplicationController
     current_user.save
     @bot.intent.delete('agenda_entry')
     @bot.save
-    redirect_to omniauth_authorize_path('user', 'google_oauth2')
+    redirect_to bots_path
   end
 
   private
