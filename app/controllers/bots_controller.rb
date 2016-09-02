@@ -77,7 +77,7 @@ class BotsController < ApplicationController
      @orders = policy_scope(Order)
     @orders = Order.all.order(created_at: :desc)
     @product = Product.new
-    @welcome = "Bonjour, je suis #{@bot.shop_name}, comment puis-je vous aider ?"
+    @welcome = "Bienvenue chez #{@bot.shop_name}, comment puis-je vous aider ?"
     if @bot.info
       if @bot.info['status'] != "INVALID_REQUEST"
         get_opening_times
