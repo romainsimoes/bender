@@ -73,7 +73,7 @@ class ProcessBotMessageJob < ApplicationJob
     @@ask_for_date_message = 'Quand Souhaitez-vous réserver ?'
     @@thanks_message = 'Tout le plaisir est pour moi'
     @@ask_for_time_step_three = 'A quelle heure souhaitez-vous réserver ?'
-    @@sorry_not_available = 'Désolé, nous sommes fermé à cette heure là, veuillez choisir une autre horaire'
+    @@sorry_not_available = 'Désolé, nous sommes fermés à cette heure là, veuillez choisir une autre horaire'
     @@make_an_order_message = "Que voulez-vous commandez ?"
     @@ask_to_confirm_order_message = "Voulez-vous confirmez votre commande"
     @@ask_for_more_message = "Ce sera tout ?"
