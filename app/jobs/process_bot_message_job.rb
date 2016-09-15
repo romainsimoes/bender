@@ -11,10 +11,10 @@ class ProcessBotMessageJob < ApplicationJob
     step_path unless @@step == 'start'
     return if @@return
 
-    intent_path
+    text_pattern
     return if @@return
 
-    text_pattern
+    intent_path
     return if @@return
 
     no_matches
@@ -94,7 +94,8 @@ class ProcessBotMessageJob < ApplicationJob
   def session_recovering(message_sender_id)
     recovery = Recovery.where(sender_id: message_sender_id)
     if recovery.empty?
-      @@session_retreiver = Recovery.new(sender_id: message_sender_id, step: "start")
+      @@session_retreiver = Recovery.new(sender_id: message_sender_id, step: "start", bot_id: @@bot.id)
+      @@session_retreiver.save
     elsif recovery.first.outdated?
       @@session_retreiver = recovery.first
       SharedJob.stepper('start')
