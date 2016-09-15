@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 20160831134721) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+    t.boolean  "admin",                  default: false
     t.string   "provider"
     t.string   "uid"
     t.string   "facebook_picture_url"
@@ -101,7 +102,6 @@ ActiveRecord::Schema.define(version: 20160831134721) do
     t.string   "last_name"
     t.string   "token"
     t.datetime "token_expiry"
-    t.boolean  "admin",                  default: false
     t.string   "google_uid"
     t.string   "google_token"
     t.string   "google_email"
