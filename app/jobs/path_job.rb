@@ -9,11 +9,12 @@ class PathJob < ProcessBotMessageJob
   def self.wit_opening_times_path
     if @@bot.intent.include?('agenda_entry')
       SharedJob.send_and_store_quick_answer(@@booking_message, nil)
-      SharedJob.stepper('booking_boolean')
+      SharedJob.stepper('booking_boolean') if @@bot.intent.include?('agenda_entry')
     end
   end
 
   def self.agenda_entry_path
+    return if @@bot.intent.include?('agenda_entry')
     SharedJob.send_and_store_answer(@@ask_for_date_message, nil)
     SharedJob.stepper('date_asked')
   end
@@ -31,15 +32,4 @@ class PathJob < ProcessBotMessageJob
     SharedJob.send_item_template
     SharedJob.stepper('ordering')
   end
-
-  def self.wit_website_path
-    SharedJob.send_and_store_answer(@@website, nil)
-    @@return = true
-  end
-
-  def self.wit_tel_path
-    SharedJob.send_and_store_answer(@@telephone, nil)
-    @@return = true
-  end
-
 end

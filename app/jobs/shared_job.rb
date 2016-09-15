@@ -2,6 +2,7 @@ class SharedJob < ProcessBotMessageJob
 
   def self.send_and_store_answer(answer, pattern_id)
     FacebookRequestService.send_message(@@message_sender_id, answer, @@bot.page_access_token)
+    p 'SharedJob'
     History.create(question: @@message_text, answer: answer, bot_id: @@bot.id, pattern_id: pattern_id)
     @@return = true
   end

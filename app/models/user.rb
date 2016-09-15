@@ -28,15 +28,9 @@ class User < ApplicationRecord
 
   def self.find_for_google_oauth2(access_token, user)
 
-    p '###'
-    p access_token
-    p '###'
-
     # Get information
     user.expires_at = access_token.credentials.expires_at
     user.refresh_token = access_token.credentials.refresh_token unless user.refresh_token
-    user.google_email = access_token.info.email
-    user.google_uid = access_token.uid
     user.google_token = access_token.credentials.token
 
     # Verify informations
@@ -79,6 +73,6 @@ class User < ApplicationRecord
   end
 
   def is_user_google_connected?
-    google_email.nil? || google_token.nil? || google_uid.nil? || refresh_token.nil?
+    google_token.nil? || refresh_token.nil?
   end
 end
