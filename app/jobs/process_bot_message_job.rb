@@ -11,7 +11,7 @@ class ProcessBotMessageJob < ApplicationJob
     step_path unless @@step == 'start'
     return if @@return
 
-    text_pattern
+    text_matcher
     return if @@return
 
     intent_path
@@ -25,25 +25,25 @@ class ProcessBotMessageJob < ApplicationJob
   end
 
   def intent_path
-    if @@bot.intent.include?(@@intent)
-      intent_pattern
+    if @@bot.intents.where(name: 'wit_welcome').first
+      intent_check
       if PathJob.respond_to? (@@intent + '_path').to_sym
         PathJob.send(@@intent + '_path')
       end
     end
   end
 
-  def intent_pattern
-    answer_pattern = @@bot.match_intent_pattern(@@entities) if @@entities
-    if answer_pattern
-      pattern_id = answer_pattern[:pattern_id]
-      answer = answer_pattern[:answer]
+  def intent_check
+    answer_intent = @@bot.match_intent(@@entities) if @@entities
+    if answer_intent
+      intent_id = answer_intent[:intent_id]
+      answer = answer_intent[:answer]
     end
-    SharedJob.send_and_store_answer(answer, pattern_id) if answer
+    SharedJob.send_and_store_answer(answer, intent_id) if answer
   end
 
-  def text_pattern
-    answer_pattern = @@bot.match_text_pattern(@@message_text)
+  def text_matcher
+    answer_pattern = @@bot.match_pattern(@@message_text)
     if answer_pattern
       answer = answer_pattern[:answer]
       pattern_id = answer_pattern[:pattern_id]

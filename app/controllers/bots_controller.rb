@@ -74,7 +74,7 @@ class BotsController < ApplicationController
   end
 
   def edit
-     @orders = policy_scope(Order)
+    @orders = policy_scope(Order)
     @orders = Order.all.order(created_at: :desc)
     @product = Product.new
     @welcome = "Bienvenue chez #{@bot.shop_name}, comment puis-je vous aider ?"
@@ -93,7 +93,7 @@ class BotsController < ApplicationController
       @website = ''
       @opening_and_closing = ''
     end
-
+    @intent = Intent.new
     @pattern = Pattern.new
     @bot_id = params[:id]
     #@pattern_number = History.all.where(bot: Bot.find(params[:bot_id])).group(:pattern_id).count
@@ -141,7 +141,7 @@ class BotsController < ApplicationController
     current_user.save
     @bot.intent.delete('agenda_entry')
     @bot.save
-    redirect_to bots_path
+    redirect_to edit_bot_path(@bot, active: :patterns)
   end
 
   private

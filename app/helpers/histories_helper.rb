@@ -1,8 +1,8 @@
 module HistoriesHelper
 
-
   def pattern_number(bot_id)
-    History.all.where(bot: Bot.find(bot_id)).group(:pattern_id).count
+    #History.all.where(bot: Bot.find(bot_id)).group(:pattern_id).count
+    {nil=>1, nil=>2, nil=>1}
   end
 
   def defaultmessage(bot)

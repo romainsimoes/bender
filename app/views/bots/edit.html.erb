@@ -17,6 +17,7 @@
     <div class="tab-content col-md-10 scroll">
       <div role="tabpanel" class="tab-pane " id="home"><%= render 'home' %></div>
       <div role="tabpanel" class="tab-pane <%= 'active' if params[:active] == 'patterns'%>" id="pattern"><%= render 'pattern' %></div>
+      <div role="tabpanel" class="tab-pane <%= 'active' if params[:active] == 'intents'%>" id="intent"><%= render 'intent' %></div>
       <div role="tabpanel" class="tab-pane" id="analytics"><%= render '/histories/analytics'%></div>
       <div role="tabpanel" class="tab-pane <%= 'active' if params[:active] == 'orders'%>"  id="orders"><%= render 'order'%></div>
       <div role="tabpanel" class="tab-pane <%= 'active' unless params[:active] %>" id="tuto"><%= render 'guide'%></div>

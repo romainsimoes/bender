@@ -25,7 +25,7 @@
   <div class="pattern-card">
     <h1> <b>If user says</b> : <%= pattern.trigger %></h1>
     <h1><b>Bot answers </b>: <%= pattern.answer %></h1>
-    <%= link_to bot_pattern_path(@bot, pattern), :method => "delete" do %>
+    <%= link_to bot_pattern_path(@bot, pattern), method: "delete" do %>
     <p>Delete</p>
     <% end %>
     <p>|</p>
@@ -37,49 +37,68 @@
  </div>
 </div>
 
-
 <div class="col-md-6 card-pattern scroll grey-background">
   <h6>Generic Information</h6>
   <p>  Program answers your bot will send in response to generic questions.</p>
   <div class="col-md-12  intent-card inline">
   <br>
     <h2>Welcome Message</h2>
-    <%= simple_form_for [@bot, @pattern] do |f| %>
-    <%= f.error_notification %>
-    <%= f.text_field :trigger, value: 'wit_welcome', hidden: true %>
-    <%= f.text_area :answer, value: @welcome, id: 'text_area_small' %>
-    <%= f.submit "Add", :class => 'btn button-blue-small', id: 'add_intent' %>
+    <% if @bot.intents.where(name: 'wit_welcome').empty? %>
+      <%= simple_form_for [@bot, @intent] do |f| %>
+      <%= f.error_notification %>
+      <%= f.text_field :name, value: 'wit_welcome', hidden: true %>
+      <%= f.text_area :answer, value: @welcome, id: 'text_area_small' %>
+      <%= f.submit "Add", class: 'btn button-blue-small', id: 'add_intent' %>
+      <% end %>
+    <% else %>
+      <% bot_intent = @bot.intents.where(name: 'wit_welcome').first %>
+      <%= link_to "Del", bot_intent_path(bot_intent), method: 'delete', class: 'btn button-blue-small' %>
     <% end %>
   </div>
 
   <div class="col-md-12  intent-card inline">
     <h2>Telephone </h2>
-    <%= simple_form_for [@bot, @pattern] do |f| %>
-    <%= f.error_notification %>
-    <%= f.text_field :trigger, value: 'wit_tel', hidden: true %>
-    <%= f.text_area :answer, value: @telephone, id: 'text_area_small' %>
-    <%= f.submit "Add", :class => 'btn button-blue-small', id: 'add_intent' %>
+    <% if @bot.intents.where(name: 'wit_tel').empty? %>
+      <%= simple_form_for [@bot, @intent] do |f| %>
+      <%= f.error_notification %>
+      <%= f.text_field :name, value: 'wit_tel', hidden: true %>
+      <%= f.text_area :answer, value: @telephone, id: 'text_area_small' %>
+      <%= f.submit "Add", class: 'btn button-blue-small', id: 'add_intent' %>
+      <% end %>
+    <% else %>
+      <% bot_intent = @bot.intents.where(name: 'wit_tel').first %>
+      <%= link_to "Del", bot_intent_path(bot_intent), method: 'delete', class: 'btn button-blue-small' %>
     <% end %>
   </div>
 
   <div class="col-md-12 intent-card">
     <h2>Website </h2>
-    <%= simple_form_for [@bot, @pattern] do |f| %>
-    <%= f.error_notification %>
-    <%= f.text_field :trigger, value: 'wit_website', hidden: true %>
-    <%= f.text_area :answer, value: @website, id: 'text_area_small' %>
-    <%= f.submit "Add", :class => 'btn button-blue-small', id: 'add_intent' %>
+    <% if @bot.intents.where(name: 'wit_website').empty? %>
+      <%= simple_form_for [@bot, @intent] do |f| %>
+      <%= f.error_notification %>
+      <%= f.text_field :name, value: 'wit_website', hidden: true %>
+      <%= f.text_area :answer, value: @website, id: 'text_area_small' %>
+      <%= f.submit "Add", :class => 'btn button-blue-small', id: 'add_intent' %>
+      <% end %>
+    <% else %>
+      <% bot_intent = @bot.intents.where(name: 'wit_website').first %>
+      <%= link_to "Del", bot_intent_path(bot_intent), method: 'delete', class: 'btn button-blue-small' %>
     <% end %>
   </div>
 
 
   <div class="col-md-12  intent-card">
     <h2>Opening Hours</h2>
-    <%= simple_form_for [@bot, @pattern] do |f| %>
-    <%= f.error_notification %>
-    <%= f.text_field :trigger, value: 'wit_opening_times', hidden: true %>
-    <%= f.text_area :answer, value: @opening_and_closing, id: 'text_area_big' %>
-    <%= f.submit "Add", :class => 'btn button-blue-small', id: 'add_intent' %>
+    <% if @bot.intents.where(name: 'wit_opening_times').empty? %>
+      <%= simple_form_for [@bot, @intent] do |f| %>
+      <%= f.error_notification %>
+      <%= f.text_field :name, value: 'wit_opening_times', hidden: true %>
+      <%= f.text_area :answer, value: @opening_and_closing, id: 'text_area_big' %>
+      <%= f.submit "Add", :class => 'btn button-blue-small', id: 'add_intent' %>
+      <% end %>
+    <% else %>
+      <% bot_intent = @bot.intents.where(name: 'wit_opening_times').first %>
+      <%= link_to "Del", bot_intent_path(bot_intent), method: 'delete', class: 'btn button-blue-small' %>
     <% end %>
   </div>
 
@@ -94,7 +113,6 @@
       <%= link_to "Add", add_agenda_entry_bot_path(@bot), class: 'btn button-blue-small' %>
     <% end %>
   </div>
-
 </div>
 
 
