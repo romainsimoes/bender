@@ -28,6 +28,7 @@ class User < ApplicationRecord
 
   def self.find_for_google_oauth2(access_token, user)
 
+    p access_token
     # Get information
     user.expires_at = access_token.credentials.expires_at
     user.refresh_token = access_token.credentials.refresh_token unless user.refresh_token
@@ -55,7 +56,7 @@ class User < ApplicationRecord
 
       refreshhash = JSON.parse(response.body)
 
-      self.google_token     = refreshhash['access_token']
+      self.google_token = refreshhash['access_token']
       self.expires_at = DateTime.now + refreshhash["expires_in"].to_i.seconds
 
       self.save
@@ -73,6 +74,6 @@ class User < ApplicationRecord
   end
 
   def is_user_google_connected?
-    google_token.nil? || refresh_token.nil?
+    !google_token.nil? && !refresh_token.nil?
   end
 end

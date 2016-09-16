@@ -1,23 +1,57 @@
-<div role="tabpanel" class="tab-pane" id="intent">
-  <div class="col-md-4 col-md-offset-2 intent-card">
-    <h2>Add Intent</h2>
-    <div class="checkbox">
-      <label><input type="checkbox" value="">Opening hours</label>
-    </div>
-    <div class="checkbox">
-      <label><input type="checkbox" value="">Address</label>
-    </div>
-    <div class="checkbox ">
-      <label><input type="checkbox" value="">Phone Number</label>
-    </div>
-  </div>
-  <div class="col-md-3 intent-card">
-    <%= simple_form_for [@bot, @pattern] do |f| %>
+<div class="col-md-6 card-pattern scroll grey-background">
+  <h6>Generic Information</h6>
+  <p>  Program answers your bot will send in response to generic questions.</p>
+  <div class="col-md-12  intent-card inline">
+  <br>
+    <h2>Welcome Message</h2>
+    <%= simple_form_for [@bot, @intent] do |f| %>
     <%= f.error_notification %>
-    <%= f.input :trigger, input_html: { disabled: true, value: 'wit_opening_times' } %>
-    <%= f.text_area(:answer, value: @opening_and_closing)%>
-    <%= f.button :submit, :class => 'btn btn-primary' %>
-  <% end %>
-  <%= render 'products/form' %>
- </div>
+    <%= f.text_field :name, value: 'wit_welcome', hidden: true %>
+    <%= f.text_area :answer, value: @welcome, id: 'text_area_small' %>
+    <%= f.submit "Add", class: 'btn button-blue-small', id: 'add_intent' %>
+    <% end %>
+  </div>
+
+  <div class="col-md-12  intent-card inline">
+    <h2>Telephone </h2>
+    <%= simple_form_for [@bot, @intent] do |f| %>
+    <%= f.error_notification %>
+    <%= f.text_field :name, value: 'wit_tel', hidden: true %>
+    <%= f.text_area :answer, value: @telephone, id: 'text_area_small' %>
+    <%= f.submit "Add", class: 'btn button-blue-small', id: 'add_intent' %>
+    <% end %>
+  </div>
+
+  <div class="col-md-12 intent-card">
+    <h2>Website </h2>
+    <%= simple_form_for [@bot, @intent] do |f| %>
+    <%= f.error_notification %>
+    <%= f.text_field :name, value: 'wit_website', hidden: true %>
+    <%= f.text_area :answer, value: @website, id: 'text_area_small' %>
+    <%= f.submit "Add", :class => 'btn button-blue-small', id: 'add_intent' %>
+    <% end %>
+  </div>
+
+
+  <div class="col-md-12  intent-card">
+    <h2>Opening Hours</h2>
+    <%= simple_form_for [@bot, @intent] do |f| %>
+    <%= f.error_notification %>
+    <%= f.text_field :name, value: 'wit_opening_times', hidden: true %>
+    <%= f.text_area :answer, value: @opening_and_closing, id: 'text_area_big' %>
+    <%= f.submit "Add", :class => 'btn button-blue-small', id: 'add_intent' %>
+    <% end %>
+  </div>
+
+  <div class="col-md-12  intent-card">
+    <h2>Booking</h2>
+    <p>
+      Tell your bot, you wish to let him handle the booking for you
+    </p>
+    <% if current_user.google_token %>
+      <%= link_to "Del", delete_agenda_entry_bot_path(@bot), class: 'btn button-blue-small' %>
+    <% else %>
+      <%= link_to "Add", add_agenda_entry_bot_path(@bot), class: 'btn button-blue-small' %>
+    <% end %>
+  </div>
 </div>

@@ -8,8 +8,8 @@ class GoogleCalendarApiService
 
   def self.get_authorization(user)
     # User not connected to Google initialization errors
-    if(user.is_user_google_connected?)
-      raise GoogleCalendarServiceUserNotGoogleConnectedError, "User don't have token or google mail"
+    unless (user.is_user_google_connected?)
+      raise GoogleCalendarServiceUserNotGoogleConnectedError, "User don't have google token or refresh token"
     end
 
     user.refresh_token_if_expired

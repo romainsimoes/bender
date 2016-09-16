@@ -3,9 +3,8 @@ before_action :set_bot, only: [:index]
 skip_after_action :verify_authorized
 
   def index
-    @histories =  policy_scope(History)
+    @histories = policy_scope(History)
     defaultmessage
-    #@pattern_number = History.all.where(bot: Bot.find(params[:bot_id])).group(:pattern_id).count
   end
 
   private

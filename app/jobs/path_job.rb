@@ -14,7 +14,7 @@ class PathJob < ProcessBotMessageJob
   end
 
   def self.agenda_entry_path
-    return if @@bot.intent.include?('agenda_entry')
+    return unless @@bot.intent.include?('agenda_entry')
     SharedJob.send_and_store_answer(@@ask_for_date_message, nil)
     SharedJob.stepper('date_asked')
   end

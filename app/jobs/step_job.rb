@@ -102,13 +102,11 @@ class StepJob < ProcessBotMessageJob
   def self.what_next_step
     if @@intent == 'wit_positive'
       SharedJob.send_and_store_answer(@@positive_message, nil)
-      SharedJob.stepper('start')
-      @@return = true
     elsif @@intent == 'wit_negative'
       SharedJob.send_and_store_answer(@@negative_message, nil)
-      SharedJob.stepper('start')
-      @@return = true
     end
+    SharedJob.stepper('start')
+    @@return = true
   end
 
   def self.ordering_step

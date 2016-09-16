@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :bots do
     resources :histories, only: [:index]
     resources :patterns, except: [:show]
+    resources :intents, except: [:show]
     resources :products
     resources :orders
     member do

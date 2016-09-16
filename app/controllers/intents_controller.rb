@@ -1,22 +1,22 @@
-class PatternsController < ApplicationController
-  before_action :set_pattern, only: [:show, :edit, :update, :destroy]
+class IntentsController < ApplicationController
+  before_action :set_intent, only: [:show, :edit, :update, :destroy]
   before_action :find_bot, only: [:new, :edit, :create, :update, :destroy]
   skip_after_action :verify_authorized
 
   def index
-    @pattern = Pattern.all
+    @intent = Intent.all
   end
 
   def new
-    @pattern = Pattern.new
+    @intent = Intent.new
   end
 
   def edit
   end
 
   def create
-    @pattern = @bot.patterns.build(pattern_params)
-    if @pattern.save
+    @intent = @bot.intents.build(intent_params)
+    if @intent.save
       redirect_to edit_bot_path(@bot, active: :patterns)
     else
       render :new
@@ -24,7 +24,7 @@ class PatternsController < ApplicationController
   end
 
   def update
-    if @pattern.update(pattern_params)
+    if @intent.update(intent_params)
       redirect_to edit_bot_path(@bot, active: :patterns)
     else
       render :edit
@@ -32,20 +32,21 @@ class PatternsController < ApplicationController
   end
 
   def destroy
-    @pattern.destroy
+    @intent.destroy
     redirect_to edit_bot_path(@bot, active: :patterns)
   end
 
   private
-    def set_pattern
-      @pattern = Pattern.find(params[:id])
+    def set_intent
+      @intent = Intent.find(params[:id])
     end
 
     def find_bot
       @bot = Bot.find(params[:bot_id])
     end
 
-    def pattern_params
-      params.require(:pattern).permit(:bot, :trigger, :answer)
+    def intent_params
+      params.require(:intent).permit(:bot, :name, :answer)
     end
 end
+
