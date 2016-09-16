@@ -44,6 +44,10 @@ class SharedJob < ProcessBotMessageJob
     GoogleCalendarApiService.create_event(@@bot.user, event)
   end
 
+  def self.get_list_of_google_event
+    GoogleCalendarApiService.get_events(@@bot.user)
+  end
+
   def self.create_event_with_date(date)
     event_start = DateTime.parse(date)
     event_end = event_start + (30/1440.0)
@@ -60,6 +64,21 @@ class SharedJob < ProcessBotMessageJob
     }
   end
 
+  def self.create_event_to_check_with_date(date)
+    event_start = DateTime.parse(date)
+    event_end_to_format = event_start + (30/1440.0)
+    event_end = event_end_to_format.iso8601
+    event = {
+      time_min: date,
+      time_max: event_end,
+      time_zone: "Europe/Paris"
+    }
+  end
+
+  def self.is_the_slot_busy?(event)
+    GoogleCalendarApiService.busy?(@@bot.user, event)
+  end
+
   def self.format_dates(hour, date)
     "20#{date[2]}-#{date[1]}-#{date[0]}T#{hour}:00.000+02:00"
   end
@@ -67,6 +86,5 @@ class SharedJob < ProcessBotMessageJob
   def self.make_an_order
     FacebookRequestService.item_template(@@message_sender_id, @@bot)
     @@return = true
-
   end
 end

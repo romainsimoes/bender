@@ -30,7 +30,6 @@ class GoogleCalendarApiService
     authorization = get_authorization(user)
 
     google_event = Google::Apis::CalendarV3::Event.new(event)
-
     client = Google::Apis::CalendarV3::CalendarService.new
 
     client.authorization = authorization
@@ -38,6 +37,34 @@ class GoogleCalendarApiService
     result = client.insert_event('primary', google_event)
 
     # puts "Event created: #{result.html_link}"
+  end
+
+  def self.busy?(user, event)
+    p 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+    p event
+    p 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+
+    authorization = get_authorization(user)
+
+    google_event = Google::Apis::CalendarV3::FreeBusyRequest.new
+    google_event.time_min = event[:time_min]
+    google_event.time_max = event[:time_max]
+    google_event.time_zone = event[:time_zone]
+    google_event.items = [{id: "primary"}]
+
+    p '@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+    p google_event
+    p '@@@@@@@@@@@@@@@@@@@@@@@@@@@'
+
+    client = Google::Apis::CalendarV3::CalendarService.new
+
+    client.authorization = authorization
+
+    result = client.query_freebusy(google_event)
+
+    p result
+
+    result.calendars['primary'].busy.empty? ? false : true
   end
 
 end
