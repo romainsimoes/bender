@@ -29,6 +29,7 @@ class BotsController < ApplicationController
       message_sender_id = params['entry'][0]['messaging'][0]['sender']['id']
       p params
       p 'webhook_request_accepted'
+      p @bot
       if message_text && message_sender_id
         # 2 - Init Job
         ProcessBotMessageJob.perform_later(message_sender_id, message_text, @bot)

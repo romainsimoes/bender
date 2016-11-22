@@ -3,8 +3,8 @@ class ProcessBotMessageJob < ApplicationJob
 
 
   def perform(message_sender_id, message_text, bot)
-    session_recovering(message_sender_id)
-    var_initalizer(message_sender_id, message_text, bot)
+    session_recovering(message_sender_id, bot)
+    var_initializer(message_sender_id, message_text, bot)
 
     get_intent
 
@@ -60,7 +60,7 @@ class ProcessBotMessageJob < ApplicationJob
     SharedJob.send_and_store_answer(answer, nil)
   end
 
-  def var_initalizer(message_sender_id, message_text, bot)
+  def var_initializer(message_sender_id, message_text, bot)
     @@message_sender_id = message_sender_id
     @@message_text = message_text
     @@bot = bot
@@ -91,10 +91,10 @@ class ProcessBotMessageJob < ApplicationJob
     @@entities ? @@intent = @@entities.keys[0] : @@intent = nil
   end
 
-  def session_recovering(message_sender_id)
+  def session_recovering(message_sender_id, bot)
     recovery = Recovery.where(sender_id: message_sender_id)
     if recovery.empty?
-      @@session_retreiver = Recovery.new(sender_id: message_sender_id, step: "start", bot_id: @@bot.id)
+      @@session_retreiver = Recovery.new(sender_id: message_sender_id, step: "start", bot_id: bot.id)
       @@session_retreiver.save
     elsif recovery.first.outdated?
       @@session_retreiver = recovery.first

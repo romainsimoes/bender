@@ -7,7 +7,7 @@ class FacebookRequestService
     json['success'] # return true if success, false otherwise
   end
 
-  def self.send_message(recipient_id, message_text, page_token)
+  def self.send_message(recipient_id, message_text, bot)
     message_data = {
         recipient: {
           id: recipient_id
@@ -18,16 +18,13 @@ class FacebookRequestService
       }
     # begin
     RestClient.post(
-        "https://graph.facebook.com/v2.6/me/messages?access_token=#{page_token}",
+        "https://graph.facebook.com/v2.6/me/messages?access_token=#{bot.page_access_token}",
         message_data.to_json,
         content_type: :json
       )
     # rescue RestClient::ExceptionWithResponse => err
     #   puts "\nFacebook API response from invalid request:\n#{err.response}\n\n"
     # end
-  end
-
-  def self.get_profile(recipient_id)
   end
 
   def self.send_image(recipient_id, message, page_token)
@@ -55,7 +52,7 @@ class FacebookRequestService
     end
   end
 
-  def self.quick_replies(recipient_id, message, page_token)
+  def self.quick_replies(recipient_id, message, bot)
     message_data = {
       recipient:{
         id: recipient_id
@@ -78,7 +75,7 @@ class FacebookRequestService
     }
     begin
       RestClient.post(
-          "https://graph.facebook.com/v2.6/me/messages?access_token=#{page_token}",
+          "https://graph.facebook.com/v2.6/me/messages?access_token=#{bot.page_access_token}",
           message_data.to_json,
           content_type: :json
         )

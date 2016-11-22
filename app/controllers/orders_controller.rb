@@ -16,6 +16,7 @@ class OrdersController < ApplicationController
       @order.status = 'commande terminée'
       @order.save
     end
+    FacebookRequestService.send_message(@order.sender_id, @order.status, @bot)
     redirect_to edit_bot_path(@bot)
   end
 

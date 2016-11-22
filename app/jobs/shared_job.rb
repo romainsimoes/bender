@@ -1,13 +1,13 @@
 class SharedJob < ProcessBotMessageJob
 
   def self.send_and_store_answer(answer, pattern_id)
-    FacebookRequestService.send_message(@@message_sender_id, answer, @@bot.page_access_token)
+    FacebookRequestService.send_message(@@message_sender_id, answer, @@bot)
     History.create(question: @@message_text, answer: answer, bot_id: @@bot.id, pattern_id: pattern_id)
     @@return = true
   end
 
   def self.send_and_store_quick_answer(answer, pattern_id)
-    FacebookRequestService.quick_replies(@@message_sender_id, answer, @@bot.page_access_token)
+    FacebookRequestService.quick_replies(@@message_sender_id, answer, @@bot)
     History.create(question: @@message_text, answer: answer, bot_id: @@bot.id, pattern_id: pattern_id)
     @@return = true
   end
@@ -34,10 +34,10 @@ class SharedJob < ProcessBotMessageJob
 
 
   def self.send_confirmed_order(answer, pattern_id)
-    FacebookRequestService.send_message(@@message_sender_id, answer, @@bot.page_access_token)
+    FacebookRequestService.send_message(@@message_sender_id, answer, @@bot)
     FacebookRequestService.send_receipt_template(@@message_sender_id, @@bot, @@products, @@address)
     product = @@products.join(" ")
-    Order.create(product: product, address: @@address, bot_id: @@bot.id, status: "en cours")
+    Order.create(product: product, address: @@address, bot_id: @@bot.id, status: "en cours", sender_id: @@message_sender_id)
   end
 
   def self.create_google_agenda_event(event)

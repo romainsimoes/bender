@@ -2,6 +2,7 @@
       <h6>Your orders</h6>
       <div class="orders">
         <% @orders.each do |order| %>
+        <% if order.status != 'commande terminée' %>
         <div class="order-card">
           <div class="flex-item">
             <p><%= order.product %></p>
@@ -16,6 +17,7 @@
             <p><%= link_to order.status, edit_bot_order_path(@bot, order) %></p>
           </div>
         </div>
+        <% end %>
       <% end %>
       </div>
  </div>
