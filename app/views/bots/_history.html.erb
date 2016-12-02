@@ -1,7 +1,7 @@
 <div class="row white-background">
 
     <div class="col-md-9 col-md-offset-1">
-    <h6> Full Historic :  <%= @bot.histories.size %> questions</h6>
+    <h6> Full Historic :  <%= @histories.size %> questions</h6>
       <div class="table-responsive">
 
         <br>
@@ -16,15 +16,11 @@
             </tr>
           </thead>
           <tbody>
-            <% @bot.histories.each do | history | %>
+            <% @histories.each do | history | %>
             <tr>
               <td><%= history.question %></td>
               <td>
-                <% if history.pattern_id ==  nil %>
-                <p>Default Message</p>
-                <% else %>
                 <p><%= history.answer[0,15] %> ...</p>
-                <% end %>
               </td>
               <td><%= history.created_at.strftime("%T") %></td>
               <td><%= history.created_at.strftime("%D") %></td>

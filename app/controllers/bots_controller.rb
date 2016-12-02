@@ -75,8 +75,10 @@ class BotsController < ApplicationController
   end
 
   def edit
+    @histories = policy_scope(History)
+    @histories = History.where(bot_id: @bot).all.order(created_at: :desc)
     @orders = policy_scope(Order)
-    @orders = Order.all.order(created_at: :desc)
+    @orders = Order.where(bot_id: @bot).all.order(created_at: :desc)
     @product = Product.new
     @welcome = "Bienvenue chez #{@bot.shop_name}, comment puis-je vous aider ?"
     if @bot.info

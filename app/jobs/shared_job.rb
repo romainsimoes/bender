@@ -36,8 +36,8 @@ class SharedJob < ProcessBotMessageJob
   def self.send_confirmed_order(answer, pattern_id)
     FacebookRequestService.send_message(@@message_sender_id, answer, @@bot)
     FacebookRequestService.send_receipt_template(@@message_sender_id, @@bot, @@products, @@address)
-    product = @@products.join(" ")
-    Order.create(product: product, address: @@address, bot_id: @@bot.id, status: "en cours", sender_id: @@message_sender_id)
+    product_hash = self.set_product
+    Order.create(product: product_hash, address: @@address, bot_id: @@bot.id, status: "en cours", sender_id: @@message_sender_id)
   end
 
   def self.create_google_agenda_event(event)
@@ -86,5 +86,17 @@ class SharedJob < ProcessBotMessageJob
   def self.make_an_order
     FacebookRequestService.item_template(@@message_sender_id, @@bot)
     @@return = true
+  end
+
+  def self.set_product
+    product_hash = Hash.new
+    @@products.each do |product|
+      if product_hash[product] == nil
+        product_hash[product] = 1
+      else
+        product_hash[product] += 1
+      end
+    end
+    return product_hash
   end
 end

@@ -13,6 +13,7 @@
   <% @pattern_array  << [x,y] %>
 <% end %>
 
+
 <!-- Generate 2 array for graph  [Label Pattern] & [Data pattern]-->
 <% @label_pattern = [] %>
 <% @data_pattern = [] %>
@@ -60,6 +61,47 @@
   <% @hourly_requests[n]  += 1 %>
   <% end %>
 
+  <!-- Daily orders-->
+  <% @daily_orders = [0, 0, 0, 0, 0, 0, 0] %>
+  <% @bot.orders.each do |order| %>
+  <% n = order.created_at.wday-1 %>
+  <% @daily_orders[n]  += 1 %>
+  <% end %>
+
+
+  <!-- Monthly orders-->
+  <% @monthly_orders = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] %>
+  <% @bot.orders.each do |order| %>
+  <% n = order.created_at.month-1 %>
+  <% @monthly_orders[n]  += 1 %>
+  <% end %>
+
+  <!-- Hourly orders-->
+  <% @hourly_orders = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] %>
+  <% @bot.orders.each do |order| %>
+  <% n = order.created_at.hour-1 %>
+  <% @hourly_orders[n]  += 1 %>
+  <% end %>
+
+  <!-- Best seller -->
+  <% @product_list = Hash.new %>
+  <% @bot.orders.each do |order|%>
+    <% order.product.each do |key, value| %>
+      <% if @product_list[key] == nil %>
+        <% @product_list[key] = value %>
+      <% else %>
+        <% @product_list[key] += value %>
+      <% end %>
+    <%end%>
+  <% end %>
+
+  <% @product_array = []%>
+  <% @product_number_array = [] %>
+  <% @product_list.each do |key, value| %>
+    <% @product_array << key %>
+    <% @product_number_array << value %>
+  <%end%>
+
   <!--**************************FRONTEND*************************************-->
 
 
@@ -97,8 +139,6 @@
 <div class="row">
 
 
-
-
       <div class="col-md-4 col-md-offset-1">
         <canvas  id="DefaultMessageChart" width="100" height="100"></canvas>
       </div>
@@ -111,12 +151,28 @@
         <canvas  id="DailyRequest" width="100" height="100"></canvas>
       </div>
 
-      <div class="col-md-4 ">
+      <div class="col-md-4">
         <canvas  id="MonthlyRequests" width="100" height="100"></canvas>
       </div>
 
       <div class="col-md-4 col-md-offset-1">
         <canvas  id="HourlyRequests" width="100" height="100"></canvas>
+      </div>
+
+      <div class="col-md-4">
+        <canvas  id="DailyOrder" width="100" height="100"></canvas>
+      </div>
+
+      <div class="col-md-4 col-md-offset-1">
+        <canvas  id="MonthlyOrders" width="100" height="100"></canvas>
+      </div>
+
+      <div class="col-md-4">
+        <canvas  id="HourlyOrders" width="100" height="100"></canvas>
+      </div>
+
+      <div class="col-md-4 col-md-offset-1">
+        <canvas  id="O" width="100" height="100"></canvas>
       </div>
 
     </div>
@@ -298,10 +354,139 @@ var myChart = new Chart(ctx, {
     }
 });
 
+var ctx = document.getElementById("DailyOrder");
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Monday", "Tuesday","Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        datasets: [{
+            label: '# of Request',
+            data: <%= @daily_orders %>,
+            backgroundColor: [
+                '#ffce56'
+            ],
+            borderColor: [
+                '#ffce56'
+            ],
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        },
+        title: {
+              display: true,
+              text: 'Daily Requests'
+          },
+    }
+});
 
 
 
 
+
+var ctx = document.getElementById("MonthlyOrders");
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["January", "February","March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
+        datasets: [{
+            label: '# of Request',
+            data: <%= @monthly_orders %>,
+            backgroundColor: [
+                "#36A2EB"
+            ],
+            borderColor: [
+                "#36A2EB"
+            ],
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        },
+        title: {
+              display: true,
+              text: 'Requests per Month'
+          },
+    }
+});
+
+
+var ctx = document.getElementById("HourlyOrders");
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["01h","02h", "03h", "04h", "05h", "06h", "07h", "08h", "09h", "10h", "11h", "12h", "13h", "14h", "15h", "16h", "17h", "18h", "19h", "20h", "21h", "22h", "23h", "00h"],
+        datasets: [{
+            label: '# of Request',
+            data: <%= @hourly_orders %>,
+            backgroundColor: [
+                '#FF6384'
+            ],
+            borderColor: [
+                '#FF6384'
+            ],
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        },
+        title: {
+              display: true,
+              text: 'Requests per Hour'
+          },
+    }
+});
+
+
+var ctx = document.getElementById("O");
+var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: <%= @product_array.to_json.html_safe%>,
+        datasets: [{
+            label: '# of Votes',
+            data: <%= @product_number_array%>,
+            backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ],
+            hoverBackgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ]
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        },
+        title: {
+              display: true,
+              text: 'Best seller'
+          },
+    }
+});
 
 </script>
 <% end %>

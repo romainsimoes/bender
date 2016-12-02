@@ -166,8 +166,6 @@ class FacebookRequestService
 
   def self.send_receipt_template(recipient_id, bot, p2, address)
     products = []
-    p products
-    p p2
     bot.products.each do |pdt|
       p2.each do |p|
         if pdt.name == p

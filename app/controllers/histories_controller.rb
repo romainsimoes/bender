@@ -2,10 +2,10 @@ class HistoriesController < ApplicationController
 before_action :set_bot, only: [:index]
 skip_after_action :verify_authorized
 
-  def index
-    @histories = policy_scope(History)
-    defaultmessage
-  end
+  # def index
+  #   @histories = policy_scope(History)
+  #   defaultmessage
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

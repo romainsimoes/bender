@@ -4,7 +4,7 @@
   <div class="col-md-12  intent-card inline">
   <br>
     <h2>Welcome Message</h2>
-    <%= simple_form_for [@bot, @intent] do |f| %>
+    <%= simple_form_for @bot do |f| %>
     <%= f.error_notification %>
     <%= f.text_field :name, value: 'wit_welcome', hidden: true %>
     <%= f.text_area :answer, value: @welcome, id: 'text_area_small' %>

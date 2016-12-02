@@ -28,7 +28,6 @@ class StepJob < ProcessBotMessageJob
 
   def self.ordering_step
     @@products << @@message_text
-    p @@products
     SharedJob.send_and_store_quick_answer(@@ask_for_more_message, nil)
     SharedJob.stepper('order_more')
     @@return = true

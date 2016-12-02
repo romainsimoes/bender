@@ -17,7 +17,7 @@ class OrdersController < ApplicationController
       @order.save
     end
     FacebookRequestService.send_message(@order.sender_id, @order.status, @bot)
-    redirect_to edit_bot_path(@bot)
+    redirect_to edit_bot_path(@bot, active: :orders)
   end
 
   def update
