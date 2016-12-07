@@ -39,7 +39,7 @@ class ProcessBotMessageJob < ApplicationJob
       intent_id = answer_intent[:intent_id]
       answer = answer_intent[:answer]
     end
-    SharedJob.send_and_store_answer(answer, intent_id) if answer
+    SharedJob.send_and_store_answer(answer, intent_id) if answer && answer != @@telephone
   end
 
   def text_matcher

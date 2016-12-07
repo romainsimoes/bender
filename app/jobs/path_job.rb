@@ -23,6 +23,10 @@ class PathJob < ProcessBotMessageJob
     SharedJob.send_and_store_answer(@@thanks_message, nil)
   end
 
+  def self.wit_tel_path
+    SharedJob.send_phone_number
+  end
+
   def self.location_path
     SharedJob.send_map
   end

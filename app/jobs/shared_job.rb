@@ -12,6 +12,11 @@ class SharedJob < ProcessBotMessageJob
     @@return = true
   end
 
+  def self.send_phone_number
+    FacebookRequestService.phone_number_template(@@message_sender_id, @@telephone, @@bot)
+    @@return = true
+  end
+
   def self.send_map
     FacebookRequestService.map_template(@@message_sender_id, @@bot)
     @@return = true

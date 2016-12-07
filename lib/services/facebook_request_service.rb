@@ -27,31 +27,6 @@ class FacebookRequestService
     # end
   end
 
-  def self.send_image(recipient_id, message, page_token)
-    message_data = {
-      recipient:{
-        id: recipient_id
-      },
-      message:{
-        attachment:{
-          type: :image,
-          payload:{
-            url: message
-          }
-        }
-      }
-    }
-    begin
-      RestClient.post(
-          "https://graph.facebook.com/v2.6/me/messages?access_token=#{page_token}",
-          message_data.to_json,
-          content_type: :json
-        )
-    rescue RestClient::ExceptionWithResponse => err
-      puts "\nFacebook API response from invalid request:\n#{err.response}\n\n"
-    end
-  end
-
   def self.quick_replies(recipient_id, message, bot)
     message_data = {
       recipient:{
@@ -84,6 +59,39 @@ class FacebookRequestService
     end
   end
 
+  def self.phone_number_template(recipient_id, phone_number, bot)
+    message_data = {
+      recipient:{
+        id: recipient_id
+      },
+      message:{
+        attachment:{
+          type: :template,
+          payload:{
+            template_type: :button,
+            text: "Besoin de plus de renseignements",
+            buttons:[
+              {
+                type: :phone_number,
+                title: "contactez-nous",
+                payload: phone_number
+              }
+            ]
+          }
+        }
+      }
+    }
+    begin
+    RestClient.post(
+        "https://graph.facebook.com/v2.6/me/messages?access_token=#{bot.page_access_token}",
+        message_data.to_json,
+        content_type: :json
+        )
+    rescue RestClient::ExceptionWithResponse => err
+      puts "\nFacebook API response from invalid request:\n#{err.response}\n\n"
+    end
+  end
+
   def self.map_template(recipient_id, bot)
     message_data = {
       recipient:{
@@ -103,7 +111,8 @@ class FacebookRequestService
                   {
                     type: :web_url,
                     url: "https://www.google.fr/maps/search/#{bot.street}, #{bot.city}",
-                    title: "Allez-y!"
+                    title: "Allez-y!",
+                    webview_height_ratio: :full
                   }
                 ]
               }
